@@ -40,7 +40,7 @@ function DoctorRegistrationForm() {
       alert(json.error);
     }
     if (response.ok){
-      alert("Patient Registered Successfully");
+      alert("Doctor Registered Successfully");
     }
   };
 

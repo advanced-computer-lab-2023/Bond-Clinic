@@ -38,19 +38,30 @@ export const fetchDoctor = async (req, res) => {
     const doctors = await doctorModel.find();
     res.status(200).json(doctors);
   } catch (error) {
-    res.status(404).json({error: error.message});
+    res.status(400).json({error: error.message});
   }
 }
 
-  export const deleteDoctor = async (req, res) => {
+export const deleteDoctor = async (req, res) => {
     const{username}=req.body;
 
     try {
       const deletedUser = await doctorModel.findOneAndDelete({ username});
       res.status(200).json(deletedUser);
     } catch (error) {
-      res.status(404).json({error: error.message});
+      res.status(400).json({error: error.message});
     }
+}
+
+export const updateDoctor = async (req, res) => {
+  const{username,email,hourlyRate,affiliation}=req.body;
+
+  try {
+    const updateDoctor = await doctorModel.updateOne({username},{email,hourlyRate,affiliation});
+    res.status(200).json(updateDoctor);
+  } catch (error) {
+    res.status(400).json({error: error.message});
   }
+}
 
 

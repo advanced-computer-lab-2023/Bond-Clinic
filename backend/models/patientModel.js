@@ -41,7 +41,15 @@ const patientSchema = new mongoose.Schema({
         type: Number,
         required: true,
         minlength: 11,
-    }
+    },
+    doctor:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Doctor'
+    },
+    package:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Package'
+    },
 });
 
 export default mongoose.model('Patient',patientSchema)

@@ -2,6 +2,7 @@ import express from "express";
 import patientRoutes from "./routes/patient.js";
 import doctorRoutes from "./routes/doctor.js";
 import adminRoutes from "./routes/admin.js"
+import packageRoutes from "./routes/package.js"
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from 'dotenv';
@@ -22,6 +23,7 @@ app.use(cors());
 app.use("/api/patient/", patientRoutes);
 app.use("/api/doctor/", doctorRoutes);
 app.use("/api/admin/", adminRoutes);
+app.use("/api/package/", packageRoutes);
 
 //connect to db
 mongoose

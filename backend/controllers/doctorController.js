@@ -12,6 +12,8 @@ export const createDoctor = async (req, res) => {
     phoneNumber,
     hourlyRate,
     affiliation,
+    speciality,
+    availability,
     educationBg
   } = req.body;
   try {
@@ -25,6 +27,8 @@ export const createDoctor = async (req, res) => {
       phoneNumber,
       hourlyRate,
       affiliation,
+      speciality,
+      availability,
       educationBg
     });
     res.status(200).json(doctor);

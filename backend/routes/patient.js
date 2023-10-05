@@ -1,5 +1,5 @@
 import express, { json } from "express";
-import { createPatient,deletePatient, fetchPatient, updatePatient} from "../controllers/patientController.js";
+import { createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor} from "../controllers/patientController.js";
 
 //router initialization
 const router = express.Router();
@@ -15,5 +15,17 @@ router.delete('/',deletePatient);
 
 //put request
 router.put('/',updatePatient)
+
+//37
+router.get('/doctors/session-price', viewDoctorsWithSessionPrice);
+
+//38
+router.get("/searchDoc", searchDoctor);
+
+//39
+router.get("/filter", filterDoctors);
+
+//40
+router.get("/select/:username", selectDoctor);
 
 export default router;

@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+const availabilitySchema = new mongoose.Schema({
+    date: {
+      type: Date,
+      required: true,
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+  });
+
 const doctorSchema = new mongoose.Schema({
     
     username: {
@@ -45,7 +56,12 @@ const doctorSchema = new mongoose.Schema({
     educationBg: {
         type: String,
         required: true,
-    }
+    },
+    speciality: {
+        type: String,
+        required: true,
+      },
+    availability: [availabilitySchema],
 });
 
 export default mongoose.model('Doctor',doctorSchema)

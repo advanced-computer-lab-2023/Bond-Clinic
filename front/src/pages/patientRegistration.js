@@ -1,4 +1,6 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
+
 
 function PatientRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ function PatientRegistrationForm() {
     emergencyFullName: "",
     emergencyPhoneNumber: "",
   });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +39,7 @@ function PatientRegistrationForm() {
     }
     if (response.ok) {
       alert("Patient Registered Successfully");
+      window.location.assign('/patient/home');
     }
   };
 

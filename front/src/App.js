@@ -3,6 +3,7 @@ import PatientRegistrationForm from "./pages/patientRegistration.js";
 import DoctorRegistrationForm from "./pages/doctorRegistration.js";
 import LandingPage from "./pages/LandingPage.js";
 import AdminPanel from "./pages/admin.js";
+import Patient from "./pages/patient.js";
 
 function App() {
   return (
@@ -15,16 +16,20 @@ function App() {
             element={<LandingPage/>}
             />
             <Route
-            path="/patient"
+            path="/patient/register"
             element={<PatientRegistrationForm/>}
             />
             <Route
-            path="/doctor"
+            path="/doctor/register"
             element={<DoctorRegistrationForm/>}
             />
             <Route
-            path="/admin"
+            path="/admin/home"
             element={<AdminPanel/>}
+            />
+            <Route
+            path="/patient/home"
+            element={<Patient/>}
             />
           </Routes>
         </div>

@@ -12,6 +12,8 @@ export const createPatient = async (req, res) => {
     phoneNumber,
     emergencyFullName,
     emergencyPhoneNumber,
+    doctor,
+    packages,
   } = req.body;
   try {
     const patient = await patientModel.create({
@@ -24,6 +26,8 @@ export const createPatient = async (req, res) => {
       phoneNumber,
       emergencyFullName,
       emergencyPhoneNumber,
+      doctor,
+      packages,
     });
     res.status(200).json(patient);
   } catch (error) {
@@ -33,20 +37,31 @@ export const createPatient = async (req, res) => {
 
 export const fetchPatient = async (req, res) => {
   try {
-    const doctors = await patientModel.find();
-    res.status(200).json(doctors);
+    const patient = await patientModel.find();
+    res.status(200).json(patient);
   } catch (error) {
-    res.status(400).json({error: error.message});
+    res.status(400).json({ error: error.message });
   }
 };
 
 export const deletePatient = async (req, res) => {
-  const{username}=req.body;
-  
+  const { username } = req.body;
+
   try {
     const deletedUser = await patientModel.findOneAndDelete({ username });
     res.status(200).json(deletedUser);
   } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const updatePatient = async (req, res) => {
+  const { username, doctor, packages } = req.body;
+  try{
+    const updatedUser = await patientModel.findOneAndUpdate({username}, {doctor, packages}, {new: true});
+    res.status(200).json(updatedUser);
+  }
+  catch(error){
     res.status(400).json({error: error.message});
   }
 };

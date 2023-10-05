@@ -57,7 +57,7 @@ export const updateDoctor = async (req, res) => {
   const{username,email,hourlyRate,affiliation}=req.body;
 
   try {
-    const updateDoctor = await doctorModel.updateOne({username},{email,hourlyRate,affiliation});
+    const updateDoctor = await doctorModel.updateOne({username},{email,hourlyRate,affiliation}, {new: true});
     res.status(200).json(updateDoctor);
   } catch (error) {
     res.status(400).json({error: error.message});

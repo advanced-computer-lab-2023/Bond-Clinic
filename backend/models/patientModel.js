@@ -46,9 +46,9 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Doctor'
     },
-    package:{
+    packages:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Package'
+        ref: 'Package',
     },
 });
 

@@ -34,12 +34,42 @@ export const deletePackage = async (req, res) => {
 };
 
 export const updatePackage = async (req, res) => {
-  const{type,price,clinicDiscount,pharmacyDiscount,familyDiscount}=req.body;
+  const { type, price, clinicDiscount, pharmacyDiscount, familyDiscount } = req.body;
+  const updateFields = {};
+
+  // Check if price is provided and update it
+  if (price !== undefined) {
+    updateFields.price = price;
+  }
+
+  // Check if clinicDiscount is provided and update it
+  if (clinicDiscount !== undefined) {
+    updateFields.clinicDiscount = clinicDiscount;
+  }
+
+  // Check if pharmacyDiscount is provided and update it
+  if (pharmacyDiscount !== undefined) {
+    updateFields.pharmacyDiscount = pharmacyDiscount;
+  }
+
+  // Check if familyDiscount is provided and update it
+  if (familyDiscount !== undefined) {
+    updateFields.familyDiscount = familyDiscount;
+  }
 
   try {
-    const updatePackage = await packageModel.updateOne({type},{price,clinicDiscount,pharmacyDiscount,familyDiscount}, {new: true});
-    res.status(200).json(updatePackage);
+    const updatedPackage = await packageModel.findOneAndUpdate(
+      { type },
+      updateFields,
+      { new: true }
+    );
+
+    if (!updatedPackage) {
+      return res.status(404).json({ error: "Package not found" });
+    }
+
+    res.status(200).json(updatedPackage);
   } catch (error) {
-    res.status(400).send({error: error.message});
+    res.status(400).json({ error: error.message });
   }
 };

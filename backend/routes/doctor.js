@@ -10,6 +10,6 @@ router.post('/',createDoctor);
 
 router.delete('/',deleteDoctor);
 
-router.put('/',updateDoctor)
+router.patch('/',updateDoctor)
 
 export default router

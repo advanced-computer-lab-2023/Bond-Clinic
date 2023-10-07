@@ -18,6 +18,10 @@ function LandingPage() {
           <Link to="/admin/home" className="button">
             Continue as an Admin
           </Link>
+          <Link to="/doctor/home" className="button">
+            Continue as an existing Doctor
+          </Link>
+          
         </div>
       </div>
     </body>

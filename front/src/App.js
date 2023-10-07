@@ -4,6 +4,7 @@ import DoctorRegistrationForm from "./pages/doctorRegistration.js";
 import LandingPage from "./pages/LandingPage.js";
 import AdminPanel from "./pages/admin.js";
 import Patient from "./pages/patient.js";
+import Doctor from "./pages/doctor.js";
 
 function App() {
   return (
@@ -30,6 +31,10 @@ function App() {
             <Route
             path="/patient/home"
             element={<Patient/>}
+            />
+            <Route
+            path="/doctor/home"
+            element={<Doctor/>}
             />
           </Routes>
         </div>

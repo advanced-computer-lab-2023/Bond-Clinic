@@ -58,14 +58,39 @@ export const deleteDoctor = async (req, res) => {
 }
 
 export const updateDoctor = async (req, res) => {
-  const{username,email,hourlyRate,affiliation}=req.body;
+  const { username, email, hourlyRate, affiliation } = req.body;
+  const updateFields = {};
+
+  // Check if email is provided and update it
+  if (email) {
+    updateFields.email = email;
+  }
+
+  // Check if hourlyRate is provided and update it
+  if (hourlyRate !== undefined) {
+    updateFields.hourlyRate = hourlyRate;
+  }
+
+  // Check if affiliation is provided and update it
+  if (affiliation) {
+    updateFields.affiliation = affiliation;
+  }
 
   try {
-    const updateDoctor = await doctorModel.updateOne({username},{email,hourlyRate,affiliation}, {new: true});
-    res.status(200).json(updateDoctor);
+    const updatedDoctor = await doctorModel.findOneAndUpdate(
+      { username },
+      updateFields,
+      { new: true }
+    );
+
+    if (!updatedDoctor) {
+      return res.status(404).json({ error: "Doctor not found" });
+    }
+
+    res.status(200).json(updatedDoctor);
   } catch (error) {
-    res.status(400).json({error: error.message});
+    res.status(400).json({ error: error.message });
   }
-}
+};
 
 

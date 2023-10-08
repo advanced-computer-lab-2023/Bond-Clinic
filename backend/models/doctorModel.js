@@ -59,7 +59,6 @@ const doctorSchema = new mongoose.Schema({
     },
     speciality: {
         type: String,
-        required: true,
       },
     availability: [availabilitySchema],
 });

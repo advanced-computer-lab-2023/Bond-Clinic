@@ -67,7 +67,7 @@ export const updateDoctor = async (req, res) => {
   }
 
   // Check if hourlyRate is provided and update it
-  if (hourlyRate !== undefined) {
+  if (hourlyRate !== undefined && hourlyRate > 0) {
     updateFields.hourlyRate = hourlyRate;
   }
 

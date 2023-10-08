@@ -1,0 +1,22 @@
+.card {
+    display: block;
+    padding: $base-padding;
+    border: $base-border-thickness solid #ddd;
+    box-shadow: $base-box-shadow;
+    border-radius: $base-border-radius;
+    margin: 25px;
+  
+    .card-title {
+      font-size: 24px;
+      padding-bottom: $base-padding;
+      text-align: center;
+    }
+  }
+  .card-button{
+    max-width: fit-content;
+    text-align: center;
+    margin: auto;
+  }
+  .card-buttons{
+    text-align: center;
+  }

@@ -5,6 +5,7 @@ import LandingPage from "./pages/LandingPage.js";
 import AdminPanel from "./pages/admin.js";
 import Patient from "./pages/patient.js";
 import Doctor from "./pages/doctor.js";
+import Packages from "./pages/packages.js";
 
 function App() {
   return (
@@ -35,6 +36,10 @@ function App() {
             <Route
             path="/doctor/home"
             element={<Doctor/>}
+            />
+            <Route
+            path="/admin/packages"
+            element={<Packages/>}
             />
           </Routes>
         </div>

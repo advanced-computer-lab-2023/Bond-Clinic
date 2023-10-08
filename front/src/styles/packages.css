@@ -1,0 +1,7 @@
+main{
+    display: flex;
+}
+
+main div {
+    margin: 20px;
+}

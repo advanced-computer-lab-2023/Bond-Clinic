@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 
 function AdminPanel() {
   const [newAdmin, setNewAdmin] = useState({ username: "", password: "" });
@@ -197,6 +199,12 @@ function AdminPanel() {
         />
         <button onClick={handleRemovePatient}>Delete patient</button>
       </div>
+
+      <Link to="/admin/packages" className="button">
+            Packages
+          </Link>
+
+
 
       {/* User List */}
       <div>

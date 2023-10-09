@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react";
 import axios from 'axios'
+import FamilyMembersTable from '../components/familymemberstable.js'
 import '../styles/doctor.css'
 export default function Patient(){
     const [users, setUsers] = useState([]);
@@ -77,7 +78,7 @@ export default function Patient(){
     return(      
       <>
 
-<div>
+<div className="Upper-Section">
         {/* Add a form for adding a new family member */}
         <form onSubmit={handleSubmit}>
         <h2>Add a New Family Member</h2>
@@ -138,9 +139,13 @@ export default function Patient(){
           <button type="submit" className="button-78">Add Family Member</button>
         </form>
         {message && <div className="Message"  >{message} </div>}
+      
+      <div><FamilyMembersTable/> </div>
+
       </div>
 
 
+      
       
 
 

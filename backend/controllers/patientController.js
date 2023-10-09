@@ -96,6 +96,33 @@ export const addFamilyMember =  async (req, res) => {
   }
 };
 
+//get family members of a patient
+export const getFamilyMembers = async(req,res) => {
+
+  try {
+    const {username} = req.params
+
+    // Find the patient by username and populate the familyMembers field
+    const patients = await patientModel.findOne({ username }).populate(
+      "familyMembers"
+    );
+
+    if (!patients) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+
+    // Extract and send the familyMembers array from the patient document
+    const familyMembers = patients.familyMembers;
+
+    res.status(200).json(familyMembers);
+  } catch (error) {
+    console.error("Error fetching family members:", error);
+    res.status(400).json({ message: "Internal server error" });
+  
+  }
+}
+
+
 
 
 

@@ -42,6 +42,7 @@ form {
     font-size: 18px;
     cursor: pointer;
     width: 50%; /* Set a specific width for the button */
+    margin-top: 10px;
   }
   
   /* Style success and error messages */
@@ -174,3 +175,21 @@ form {
   cursor: default;
   opacity: .24;
 }
+
+
+
+
+select {
+  margin-bottom: 1em;
+  padding: .25em;
+  border: 0;
+  border-bottom: 2px solid currentcolor; 
+  font-weight: bold;
+  letter-spacing: .15em;
+  border-radius: 0;
+  &:focus, &:active {
+    outline: 0;
+    border-bottom-color: rgb(26, 17, 195);
+  }
+}
+

@@ -67,6 +67,40 @@ export const updatePatient = async (req, res) => {
   }
 };
 
+
+
+//add family member
+
+export const addFamilyMember =  async (req, res) => {
+  try {
+    const patientusername = req.body.username;
+    const newFamilyMember = req.body; // The new family member data from the request body
+
+    // Find the patient by username
+    const patient = await patientModel.findOne({username:patientusername});
+
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+
+    // Add the new family member to the patient's familyMembers array
+    patient.familyMembers.push(newFamilyMember);
+
+    // Save the updated patient document
+    await patient.save();
+
+    res.status(200).json(patient);
+  } catch (error) {
+    console.error("Error adding family member:", error);
+    res.status(400).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
+
+
 // 37 view a list of all doctors along with their speciality, session price (based on subscribed health package if any)
 
 // Fetch all doctors along with their speciality and calculated session price

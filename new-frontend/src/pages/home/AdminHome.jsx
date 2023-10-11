@@ -1,8 +1,17 @@
+import Row from "react-bootstrap/Row";
+import NavBar from "../../components/NavBar.jsx";
+import { useParams } from "react-router-dom";
 const AdminHome = () => {
+  const { username } = useParams();
   return (
-    <div>
-      <h1>Admin Home</h1>
-    </div>
+    <>
+      <Row className="nav-bar">
+        <NavBar></NavBar>
+      </Row>
+      <Row className="body">
+        <h2 className="text">Welcome {username}!</h2>
+      </Row>
+    </>
   );
 };
 

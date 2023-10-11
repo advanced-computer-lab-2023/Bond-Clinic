@@ -72,6 +72,10 @@ function DoctorPatientsTable() {
                 <th>Username</th>
                 <th>Name</th>
                 <th>Phone Number</th>
+                <th>Password</th>
+                <th>Gender</th>
+                <th>Emergency Name</th>
+                <th>Emergency Phone Number</th>
               </tr>
             </thead>
             <tbody>
@@ -80,6 +84,10 @@ function DoctorPatientsTable() {
                   <td>{patient.username}</td>
                   <td>{patient.name}</td>
                   <td>{patient.phoneNumber}</td>
+                  <td>{patient.password}</td>
+                  <td>{patient.gender}</td>
+                  <td>{patient.emergencyFullName}</td>
+                  <td>{patient.emergencyPhoneNumber}</td>
                 </tr>
               ))}
             </tbody>

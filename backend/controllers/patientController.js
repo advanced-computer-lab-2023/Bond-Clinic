@@ -96,6 +96,35 @@ export const addFamilyMember =  async (req, res) => {
   }
 };
 
+//get prescriptions of a patient
+export const getPrescriptions = async(req,res) => {
+  const username = req.query.username;
+  try{
+    const patient = await patientModel.findOne({username});
+    if(!patient){
+      return res.status(404).json({message: "Patient not found"});
+    }
+    const prescriptions = patient.prescription;
+    res.status(200).json(prescriptions);
+  }
+  catch(error){
+    res.status(400).json({error: error.message});
+  }
+}
+export const addPrescription = async(req,res) => {
+  const username = req.query.username;
+  const {name , price, description , img}= req.body
+  try{
+    const prescription1 = await patientModel.findOneAndUpdate({username},{prescription:{name,price,description,img}})
+    res.status(200).json(prescription1);
+  }
+  catch(error){
+    res.status(400).json({error: error.message});
+  }
+}
+
+
+
 //get family members of a patient
 export const getFamilyMembers = async(req,res) => {
 

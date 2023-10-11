@@ -5,6 +5,7 @@ import '../styles/doctor.css'
 export default function Patient(){
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [newFamilyMember, setNewFamilyMember] = useState({
       username:"",
@@ -14,6 +15,26 @@ export default function Patient(){
       gender: "male",
       relationToPatient: "child", 
     });
+    const [prescriptions,setPrescriptions] = useState([]);
+    useEffect(() => {
+      // Fetch user data from your backend API
+      handleFetchPrescriptions();
+    }, []);
+    const handleFetchPrescriptions = async () => {
+      // Make an API request to fetch family members based on the entered username
+      const response = await fetch("http://localhost:4000/api/patient/getprescription/?username=soubky", {
+        method: "GET",
+      });
+  
+      if (response.ok) {
+        setError("");
+        setPrescriptions(await response.json());
+      } else {
+        const json = await response.json();
+        setError(await json.error);
+        setPrescriptions([]);
+      }
+    };
     const handleInputChange = (e) => {
       const { name, value } = e.target;
       setNewFamilyMember({
@@ -184,6 +205,31 @@ export default function Patient(){
               <td>{user.hourlyRate}</td>
               <td>{user.affiliation}</td>
               <td>{user.educationBg}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h2 className="table-name">Prescriptions List</h2>
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {prescriptions.map((prescription) => (
+            <tr
+              key={prescription.id}
+              onClick={() => handleUserClick(prescription)}
+              className={`user-row ${selectedUser === prescription ? 'selected' : ''}`}
+            >
+              <td>{prescription.name}</td>
+              <td>{prescription.price}</td>
+              <td>{prescription.description}</td>
             </tr>
           ))}
         </tbody>

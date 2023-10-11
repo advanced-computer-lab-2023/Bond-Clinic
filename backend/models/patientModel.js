@@ -1,5 +1,24 @@
 import mongoose from "mongoose";
 
+const prescriptionSchema = new mongoose.Schema({
+  name:{
+    type: String,
+    required: true,
+  },
+  price:{
+    type: Number,
+    required: true,
+  },
+  description:{
+    type: String,
+    required: true,
+  },
+  img:{
+        data: Buffer,
+        contentType: String
+      }
+})
+
 const familyMemberSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -75,7 +94,8 @@ const patientSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Package",
   },
-  familyMembers: [familyMemberSchema], // Array of family members
+  prescription : [prescriptionSchema],
+  familyMembers: [familyMemberSchema] // Array of family members
 });
 
 export default mongoose.model("Patient", patientSchema);

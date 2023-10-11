@@ -5,6 +5,7 @@ function DoctorPatientsTable() {
   const [username, setUsername] = useState("");
   const [patients, setPatients] = useState([]);
   const [error, setError] = useState("");
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleInputChange = (e) => {
@@ -20,10 +21,12 @@ function DoctorPatientsTable() {
     if (response.ok) {
       setError("");
       setPatients(await response.json());
+      setSelectedPatient(null); // Clear the selected patient
     } else {
       const json = await response.json();
       setError(await json.error);
       setPatients([]);
+      setSelectedPatient(null); // Clear the selected patient
     }
   };
 
@@ -31,10 +34,14 @@ function DoctorPatientsTable() {
     setSearchQuery(e.target.value);
   };
 
-  // Filter patients based on the search query
-  const filteredPatients = patients.filter((patient) =>
-    patient.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleSelectPatient = (patient) => {
+    setSelectedPatient(patient);
+  };
+
+// Filter patients based on the search query
+const filteredPatients = patients.filter((patient) =>
+patient.name.toLowerCase().includes(searchQuery.toLowerCase())
+);
 
   return (
     <>
@@ -69,29 +76,30 @@ function DoctorPatientsTable() {
           <table>
             <thead>
               <tr>
-                <th>Username</th>
                 <th>Name</th>
-                <th>Phone Number</th>
-                <th>Password</th>
-                <th>Gender</th>
-                <th>Emergency Name</th>
-                <th>Emergency Phone Number</th>
               </tr>
             </thead>
             <tbody>
               {filteredPatients.map((patient) => (
-                <tr key={patient._id}>
-                  <td>{patient.username}</td>
+                <tr key={patient._id} onClick={() => handleSelectPatient(patient)}>
                   <td>{patient.name}</td>
-                  <td>{patient.phoneNumber}</td>
-                  <td>{patient.password}</td>
-                  <td>{patient.gender}</td>
-                  <td>{patient.emergencyFullName}</td>
-                  <td>{patient.emergencyPhoneNumber}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {selectedPatient && (
+        <div className="user-details">
+          <h2>Patient Details</h2>
+          <p><strong>Name:</strong> {selectedPatient.name}</p>
+          <p><strong>Username:</strong> {selectedPatient.username}</p>
+          <p><strong>Phone Number:</strong> {selectedPatient.phoneNumber}</p>
+          <p><strong>Password:</strong> {selectedPatient.password}</p>
+          <p><strong>Gender:</strong> {selectedPatient.gender}</p>
+          <p><strong>Emergency Name:</strong> {selectedPatient.emergencyFullName}</p>
+          <p><strong>Emergency Phone Number:</strong> {selectedPatient.emergencyPhoneNumber}</p>
         </div>
       )}
     </>

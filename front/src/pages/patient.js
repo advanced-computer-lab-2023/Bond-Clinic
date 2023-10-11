@@ -5,7 +5,6 @@ import '../styles/doctor.css'
 export default function Patient(){
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
-    const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [newFamilyMember, setNewFamilyMember] = useState({
       username:"",
@@ -27,11 +26,10 @@ export default function Patient(){
       });
   
       if (response.ok) {
-        setError("");
         setPrescriptions(await response.json());
       } else {
         const json = await response.json();
-        setError(await json.error);
+        alert(json.error);
         setPrescriptions([]);
       }
     };

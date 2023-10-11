@@ -33,7 +33,7 @@ form {
     color: #333;
   }
   
-  button[type="submit"] {
+  .button-78 {
     background-color: #fff;
     color: #fff;
     padding: 12px 20px;
@@ -63,8 +63,12 @@ form {
     color: #fff;
   }
 
-
-
+button{
+  background-color: #fff;
+}
+button:hover{
+  background-color: #fff;
+}
 /* CSS */
 .button-78 {
   align-items: center;
@@ -143,7 +147,7 @@ form {
 }
 
 .button-78:hover:not(:disabled):before {
-  background: linear-gradient(92.83deg, rgb(140, 163, 225) 0%, rgb(49, 5, 208) 100%);
+  background: linear-gradient(92.83deg, rgb(140, 163, 225) 0%, rgb(10, 10, 10) 100%);
 }
 
 .button-78:hover:not(:disabled):after {

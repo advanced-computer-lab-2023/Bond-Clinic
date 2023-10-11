@@ -1,5 +1,5 @@
 import doctorModel from "../models/doctorModel.js";
-
+import patientModel from "../models/patientModel.js";
 
 export const createDoctor = async (req, res) => {
   const {
@@ -91,6 +91,40 @@ export const updateDoctor = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
+
+
+
+
+
 };
+
+export const fetchPatients = async (req,res) => {
+
+  try {
+    const {username} = req.params
+    const doctorr = await doctorModel.findOne({username})
+   
+    if(!doctorr){
+      return res.status(404).json({error:"Doctor not found" });
+    }
+
+    const patients = await patientModel.find({ doctor:doctorr._id });
+
+    if (!patients.length) {
+      return res.status(404).json({error: "Doctor has No Patients yet !" });
+    }
+
+    // Extract and send the familyMembers array from the patient document
+
+    res.status(200).json(patients);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  
+  }
+
+
+
+
+}
 
 

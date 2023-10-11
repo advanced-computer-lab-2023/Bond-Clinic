@@ -1,5 +1,5 @@
 import express, { json } from "express";
-import {getFamilyMembers,addFamilyMember, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor} from "../controllers/patientController.js";
+import {getFamilyMembers,addFamilyMember, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor, adddoctor} from "../controllers/patientController.js";
 
 //router initialization
 const router = express.Router();
@@ -21,6 +21,12 @@ router.patch('/addfamily/',addFamilyMember)
 
 //get family members
 router.get('/getfamily/:username',getFamilyMembers)
+
+//add doctor to patient
+router.patch('/adddoctor/',adddoctor);
+
+
+
 
 //37
 router.get('/doctors/session-price', viewDoctorsWithSessionPrice);

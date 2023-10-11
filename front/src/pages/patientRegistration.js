@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState } from "react";
-
+import "./styles.css"
 
 function PatientRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -143,7 +143,7 @@ function PatientRegistrationForm() {
             minLength="11"
           />
         </div>
-        <button type="submit">Register</button>
+        <button className="button" type="submit">Register</button>
       </form>
     </div>
   );

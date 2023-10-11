@@ -1,10 +1,12 @@
 import express from "express";
-import { createDoctor , deleteDoctor, fetchDoctor, updateDoctor } from "../controllers/doctorController.js";
+import {fetchPatients, createDoctor , deleteDoctor, fetchDoctor, updateDoctor } from "../controllers/doctorController.js";
 
 //router initialization
 const router = express.Router();
 
 router.get('/',fetchDoctor);
+
+router.get('/getpatients/:username',fetchPatients);
 
 router.post('/',createDoctor);
 

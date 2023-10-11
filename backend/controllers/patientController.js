@@ -125,6 +125,28 @@ export const getFamilyMembers = async(req,res) => {
 
 
 
+//add doctor to a patient 
+
+
+export const adddoctor =  async (req, res) => {
+  try {
+    const patientusername = req.body.patientusername;
+    const doctorid = req.body.doctorid; // The new family member data from the request body
+
+    // Find the patient by username
+    const patient = await patientModel.findOneAndUpdate({username:patientusername},{doctor:doctorid},{new:true})
+
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+
+    res.status(200).json(patient);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
 
 
 

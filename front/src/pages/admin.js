@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./styles.css";
 
 
 function AdminPanel() {
@@ -156,7 +157,7 @@ function AdminPanel() {
             setNewAdmin({ ...newAdmin, password: e.target.value })
           }
         />
-        <button onClick={handleAddAdmin}>Add Admin</button>
+        <button className="button" onClick={handleAddAdmin}>Add Admin</button>
       </div>
 
       <div className="form-container">
@@ -171,7 +172,7 @@ function AdminPanel() {
             deleteAdmin({ ...oldAdmin, username: e.target.value })
           }
         />
-        <button onClick={handleRemoveAdmin}>Delete Admin</button>
+        <button className="button" onClick={handleRemoveAdmin}>Delete Admin</button>
       </div>
       <div className="form-container">
       <h3>
@@ -185,7 +186,7 @@ function AdminPanel() {
             deleteDoctor({ ...oldDoctor, username: e.target.value })
           }
         />
-        <button onClick={handleRemoveDoctor}>Delete doctor</button>
+        <button className="button" onClick={handleRemoveDoctor}>Delete doctor</button>
       </div>
       <div className="form-container">
       <h3>Remove Patient</h3>
@@ -197,7 +198,7 @@ function AdminPanel() {
             deletePatient({ ...oldPatient, username: e.target.value })
           }
         />
-        <button onClick={handleRemovePatient}>Delete patient</button>
+        <button className="button" onClick={handleRemovePatient}>Delete patient</button>
       </div>
 
       <Link to="/admin/packages" className="button">

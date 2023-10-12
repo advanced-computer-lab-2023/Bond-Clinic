@@ -95,7 +95,28 @@ const patientSchema = new mongoose.Schema({
     ref: "Package",
   },
   prescription : [prescriptionSchema],
-  familyMembers: [familyMemberSchema] // Array of family members
+  familyMembers: [familyMemberSchema] , // Array of family members
+  
+  appointments: [
+    {
+      date: {
+        type: Date,
+        required: true,
+      },
+      status: {
+        type: String,
+        required: true,
+      },
+      doctor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Doctor",
+      }
+    }
+  ]
+
+
+
+
 });
 
 export default mongoose.model("Patient", patientSchema);

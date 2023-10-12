@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from "react";
 import axios from 'axios'
 import FamilyMembersTable from '../components/familymemberstable.js'
+import AppointmensTable from "../components/appointments.js";
 import '../styles/doctor.css'
 export default function Patient(){
     const [users, setUsers] = useState([]);
@@ -164,7 +165,7 @@ export default function Patient(){
       </div>
 
 
-      
+      <div><AppointmensTable/></div>
       
 
 

@@ -11,7 +11,7 @@ export default function AppointmentsTable() {
   useEffect(() => {
     // Fetch user's appointments from your backend API
     handleFetchAppointments();
-  }, []);
+  });
 
   const handleFetchAppointments = async () => {
     // Make an API request to fetch appointments for the patient
@@ -23,7 +23,6 @@ export default function AppointmentsTable() {
       setAppointments(await response.json());
     } else {
       const json = await response.json();
-      alert(json.error);
       setAppointments([]);
     }
   };

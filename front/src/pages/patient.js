@@ -98,7 +98,7 @@ export default function Patient(){
     return(      
       <>
 
-<div className="Upper-Section">
+<div  className="Upper-Section">
         {/* Add a form for adding a new family member */}
         <form onSubmit={handleSubmit}>
         <h2>Add a New Family Member</h2>

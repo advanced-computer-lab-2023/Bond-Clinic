@@ -177,6 +177,27 @@ export const adddoctor =  async (req, res) => {
 
 
 
+//getappointments
+
+export const getappointments = async(req,res) => {
+  const {username} = req.params
+  try {
+    // Fetch appointments from the database
+    const patients = await patientModel.findOne({username}).populate("appointments");
+    if(!patients){
+     return  res.status(400).json({error:"Patient not found"})
+    }
+    const appointments = patients.appointments;
+    res.status(200).json(appointments);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+
+
+}
+
+
+
 
 
 // 37 view a list of all doctors along with their speciality, session price (based on subscribed health package if any)

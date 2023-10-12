@@ -42,7 +42,7 @@ function FamilyMembersTable() {
           value={username}
           onChange={handleInputChange}
         />
-        <button onClick={handleFetchFamilyMembers}>View Family Members</button>
+        <button className="button-78" onClick={handleFetchFamilyMembers}>View Family Members</button>
       </div>
 
       {error && <div className="error">{error}</div>}

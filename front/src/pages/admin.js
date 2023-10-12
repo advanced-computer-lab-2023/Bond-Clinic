@@ -249,8 +249,8 @@ function AdminPanel() {
 
       {selectedUser && (
         <div className="select-buttons">
-          <button className="one" onClick={handleAcceptDoctor}>Accept Doctor</button>
-          <button className= "two" onClick={handleRemoveDoctor}>Delete Doctor</button>
+          <button className="button-78" onClick={handleAcceptDoctor}>Accept Doctor</button>
+          <button className= "button-78" onClick={handleRemoveDoctor}>Delete Doctor</button>
         </div>
       )}
     </div>

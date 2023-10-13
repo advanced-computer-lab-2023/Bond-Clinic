@@ -3,6 +3,7 @@ import axios from 'axios'
 import FamilyMembersTable from '../components/familymemberstable.js'
 import AppointmensTable from "../components/appointments.js";
 import '../styles/doctor.css'
+import PrescriptionsTable from "../components/prescriptions.js";
 export default function Patient(){
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -166,7 +167,7 @@ export default function Patient(){
 
 
       <div><AppointmensTable/></div>
-      
+      <div><PrescriptionsTable/></div>
 
 
 

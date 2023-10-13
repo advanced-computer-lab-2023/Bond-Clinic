@@ -16,7 +16,18 @@ const prescriptionSchema = new mongoose.Schema({
   img:{
         data: Buffer,
         contentType: String
-      }
+      },
+  doctor:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Doctor",
+  },
+  date:{
+    type: Date,
+  },
+  doctorName:{
+    type: String,
+    default:"soubky"
+  }
 })
 
 const familyMemberSchema = new mongoose.Schema({

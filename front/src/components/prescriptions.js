@@ -98,9 +98,8 @@ export default function PrescriptionsTable() {
                 </tr>
               ))
             : (
-              <tr>
-                <td colSpan="3">No matching prescriptions found.</td>
-              </tr>
+              <div>
+              </div>
             )}
         </tbody>
       </table>

@@ -58,7 +58,7 @@ export default function UpdateDoctorForm() {
   };
 
   return (
-    <div>
+    <div className="input-section">
       <h1>Update Doctor Information</h1>
       <form onSubmit={handleSubmit}>
       <div >

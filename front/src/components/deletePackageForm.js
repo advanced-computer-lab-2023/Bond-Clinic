@@ -40,7 +40,7 @@ function DeletePackageForm() {
   };
 
   return (
-    <>
+    <div className="input-section">
     <form onSubmit={handleSubmit}>
         <h1>Delete Package</h1>
       <label>Package Type:</label>
@@ -54,7 +54,7 @@ function DeletePackageForm() {
             <button type="submit" className="button-78">Delete Package</button>
     </form>
         {message && <div className="Message"  >{message} </div>}
-    </>
+    </div>
   );
 }
 

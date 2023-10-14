@@ -57,7 +57,7 @@ function UpdatePackageForm() {
 
   return (
 
-    <div>
+    <div className="input-section">
     <form onSubmit={handleSubmit}>
         <h1>Update Package</h1>
       <label>Package Type:</label>

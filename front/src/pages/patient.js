@@ -168,6 +168,31 @@ export default function Patient(){
 
       <div><AppointmensTable/></div>
       <div><PrescriptionsTable/></div>
+      <div>
+      <h2 className="table-name">Prescriptions List</h2>
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {prescriptions.map((prescription) => (
+            <tr
+              key={prescription.id}
+              onClick={() => handleUserClick(prescription)}
+              className={`user-row ${selectedUser === prescription ? 'selected' : ''}`}
+            >
+              <td>{prescription.name}</td>
+              <td>{prescription.price}</td>
+              <td>{prescription.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
 
 
@@ -205,31 +230,6 @@ export default function Patient(){
               <td>{user.hourlyRate}</td>
               <td>{user.affiliation}</td>
               <td>{user.educationBg}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <div>
-      <h2 className="table-name">Prescriptions List</h2>
-      <table className="user-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {prescriptions.map((prescription) => (
-            <tr
-              key={prescription.id}
-              onClick={() => handleUserClick(prescription)}
-              className={`user-row ${selectedUser === prescription ? 'selected' : ''}`}
-            >
-              <td>{prescription.name}</td>
-              <td>{prescription.price}</td>
-              <td>{prescription.description}</td>
             </tr>
           ))}
         </tbody>

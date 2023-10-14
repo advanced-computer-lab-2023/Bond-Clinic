@@ -55,12 +55,10 @@ button {
   cursor: pointer;
 }
 
-body{
+body {
   display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin-top: 300px;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
@@ -77,11 +75,12 @@ body{
   border: #fff;
   border-radius: 20px;
 }
-.button:hover{
+
+.button:hover {
   background-color: #0056b3;
 }
 
-.register form div{
+.register form div {
   padding: 10px;
   padding: 12px;
   border: 1px solid #ccc;
@@ -89,10 +88,12 @@ body{
   font-size: 16px;
   margin-bottom: 15px;
 }
-.register form div label{
+
+.register form div label {
   margin-right: 10px;
 }
-.register form div input{
+
+.register form div input {
   width: fit-content;
   height: fit-content;
 }

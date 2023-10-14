@@ -1,11 +1,9 @@
 import PrescriptionsTable from "../components/prescriptions";
 import React, { useState, useEffect} from "react";
-import axios from 'axios'
 
 export default function PatientPrescriptions(){
     const [prescriptions,setPrescriptions] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
-    const [users, setUsers] = useState([]);
 
     const handleUserClick = (user) => {
         setSelectedUser(user);

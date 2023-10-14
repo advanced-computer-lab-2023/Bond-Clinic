@@ -3,7 +3,71 @@ import axios from 'axios'
 export default function PatientDoctors(){
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [appointments, setAppointments] = useState([]);
+    const [filteredAppointments, setFilteredAppointments] = useState([]);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState("");
+    const [doctorName, setdoctorName] = useState("");
+    const [speciality, setspeciality] = useState("");
 
+    useEffect(() => {
+        // Fetch user's appointments from your backend API
+        handleFetchAppointments();
+      },[]);
+    
+      const handleFetchAppointments = async () => {
+        // Make an API request to fetch appointments for the patient
+        const response = await fetch("http://localhost:4000/api/doctor/", {
+        });
+    
+        if (response.ok) {
+          setAppointments(await response.json());
+        } else {
+          setAppointments([]);
+        }
+      };
+    
+      const handleFilterAppointments = () => {
+        // Filter appointments based on selected date range and status
+        const filtered = appointments.filter((appointment) => {
+          const appointmentDate = new Date(appointment.date);
+          const startDateObj = new Date(startDate);
+          const endDateObj = new Date(endDate);
+          
+          if (
+            (!startDate || !endDate || (startDateObj <= appointmentDate && appointmentDate <= endDateObj)) &&
+            (!selectedStatus || appointment.status === selectedStatus)
+          ) {
+            return true;
+          }
+          return false;
+        });
+    
+        setFilteredAppointments(filtered);
+      };
+      const handleFetchDoctors = () => {
+        axios.get("http://localhost:4000/api/patient/searchDoc/?doctorName="+doctorName)
+        .then((response) => {
+            setUsers(response.data);
+        }).catch((error)=>
+        {
+            console.log(error)
+        })
+        axios.get("http://localhost:4000/api/patient/searchDoc/?speciality="+speciality)
+        .then((response) => {
+            setUsers(response.data);
+        }).catch((error)=>
+        {
+            console.log(error)
+        })
+      };
+    
+      const handleInputChange = (e) => {
+        setdoctorName(e.target.value);
+        setspeciality(e.target.value);
+      };
+    
     useEffect(() => {
         // Fetch user data from your backend API
         axios
@@ -24,6 +88,17 @@ export default function PatientDoctors(){
 
 
         <div>
+      <>
+      <div className="input-section">
+        <label>Search for doctor by Name or speciality: </label>
+        <input
+          type="text"
+          placeholder="Search for a doctor"
+          value={doctorName}
+          onChange={handleInputChange}
+        />
+        <button className="button-78" onClick={handleFetchDoctors}>Search</button>
+      </div>
       <h2 className="table-name">Doctor List</h2>
       <table className="user-table">
         <thead>
@@ -61,5 +136,61 @@ export default function PatientDoctors(){
           ))}
         </tbody>
       </table>
+
+      <div>
+        <h2>Availability</h2>
+        <label>Filter by Start Date:</label>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        <label>Filter by End Date:</label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+        <label>Filter by Speciality:</label>
+        <select
+          value={selectedStatus}
+          onChange={(e) => setSelectedStatus(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="scheduled">Nothing</option>
+          <option value="completed">Heart</option>
+          <option value="canceled">Eye</option>
+        </select>
+        <button className="button-78" onClick={handleFilterAppointments}>View Doctors</button>
+        <button className="button-78" onClick={handleFetchAppointments}>Reset Filters</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Doctor</th>
+            {/* Add other appointment-related columns here */}
+          </tr>
+        </thead>
+        <tbody>
+          {filteredAppointments.length > 0
+            ? filteredAppointments.map((appointment) => (
+                <tr key={appointment.id}>
+                  <td>{appointment.date}</td>
+                  <td>{appointment.status}</td>
+                  <td>{appointment.doctor}</td>
+                  {/* Add other appointment-related fields here */}
+                </tr>
+              ))
+            : (
+              <tr>
+                <td colSpan="3">No matching appointments found.</td>
+              </tr>
+            )}
+        </tbody>
+      </table>
+    </>
     </div>)
 }

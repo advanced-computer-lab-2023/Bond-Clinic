@@ -1,5 +1,7 @@
 import patientModel from "../models/patientModel.js";
 import Doctor from "../models/doctorModel.js";
+import doctorModel from "../models/doctorModel.js";
+
 
 // create a new patient
 export const createPatient = async (req, res) => {
@@ -105,6 +107,8 @@ export const getPrescriptions = async(req,res) => {
       return res.status(404).json({message: "Patient not found"});
     }
     const prescriptions = patient.prescription;
+    const {name}=doctorModel.findOne({_id:prescriptions.doctor})
+    prescriptions.create(name)
     res.status(200).json(prescriptions);
   }
   catch(error){
@@ -113,9 +117,9 @@ export const getPrescriptions = async(req,res) => {
 }
 export const addPrescription = async(req,res) => {
   const username = req.query.username;
-  const {name , price, description , img}= req.body
+  const {name , price, description , img , date, doctor}= req.body
   try{
-    const prescription1 = await patientModel.findOneAndUpdate({username},{prescription:{name,price,description,img}})
+    const prescription1 = await patientModel.findOneAndUpdate({username},{prescription: {name,price,description,img, date, doctor}})
     res.status(200).json(prescription1);
   }
   catch(error){

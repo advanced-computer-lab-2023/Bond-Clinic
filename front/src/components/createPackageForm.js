@@ -46,7 +46,7 @@ function CreatePackageForm() {
 
   return (
 
-    <div>
+    <div className="input-section">
     <form onSubmit={handleSubmit}>
       <h1>Create Package</h1>
       <label>Package Type:</label>

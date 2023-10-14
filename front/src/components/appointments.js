@@ -22,6 +22,7 @@ export default function AppointmentsTable() {
     if (response.ok) {
       setAppointments(await response.json());
     } else {
+      const json = await response.json();
       setAppointments([]);
     }
   };

@@ -1,240 +1,29 @@
-import React, { useState, useEffect} from "react";
-import axios from 'axios'
-import FamilyMembersTable from '../components/familymemberstable.js'
-import AppointmensTable from "../components/appointments.js";
 import '../styles/doctor.css'
-import PrescriptionsTable from "../components/prescriptions.js";
+import { Link } from "react-router-dom";
 export default function Patient(){
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
-    const [message, setMessage] = useState("");
-    const [newFamilyMember, setNewFamilyMember] = useState({
-      username:"",
-      name: "",
-      nationalID: "",
-      age: "",
-      gender: "male",
-      relationToPatient: "child", 
-    });
-    const [prescriptions,setPrescriptions] = useState([]);
-    useEffect(() => {
-      // Fetch user data from your backend API
-      handleFetchPrescriptions();
-    }, []);
-    const handleFetchPrescriptions = async () => {
-      // Make an API request to fetch family members based on the entered username
-      const response = await fetch("http://localhost:4000/api/patient/getprescription/?username=soubky", {
-        method: "GET",
-      });
-  
-      if (response.ok) {
-        setPrescriptions(await response.json());
-      } else {
-        const json = await response.json();
-        alert(json.error);
-        setPrescriptions([]);
-      }
-    };
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setNewFamilyMember({
-        ...newFamilyMember,
-        [name]: value,
-      });
-    };
 
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-  
-
-      if(newFamilyMember.age==="" || newFamilyMember.gender===""||newFamilyMember.relationToPatient===""
-         || newFamilyMember.username===""||newFamilyMember.nationalID===""){
-          return setMessage('All Fields MUST be Input')
-         }
-
-
-      // Send a PATCH request to your backend API to add the new family member
-      axios
-        .patch("http://localhost:4000/api/patient/addfamily", newFamilyMember) // Replace with the actual API endpoint
-        .then((response) => {
-          // Handle the response as needed
-          console.log("New family member added:", response.data);
-          setMessage(response.data.familyMembers.pop().name+" Has been added successfully")
-          // Clear the form input fields
-      setNewFamilyMember({
-        username:"",
-        name: "",
-        nationalID: "",
-        age: "",
-        gender: "male",
-        relationToPatient: "child", // Reset the relation field
-      });
-          // You can also update the 'users' state to reflect the changes if needed
-        })
-        .catch((error) => {
-          console.error("Error adding family member:", error);
-          setMessage("Error while adding family member")
-        });
-  
-      
-    };
-
-
-
-    const handleUserClick = (user) => {
-        setSelectedUser(user);
-      };
-    useEffect(() => {
-        // Fetch user data from your backend API
-        axios
-          .get("http://localhost:4000/api/doctor") // Replace '/api/users' with the actual API endpoint
-          .then((response) => {
-            setUsers(response.data);
-          })
-          .catch((error) => {
-            console.error("Error fetching user data:", error);
-          });
-      }, []);
     return(      
       <>
 
 <div  className="Upper-Section">
-        {/* Add a form for adding a new family member */}
-        <form onSubmit={handleSubmit}>
-        <h2>Add a New Family Member</h2>
-          
-        <label>Your Username:</label>
-          <input
-            type="text"
-            name="username"
-            value={newFamilyMember.username}
-            onChange={handleInputChange}
-          />
-
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={newFamilyMember.name}
-            onChange={handleInputChange}
-          />
-
-          <label>National ID:</label>
-          <input
-            type="text"
-            name="nationalID"
-            value={newFamilyMember.nationalID}
-            onChange={handleInputChange}
-          />
-
-          <label>Age:</label>
-          <input
-            type="number"
-            name="age"
-            value={newFamilyMember.age}
-            onChange={handleInputChange}
-          />
-
-          <label>Gender:</label>
-          <select
-            name="gender"
-            onChange={handleInputChange}
-            value={newFamilyMember.gender}
-          >
-            <option  value="male">Male</option>
-            <option  value="female">Female</option>
-          </select>
-
-          <label>Relation to Patient:</label>
-          <select
-            name="relationToPatient"
-            onChange={handleInputChange}
-            value={newFamilyMember.relationToPatient}
-          >
-            <option value="wife">Wife</option>
-            <option value="husband">Husband</option>
-            <option value="child">Child</option>
-          </select>
-
-          <button type="submit" className="button-78">Add Family Member</button>
-        </form>
-        {message && <div className="Message"  >{message} </div>}
+<div className="role-buttons">
+    <h1 className='title'>Patient Home</h1>
+    <Link to="/patient/appointments" className="button">
+            Appointments
+          </Link>
+          <Link to="/patient/familymembers" className="button">
+            Family Members
+          </Link>
+          <Link to="/patient/prescriptions" className="button">
+            Prescriptions
+          </Link>
+          <Link to="/patient/doctors" className="button">
+            Doctors
+          </Link>
+          </div>
       
-      <div><FamilyMembersTable/> </div>
 
       </div>
-
-
-      <div><AppointmensTable/></div>
-      <div><PrescriptionsTable/></div>
-      <div>
-      <h2 className="table-name">Prescriptions List</h2>
-      <table className="user-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {prescriptions.map((prescription) => (
-            <tr
-              key={prescription.id}
-              onClick={() => handleUserClick(prescription)}
-              className={`user-row ${selectedUser === prescription ? 'selected' : ''}`}
-            >
-              <td>{prescription.name}</td>
-              <td>{prescription.price}</td>
-              <td>{prescription.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-
-
-        <div>
-      <h2 className="table-name">Doctor List</h2>
-      <table className="user-table">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Date of Birth</th>
-            <th>Gender</th>
-            <th>Phone Number</th>
-            <th>Hourly Rate</th>
-            <th>Affiliation</th>
-            <th>Educational Background</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr
-              key={user.id}
-              onClick={() => handleUserClick(user)}
-              className={`user-row ${selectedUser === user ? 'selected' : ''}`}
-            >
-              <td>{user.username}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.password}</td>
-              <td>{user.dob}</td>
-              <td>{user.gender}</td>
-              <td>{user.phoneNumber}</td>
-              <td>{user.hourlyRate}</td>
-              <td>{user.affiliation}</td>
-              <td>{user.educationBg}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
     </>
     );
 }

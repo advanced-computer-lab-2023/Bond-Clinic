@@ -6,6 +6,10 @@ import AdminPanel from "./pages/admin.js";
 import Patient from "./pages/patient.js";
 import Doctor from "./pages/doctor.js";
 import Packages from "./pages/packages.js";
+import PatientFamilyMembers from "./pages/patientFamilyMembers.js";
+import AppointmentsTable from "./components/appointments.js";
+import PatientPrescriptions from "./pages/patientPrescriptions.js";
+import PatientDoctors from "./pages/patientDoctor.js";
 
 function App() {
   return (
@@ -41,6 +45,25 @@ function App() {
             path="/admin/packages"
             element={<Packages/>}
             />
+            <Route
+            path="/patient/appointments"
+            element={<AppointmentsTable/>}
+            />
+            <Route
+            path="/patient/familymembers"
+            element={<PatientFamilyMembers/>}
+            /><Route
+            path="/patient/prescriptions"
+            element={<PatientPrescriptions/>}
+            />
+            <Route
+            path="/patient/doctors"
+            element={<PatientDoctors/>}
+            />
+            
+
+
+
           </Routes>
         </div>
       </BrowserRouter>

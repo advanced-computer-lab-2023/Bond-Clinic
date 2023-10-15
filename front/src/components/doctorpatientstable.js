@@ -96,6 +96,7 @@ patient.name.toLowerCase().includes(searchQuery.toLowerCase())
           <p><strong>Name:</strong> {selectedPatient.name}</p>
           <p><strong>Username:</strong> {selectedPatient.username}</p>
           <p><strong>Phone Number:</strong> {selectedPatient.phoneNumber}</p>
+          <p><strong>Health Record:</strong> {selectedPatient.healthrecords}</p>
           <p><strong>Password:</strong> {selectedPatient.password}</p>
           <p><strong>Gender:</strong> {selectedPatient.gender}</p>
           <p><strong>Emergency Name:</strong> {selectedPatient.emergencyFullName}</p>

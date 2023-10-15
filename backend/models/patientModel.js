@@ -107,7 +107,7 @@ const patientSchema = new mongoose.Schema({
   },
   prescription : [prescriptionSchema],
   familyMembers: [familyMemberSchema] , // Array of family members
-  
+  healthrecords : {type : String},
   appointments: [
     {
       date: {

@@ -128,3 +128,41 @@ export const fetchPatients = async (req,res) => {
 }
 
 
+
+//get all appointments
+export const getappointments = async (req, res) => {
+  const { username } = req.params;
+  try {
+    // Fetch appointments from the database
+    const doctor = await doctorModel.findOne({ username });
+    if (!doctor) {
+      return res.status(400).json({ error: "Doctor not found" });
+    }
+
+    // Find patients associated with the doctor and populate their appointments
+    const patients = await patientModel
+      .find({ doctor: doctor._id })
+      .populate("appointments");
+
+    if (patients.length === 0) {
+      return res.status(400).json({ error: "No Patients found" });
+    }
+
+    // Extract and return the appointments
+    const appointments = patients.reduce((allAppointments, patient) => {
+      allAppointments.push(...patient.appointments);
+      return allAppointments;
+    }, []);
+
+    if (appointments.length === 0) {
+      return res.status(400).json({ error: "No Appointments Yet!" });
+    }
+
+    res.status(200).json(appointments);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+
+

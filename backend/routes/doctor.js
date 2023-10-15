@@ -1,5 +1,5 @@
 import express from "express";
-import {fetchPatients, createDoctor , deleteDoctor, fetchDoctor, updateDoctor } from "../controllers/doctorController.js";
+import {fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor } from "../controllers/doctorController.js";
 
 //router initialization
 const router = express.Router();
@@ -7,6 +7,8 @@ const router = express.Router();
 router.get('/',fetchDoctor);
 
 router.get('/getpatients/:username',fetchPatients);
+
+router.get('/getappointments/:username',getappointments)
 
 router.post('/',createDoctor);
 

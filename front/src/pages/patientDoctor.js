@@ -113,6 +113,7 @@ export default function PatientDoctors(){
             <th>Hourly Rate</th>
             <th>Affiliation</th>
             <th>Educational Background</th>
+            <th>Speciality</th>
           </tr>
         </thead>
         <tbody>
@@ -132,6 +133,7 @@ export default function PatientDoctors(){
               <td>{user.hourlyRate}</td>
               <td>{user.affiliation}</td>
               <td>{user.educationBg}</td>
+              <td>{user.speciality}</td>
             </tr>
           ))}
         </tbody>

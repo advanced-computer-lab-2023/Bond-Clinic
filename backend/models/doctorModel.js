@@ -10,6 +10,7 @@ const availabilitySchema = new mongoose.Schema({
       required: true,
     },
   });
+
 const doctorSchema = new mongoose.Schema({
     
     username: {
@@ -59,17 +60,6 @@ const doctorSchema = new mongoose.Schema({
     speciality: {
         type: String,
       },
-      status: {
-        type: String,
-        enum: ["pending", "accepted", "rejected"],
-        default: "pending",
-      },
-      employmentStatus: {
-        type: String,
-        enum: ["pending", "accepted", "rejected"],
-        default: "pending",
-    },
-    availableTimeSlots: [availabilitySchema],
     availability: [availabilitySchema],
 });
 

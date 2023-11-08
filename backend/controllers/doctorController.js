@@ -163,6 +163,31 @@ export const getappointments = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+export const addAvailableTimeSlot = async (req, res) => {
+  const { username, date, time } = req.body;
+
+  try {
+    // Check if the doctor is accepted by the admin and has accepted the employment contract
+    const doctor = await doctorModel.findOne({ username });
+    
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor not found" });
+    }
+
+    if (doctor.employmentStatus !== "accepted") {
+      return res.status(403).json({ error: "Doctor is not accepted by the admin." });
+    }
+
+    // Add the new available time slot
+    doctor.availableTimeSlots.push({ date, time });
+    await doctor.save();
+
+    res.status(200).json(doctor);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 
 

@@ -14,7 +14,10 @@ export const createDoctor = async (req, res) => {
     affiliation,
     speciality,
     availability,
-    educationBg
+    educationBg,
+    status,
+    employmentStatus,
+    availableTimeSlots, 
   } = req.body;
   try {
     const doctor = await doctorModel.create({
@@ -29,7 +32,10 @@ export const createDoctor = async (req, res) => {
       affiliation,
       speciality,
       availability,
-      educationBg
+      educationBg,
+      status,
+      employmentStatus,
+      availableTimeSlots,
     });
     res.status(200).json(doctor);
   } catch (error) {

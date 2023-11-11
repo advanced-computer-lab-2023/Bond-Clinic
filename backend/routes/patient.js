@@ -1,11 +1,13 @@
 import express, { json } from "express";
-import {getFamilyMembers,addFamilyMember,getappointments, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor, adddoctor, getPrescriptions, addPrescription} from "../controllers/patientController.js";
+import {login,getFamilyMembers,addFamilyMember,getappointments, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor, adddoctor, getPrescriptions, addPrescription} from "../controllers/patientController.js";
 
 //router initialization
 const router = express.Router();
 
 //get request
 router.get("/", fetchPatient);
+
+router.post('/login',login)
 
 //post request
 router.post("/", createPatient);

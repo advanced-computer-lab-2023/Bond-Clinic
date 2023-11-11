@@ -1,10 +1,12 @@
 import express from "express";
-import { createAdmin, deleteAdmin , acceptDoctorRequest, rejectDoctorRequest, getPendingDoctorRequests, acceptDoctorRequestReg} from "../controllers/adminController.js";
+import { login,createAdmin, deleteAdmin , acceptDoctorRequest, rejectDoctorRequest, getPendingDoctorRequests, acceptDoctorRequestReg} from "../controllers/adminController.js";
 
 //router initialization
 const router = express.Router();
 
 //router.get('/',);
+
+router.post('/login',login)
 
 router.post('/',createAdmin);
 

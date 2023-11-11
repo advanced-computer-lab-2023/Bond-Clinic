@@ -10,6 +10,7 @@ import PatientFamilyMembers from "./pages/patientFamilyMembers.js";
 import AppointmentsTable from "./components/appointments.js";
 import PatientPrescriptions from "./pages/patientPrescriptions.js";
 import PatientDoctors from "./pages/patientDoctor.js";
+import Login from "./pages/login.js";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
       <BrowserRouter>
         <div className="pages">
           <Routes>
+          <Route 
+            path="/login"
+            element={<Login/>}
+            />
             <Route 
             path="/"
             element={<LandingPage/>}

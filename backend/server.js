@@ -6,6 +6,7 @@ import packageRoutes from "./routes/package.js"
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from 'dotenv';
+import cookieParser from "cookie-parser";
 
 //initializations
 dotenv.config();
@@ -17,7 +18,8 @@ const mongo = process.env.MONGO_URI;
 
 //middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000',credentials:true}));
+app.use(cookieParser())
 
 //routes
 app.use("/api/patient/", patientRoutes);

@@ -94,6 +94,21 @@ export const login = async(req,res) => {
   }
 }
 
+export const logout = async (req, res) => {
+  
+  try {
+    const token = req.cookies.jwt;
+    if (!token){
+        res.status(400).json({error:"You're Not Signed in to Logout !!"})
+         } else {
+           res.clearCookie('jwt');
+           res.status(200).json({mssg : "Successfully Logged Out "});}
+  } catch (error) {
+    res.status(400).json({error:error.message})
+  }
+
+}
+
 export const resetPassword = async(req,res) => {
   try {
     const { username, email } = req.body;

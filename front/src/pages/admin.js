@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./styles.css";
+import LogoutButton from "../components/LogoutButton";
 
 
 function AdminPanel() {
@@ -135,7 +136,7 @@ function AdminPanel() {
   return (
     <div>
       <h1 className="title">Admin Panel</h1>
-
+        <LogoutButton/>
       {/* Add Admin Form */}
       <div className="form-container">
         <h3>

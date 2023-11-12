@@ -1,5 +1,5 @@
 import express, { json } from "express";
-import {login, changePassword, resetPassword, verifyOTP, getFamilyMembers,addFamilyMember,getappointments, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor, adddoctor, getPrescriptions, addPrescription} from "../controllers/patientController.js";
+import {login,logout, changePassword, resetPassword, verifyOTP, getFamilyMembers,addFamilyMember,getappointments, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor, adddoctor, getPrescriptions, addPrescription} from "../controllers/patientController.js";
 
 //router initialization
 const router = express.Router();
@@ -8,6 +8,8 @@ const router = express.Router();
 router.get("/", fetchPatient);
 
 router.post('/login',login);
+router.get('/logout',logout)
+
 
 router.put('/changePassword', changePassword);
 

@@ -17,12 +17,55 @@ schema
 .has().not().spaces(); // Should not have spaces
 // .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
-// create json web token
+// generate random OTP
+import crypto from 'crypto';
+// const crypto = require('crypto');
+function generateOTP() {
+  return crypto.randomInt(100000, 999999).toString();
+}
+
+// Using a gmail
+import nodemailer from 'nodemailer';
+// const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'csen704Bond@gmail.com',
+    pass: 'xsfudgbrdfpzkihi',
+  },
+});
+
+// Sending OTP
+async function sendOTP(email, otp) {
+  const mailOptions = {
+    from: 'csen704Bond@gmail.com',
+    to: email,
+    subject: 'Password Reset OTP',
+    text: `Your OTP for password reset is: ${otp}`,
+  };
+
+  await transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+// create json web token after login
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (username,role) => {
     return jwt.sign({ username,role }, 'supersecret', {
         expiresIn: maxAge
     });
+};
+
+// create json web token after reset
+const createResetToken = (username, otp) => {
+  return jwt.sign({username, otp}, 'supersecret', {
+    expiresIn: maxAge
+  });
 };
 
 export const login = async(req,res) => {
@@ -50,6 +93,78 @@ export const login = async(req,res) => {
     return res.status(400).json({error : error.message})
   }
 }
+
+export const resetPassword = async(req,res) => {
+  try {
+    const { username, email } = req.body;
+    const doctor = await doctorModel.findOne({username:username});
+    if(!doctor) {
+      return res.status(400).json({error : "Doctor Doesn't Exist"});
+    }
+    if(doctor.email !== email) {
+      return res.status(400).json({error : "Email Doesn't Match"});
+    }
+
+    const otp = generateOTP();
+    sendOTP(email, otp);
+
+    const token = createResetToken(username,otp);
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge*1000,sameSite: "none", secure: true });
+    res.set('Access-Control-Allow-Origin',req.headers.origin);
+    res.set('Access-Control-Allow-Credentials','true');
+  
+    res.json({ message: 'OTP sent successfully' });
+
+  } catch (error) {
+    return res.status(400).json({error : error.message});
+  }
+}
+
+export const verifyOTP = async(req, res) => {
+  try {
+    const token = req.cookies.jwt;
+
+    jwt.verify(token, 'supersecret', async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({message:"You have not reset your password"});
+      } else {
+        const savedUsername = decodedToken.username ;
+        const savedOTP  = decodedToken.otp ;
+
+        const {OTP, username, newPassword, reNewPassword} = req.body;
+        if(username !== savedUsername) {
+          res.status(400).json({message:"You have not reset your password"});
+        }
+
+        const doctor = await doctorModel.findOne({username:username});
+       
+        if (!doctor){
+          return res.status(400).json({error : "Doctor Doesn't Exist"});
+        }
+        if(OTP !== savedOTP) {
+          return res.status(400).json({error : "Wrong OTP"});
+        }
+        if(newPassword !== reNewPassword) {
+          return res.status(400).json({error : "New Password and Re-input New Password does not match"});
+        }
+        if (!schema.validate(newPassword)) {
+          let tempArr = schema.validate(newPassword, { details: true });
+          const tempJson = tempArr.map(detail => ({
+            validation : detail.validation,
+            message : detail.message
+          }));
+          return res.status(400).json(tempJson);
+        }
+        doctor.password = newPassword;
+        await doctor.save();
+
+        res.status(200).json({ message: "Password resetted successfully" });        
+      }
+    });
+  } catch (error) {
+    return res.status(400).json({error : error.message});
+  }
+};
 
 export const changePassword = async(req,res) => {
   try {

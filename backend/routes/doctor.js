@@ -1,5 +1,5 @@
 import express from "express";
-import {login, changePassword, fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor, addAvailableTimeSlot } from "../controllers/doctorController.js";
+import {login, changePassword, resetPassword, verifyOTP, fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor, addAvailableTimeSlot } from "../controllers/doctorController.js";
 import {viewContract, acceptContract} from "../controllers/employmentContractController.js";
 
 //router initialization
@@ -8,6 +8,10 @@ const router = express.Router();
 router.post('/login',login);
 
 router.put('/changePassword', changePassword);
+
+router.post('/resetPassword', resetPassword);
+
+router.post('/verifyOTP', verifyOTP);
 
 router.get('/',fetchDoctor);
 

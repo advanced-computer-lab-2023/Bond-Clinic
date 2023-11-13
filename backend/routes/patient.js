@@ -1,6 +1,6 @@
 import express, { json } from "express";
-import {login,logout, changePassword, resetPassword, verifyOTP, getFamilyMembers,addFamilyMember,getappointments, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor, adddoctor, getPrescriptions, addPrescription} from "../controllers/patientController.js";
-
+import {login,logout, changePassword, resetPassword, verifyOTP, getFamilyMembers,addFamilyMember,getappointments, createPatient, deletePatient, fetchPatient, updatePatient, viewDoctorsWithSessionPrice, searchDoctor, filterDoctors, selectDoctor, adddoctor, getPrescriptions, addPrescription, addhealthrecordp, removeHealthRecord} from "../controllers/patientController.js";
+import upload from "../Middleware/multer.js";
 //router initialization
 const router = express.Router();
 
@@ -54,5 +54,12 @@ router.get("/filter", filterDoctors);
 
 //40
 router.get("/select/:username", selectDoctor);
+
+//2
+router.post('/addhealthrecord', upload.single('file'), addhealthrecordp);
+router.delete('/removehealthrecord/:recordId',removeHealthRecord);
+
+
+
 
 export default router;

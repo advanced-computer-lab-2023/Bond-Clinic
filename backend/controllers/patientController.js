@@ -1,7 +1,6 @@
 import patientModel from "../models/patientModel.js";
 import Doctor from "../models/doctorModel.js";
 import doctorModel from "../models/doctorModel.js";
-
 import jwt from "jsonwebtoken"
 import passwordValidator from 'password-validator';
 
@@ -552,6 +551,66 @@ export const selectDoctor = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+// 2
+
+// patient adding health record
+export const addhealthrecordp = async (req, res) => {
+  try{
+    const token = req.cookies.jwt;
+    jwt.verify(token, 'supersecret', async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({message:"You are not logged in."})
+      } else {
+        const username = decodedToken.username ;
+        const role  = decodedToken.role ;
+        const { description } = req.body;
+        const file = req.file.path;
+        const healthrecord = await patientModel.findOneAndUpdate({username},{$push:{healthrecords:{file,description,by:"patient"}}},{new:true});
+        res.status(200).json({ message: 'Health record added successfully.' });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({error: error.message});
+  }
+};
+
+// Patient removing health record
+export const removeHealthRecord = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, 'supersecret', async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const username = decodedToken.username;
+        const { recordId } = req.params; // Assuming the record ID is passed as a URL parameter
+
+        // Find the patient and pull the health record from the array
+        const updatedPatient = await patientModel.findOneAndUpdate(
+          { username },
+          { $pull: { healthrecords: { _id: recordId, by: 'patient' } } },
+          { new: true }
+        );
+
+        if (!updatedPatient) {
+          // If the patient is not found or the health record does not exist
+          return res.status(404).json({ message: 'Health record not found.' });
+        }
+
+        res.status(200).json({ message: 'Health record removed successfully.' });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
+
+
 
 
 

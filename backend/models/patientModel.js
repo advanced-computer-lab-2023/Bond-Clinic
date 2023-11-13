@@ -1,5 +1,25 @@
 import mongoose from "mongoose";
 
+const healthrecord = new mongoose.Schema({
+  date:{
+    type: Date,
+    default: Date.now()
+  },
+  by:{
+    type: String,
+  },
+  file:{
+    type: String,
+  },
+  doctorNotes:{
+    type: String,
+  },
+  description:{
+    type: String,
+    required: true,
+  }
+});
+
 const prescriptionSchema = new mongoose.Schema({
   name:{
     type: String,
@@ -107,7 +127,7 @@ const patientSchema = new mongoose.Schema({
   },
   prescription : [prescriptionSchema],
   familyMembers: [familyMemberSchema] , // Array of family members
-  healthrecords : {type : String},
+  healthrecords : [healthrecord],
   appointments: [
     {
       date: {

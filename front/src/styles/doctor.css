@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Style the form container */
 .input-section form {
   max-width: 400px;
@@ -153,7 +157,11 @@ button:hover {
 }
 
 .button-78:hover:not(:disabled):before {
-  background: linear-gradient(92.83deg, rgb(140, 163, 225) 0%, rgb(10, 10, 10) 100%);
+  background: linear-gradient(
+    92.83deg,
+    rgb(140, 163, 225) 0%,
+    rgb(10, 10, 10) 100%
+  );
 }
 
 .button-78:hover:not(:disabled):after {
@@ -170,7 +178,12 @@ button:hover {
 }
 
 .button-78:active:not(:disabled):before {
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.2)
+    ),
+    linear-gradient(92.83deg, #ff7426 0, #f93a13 100%);
 }
 
 .button-78:active:not(:disabled):after {
@@ -183,19 +196,16 @@ button:hover {
 
 .button-78:disabled {
   cursor: default;
-  opacity: .24;
+  opacity: 0.24;
 }
-
-
-
 
 select {
   margin-bottom: 1em;
-  padding: .25em;
+  padding: 0.25em;
   border: 0;
   border-bottom: 2px solid currentcolor;
   font-weight: bold;
-  letter-spacing: .15em;
+  letter-spacing: 0.15em;
   border-radius: 0;
 
   &:focus,
@@ -204,7 +214,6 @@ select {
     border-bottom-color: rgb(26, 17, 195);
   }
 }
-
 
 .Upper-Section {
   display: flex;

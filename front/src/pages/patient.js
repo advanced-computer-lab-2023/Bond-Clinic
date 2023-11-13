@@ -1,17 +1,15 @@
-import '../styles/doctor.css'
+import "../styles/doctor.css";
 import { Link } from "react-router-dom";
-import LogoutButton from '../components/LogoutButton';
-export default function Patient(){
+import LogoutButton from "../components/LogoutButton";
+export default function Patient() {
+  return (
+    <>
+      <div className="Upper-Section">
+        <LogoutButton />
 
-    return(      
-      <>
-
-<div  className="Upper-Section">
-<LogoutButton/>
-
-<div className="role-buttons">
-    <h1 className='title'>Patient Home</h1>
-    <Link to="/patient/appointments" className="button">
+        <div className="role-buttons">
+          <h1 className="title">Patient Home</h1>
+          <Link to="/patient/appointments" className="button">
             Appointments
           </Link>
           <Link to="/patient/familymembers" className="button">
@@ -23,11 +21,11 @@ export default function Patient(){
           <Link to="/patient/doctors" className="button">
             Doctors
           </Link>
-          </div>
-      
-
+          <Link to="/patient/packages" className="button">
+            Packages
+          </Link>
+        </div>
       </div>
     </>
-    );
+  );
 }
-    

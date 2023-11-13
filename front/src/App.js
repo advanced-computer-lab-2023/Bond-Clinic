@@ -9,6 +9,7 @@ import Packages from "./pages/packages.js";
 import PatientFamilyMembers from "./pages/patientFamilyMembers.js";
 import AppointmentsTable from "./components/appointments.js";
 import PatientPrescriptions from "./pages/patientPrescriptions.js";
+import PatientPackages from "./pages/patientPackages.tsx";
 import PatientDoctors from "./pages/patientDoctor.js";
 import Login from "./pages/login.js";
 
@@ -18,57 +19,34 @@ function App() {
       <BrowserRouter>
         <div className="pages">
           <Routes>
-          <Route 
-            path="/login"
-            element={<Login/>}
-            />
-            <Route 
-            path="/"
-            element={<LandingPage/>}
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/patient/register"
+              element={<PatientRegistrationForm />}
             />
             <Route
-            path="/patient/register"
-            element={<PatientRegistrationForm/>}
+              path="/doctor/register"
+              element={<DoctorRegistrationForm />}
+            />
+            <Route path="/admin/home" element={<AdminPanel />} />
+            <Route path="/patient/home" element={<Patient />} />
+            <Route path="/doctor/home" element={<Doctor />} />
+            <Route path="/admin/packages" element={<Packages />} />
+            <Route
+              path="/patient/appointments"
+              element={<AppointmentsTable />}
             />
             <Route
-            path="/doctor/register"
-            element={<DoctorRegistrationForm/>}
+              path="/patient/familymembers"
+              element={<PatientFamilyMembers />}
             />
             <Route
-            path="/admin/home"
-            element={<AdminPanel/>}
+              path="/patient/prescriptions"
+              element={<PatientPrescriptions />}
             />
-            <Route
-            path="/patient/home"
-            element={<Patient/>}
-            />
-            <Route
-            path="/doctor/home"
-            element={<Doctor/>}
-            />
-            <Route
-            path="/admin/packages"
-            element={<Packages/>}
-            />
-            <Route
-            path="/patient/appointments"
-            element={<AppointmentsTable/>}
-            />
-            <Route
-            path="/patient/familymembers"
-            element={<PatientFamilyMembers/>}
-            /><Route
-            path="/patient/prescriptions"
-            element={<PatientPrescriptions/>}
-            />
-            <Route
-            path="/patient/doctors"
-            element={<PatientDoctors/>}
-            />
-            
-
-
-
+            <Route path="/patient/packages" element={<PatientPackages />} />
+            <Route path="/patient/doctors" element={<PatientDoctors />} />
           </Routes>
         </div>
       </BrowserRouter>

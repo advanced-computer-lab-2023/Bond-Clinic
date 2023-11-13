@@ -1,54 +1,54 @@
 import mongoose from "mongoose";
 
 const healthrecord = new mongoose.Schema({
-  date:{
+  date: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
-  by:{
+  by: {
     type: String,
   },
-  file:{
+  file: {
     type: String,
   },
-  doctorNotes:{
+  doctorNotes: {
     type: String,
   },
-  description:{
+  description: {
     type: String,
     required: true,
-  }
+  },
 });
 
 const prescriptionSchema = new mongoose.Schema({
-  name:{
+  name: {
     type: String,
     required: true,
   },
-  price:{
+  price: {
     type: Number,
     required: true,
   },
-  description:{
+  description: {
     type: String,
     required: true,
   },
-  img:{
-        data: Buffer,
-        contentType: String
-      },
-  doctor:{
+  img: {
+    data: Buffer,
+    contentType: String,
+  },
+  doctor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Doctor",
   },
-  date:{
+  date: {
     type: Date,
   },
-  doctorName:{
+  doctorName: {
     type: String,
-    default:"soubky"
-  }
-})
+    default: "soubky",
+  },
+});
 
 const familyMemberSchema = new mongoose.Schema({
   name: {
@@ -72,6 +72,10 @@ const familyMemberSchema = new mongoose.Schema({
     type: String,
     enum: ["wife", "husband", "child"],
     required: true,
+  },
+  packageType: {
+    type: String,
+    required: false,
   },
 });
 
@@ -117,13 +121,17 @@ const patientSchema = new mongoose.Schema({
     required: true,
     minlength: 11,
   },
+  packageType: {
+    type: String,
+    required: false,
+  },
   packages: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Package",
   },
-  prescription : [prescriptionSchema],
-  familyMembers: [familyMemberSchema] , // Array of family members
-  healthrecords : [healthrecord],
+  prescription: [prescriptionSchema],
+  familyMembers: [familyMemberSchema], // Array of family members
+  healthrecords: [healthrecord],
   appointments: [
     {
       date: {
@@ -137,13 +145,9 @@ const patientSchema = new mongoose.Schema({
       doctor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Doctor",
-      }
-    }
-  ]
-
-
-
-
+      },
+    },
+  ],
 });
 
 export default mongoose.model("Patient", patientSchema);

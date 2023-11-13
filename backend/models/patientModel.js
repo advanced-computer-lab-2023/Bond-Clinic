@@ -117,10 +117,6 @@ const patientSchema = new mongoose.Schema({
     required: true,
     minlength: 11,
   },
-  doctor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Doctor",
-  },
   packages: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Package",

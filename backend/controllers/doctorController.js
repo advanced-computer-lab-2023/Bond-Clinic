@@ -336,7 +336,9 @@ export const fetchPatients = async (req,res) => {
       return res.status(404).json({error:"Doctor not found" });
     }
 
-    const patients = await patientModel.find({ doctor:doctorr._id });
+    //fetch patients who have this doctorr in any object in the appoitnments array
+    const patients = await patientModel.find({ "appointments.doctor": doctorr._id });
+    //const patients = await patientModel.find({ doctor:doctorr._id });
 
     if (!patients.length) {
       return res.status(404).json({error: "Doctor has No Patients yet !" });
@@ -415,6 +417,7 @@ export const addAvailableTimeSlot = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 
 

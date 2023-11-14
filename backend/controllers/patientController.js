@@ -769,12 +769,12 @@ export const payAppointment = async (req, res) => {
 }
 
 
-       export const getWallet = async (req,res) => {
+export const getWallet = async (req,res) => {
       const token = req.cookies.jwt;
+      jwt.verify(token, "supersecret", async (err, decodedToken) => {
         const username = decodedToken.username;
         const patient = await patientModel.findOne({ username: username });
         res.json(patient.wallet);
-      }
     });
  }
 

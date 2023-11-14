@@ -14,6 +14,9 @@ return (
     <div><UpdateDoctorForm/></div>
     <div><DoctorPatientsTable/></div>
     <div><DoctorAppointmentsTable/></div>
+    <Link to="/doctor/wallet" className="button">
+            Wallet
+          </Link>
 
     </main>
 )

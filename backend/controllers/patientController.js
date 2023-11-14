@@ -721,3 +721,15 @@ export const payAppointment = async (req, res) => {
     cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
   });
  }
+ export const getWallet = async (req,res) => {
+  const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const username = decodedToken.username;
+        const patient = await patientModel.findOne({ username: username });
+        res.json(patient.wallet);
+      }
+    });
+ }

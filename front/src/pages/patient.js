@@ -23,6 +23,8 @@ export default function Patient() {
           </Link>
           <Link to="/patient/packages" className="button">
             Packages
+          </Link><Link to="/patient/wallet" className="button">
+            Wallet
           </Link>
         </div>
       </div>

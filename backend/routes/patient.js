@@ -85,4 +85,6 @@ router.delete("/removehealthrecord/:recordId", removeHealthRecord);
 router.post("/payment-appointment", payAppointment);
 router.post("/payment-package", payPackage);
 
+router.get("/wallet", getWallet);
+
 export default router;

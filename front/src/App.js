@@ -57,6 +57,8 @@ function App() {
             />
             <Route path="/patient/packages" element={<PatientPackages />} />
             <Route path="/patient/doctors" element={<PatientDoctors />} />
+            <Route path="/doctor/wallet" element={<Wallet />} />
+            <Route path="/patient/wallet" element={<Wallet />} />
           </Routes>
         </div>
       </BrowserRouter>

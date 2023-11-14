@@ -417,6 +417,18 @@ export const addAvailableTimeSlot = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+export const getWallet = async (req,res) => {
+  const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const username = decodedToken.username;
+        const doctor = await doctorModel.findOne({ username: username });
+        res.json(doctor.wallet);
+      }
+    });
+ }
 
 
 

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import {  useNavigate, useParams} from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import {  useNavigate} from 'react-router-dom';
 import '../styles/doctor.css'
+import RoleContext from './RoleContext';
 
 const OtpVerification = () => {
     const navigate = useNavigate();
-    const { role } = useParams(); // Get the role from the URL params
+    const { role } = useContext(RoleContext);
     const [formData, setFormData] = useState({
         OTP: '',
         username: '',
@@ -24,7 +25,7 @@ const OtpVerification = () => {
         try {
           // Make a request to the server for authentication
     
-            const response = await fetch("http://localhost:4000/api/"+role+"/verifyOTP/:"+role, {
+            const response = await fetch("http://localhost:4000/api/"+role+"/verifyOTP", {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',

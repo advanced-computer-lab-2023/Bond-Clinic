@@ -69,6 +69,13 @@ const doctorSchema = new mongoose.Schema({
         enum: ["pending", "accepted", "rejected"],
         default: "pending",
     },
+
+    wallet:{
+        type: Number,
+        default: 0,
+    },
+    availableTimeSlots: [availabilitySchema],
+
     availability: [availabilitySchema],
     appointments: [
         {

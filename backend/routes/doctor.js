@@ -1,5 +1,9 @@
 import express from "express";
+
 import {login,logout, changePassword, resetPassword, verifyOTP, fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor, addAvailableTimeSlot, reservefollowup } from "../controllers/doctorController.js";
+
+import {login,logout, changePassword, resetPassword, verifyOTP, fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor, addAvailableTimeSlot, getWallet } from "../controllers/doctorController.js";
+
 import {viewContract, acceptContract} from "../controllers/employmentContractController.js";
 
 //router initialization
@@ -37,5 +41,7 @@ router.patch("/contract/:doctorId/accept", acceptContract);
 //17
 // Add a new route for adding available time slots
 router.post("/add-available-time-slot", addAvailableTimeSlot);
+
+router.get("/wallet",getWallet);
 
 export default router

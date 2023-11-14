@@ -57,7 +57,6 @@ const familyMemberSchema = new mongoose.Schema({
   },
   nationalID: {
     type: String,
-    required: true,
     unique: true,
   },
   age: {
@@ -128,6 +127,10 @@ const patientSchema = new mongoose.Schema({
   packages: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Package",
+  },
+  wallet: {
+    type : Number,
+    default : 0
   },
   prescription: [prescriptionSchema],
   familyMembers: [familyMemberSchema], // Array of family members

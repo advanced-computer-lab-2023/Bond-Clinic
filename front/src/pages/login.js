@@ -5,7 +5,7 @@ import RoleContext from './RoleContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    role: '',
+    role: 'admin',
     username: '',
     password: '',
   });

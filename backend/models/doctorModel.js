@@ -69,12 +69,33 @@ const doctorSchema = new mongoose.Schema({
         enum: ["pending", "accepted", "rejected"],
         default: "pending",
     },
+
     wallet:{
         type: Number,
         default: 0,
     },
     availableTimeSlots: [availabilitySchema],
+
     availability: [availabilitySchema],
+    appointments: [
+        {
+          date: {
+            type: Date,
+            required: true,
+          },
+          status: {
+            type: String,
+            required: true,
+          },
+          patient: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Patient",
+          },
+          type :{
+            type:String
+          }
+        },
+      ]
 });
 
 export default mongoose.model('Doctor',doctorSchema)

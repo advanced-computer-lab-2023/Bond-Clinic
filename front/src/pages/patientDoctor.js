@@ -82,6 +82,35 @@ export default function PatientDoctors(){
 
     const handleUserClick = (user) => {
         setSelectedUser(user);
+        setAppointments(user.availability)
+        setFilteredAppointments(user.availability)
+      };
+      const handleReserveAppointment = async (appointment,reservetype) => {
+        // Implement the logic to reserve the appointment, e.g., make an API request
+        console.log(`Appointment reserved: ${appointment.date} ${appointment.time}`);
+        // Add logic to handle reservation, e.g., make an API request
+        try {
+          // Make a request to the server for authentication
+    
+          const response = await fetch("http://localhost:4000/api/patient/reserveappointment", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({appointment,selectedUser,reservetype}),
+            credentials : `include`
+          });
+
+          if(response.ok){
+            const data = await response.json();
+            console.log(data);
+          }
+
+
+
+            } catch (error) {
+          console.error('Error during reservation:', error);
+        }
       };
     
     return(
@@ -171,8 +200,10 @@ export default function PatientDoctors(){
         <thead>
           <tr>
             <th>Date</th>
-            <th>Status</th>
+            <th>Time</th>
             <th>Doctor</th>
+            <th>Action</th>
+
             {/* Add other appointment-related columns here */}
           </tr>
         </thead>
@@ -181,8 +212,22 @@ export default function PatientDoctors(){
             ? filteredAppointments.map((appointment) => (
                 <tr key={appointment.id}>
                   <td>{appointment.date}</td>
-                  <td>{appointment.status}</td>
-                  <td>{appointment.doctor}</td>
+                  <td>{appointment.time}</td>
+                  <td>{selectedUser.name}</td>
+                  {/* <td>
+                    <button onClick={() => handleReserveAppointment(appointment)}>
+                      Reserve
+                    </button>
+                  </td> */}
+                    <td className="table-buttons">
+                    <button onClick={() => handleReserveAppointment(appointment, "self")}>
+                      Reserve for Self
+                    </button>
+                    <button onClick={() => handleReserveAppointment(appointment, "family")}>
+                      Reserve for Family Member
+                    </button>
+                  </td>
+                 
                   {/* Add other appointment-related fields here */}
                 </tr>
               ))

@@ -24,7 +24,9 @@ function LandingPage() {
           <Link to="/patient/home" className="button">
             Continue as an existing Patient
           </Link>
-          
+          <Link to="/login" className="button">
+            Login
+          </Link>
         </div>
       </div>
     </body>

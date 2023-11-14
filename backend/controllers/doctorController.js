@@ -361,7 +361,14 @@ export const fetchPatients = async (req,res) => {
 
 //get all appointments
 export const getappointments = async (req, res) => {
-  const { username } = req.params;
+  const token = req.cookies.jwt;
+  if (!token){
+    return res.status(400).json({error:"Not Logged in"})
+     } else {
+      const decodedToken =  jwt.verify(token, 'supersecret') 
+      const username = decodedToken.username ;
+      console.log(username)
+      //const role  = decodedToken.role ;
   try {
     // Fetch appointments from the database
     const doctor = await doctorModel.findOne({ username });
@@ -370,28 +377,15 @@ export const getappointments = async (req, res) => {
     }
 
     // Find patients associated with the doctor and populate their appointments
-    const patients = await patientModel
-      .find({ doctor: doctor._id })
-      .populate("appointments");
-
-    if (patients.length === 0) {
-      return res.status(400).json({ error: "No Patients found" });
-    }
-
-    // Extract and return the appointments
-    const appointments = patients.reduce((allAppointments, patient) => {
-      allAppointments.push(...patient.appointments);
-      return allAppointments;
-    }, []);
-
-    if (appointments.length === 0) {
-      return res.status(400).json({ error: "No Appointments Yet!" });
-    }
+    // const patients = await patientModel
+    //   .find({ doctor: doctor._id })
+    //   .populate("appointments");
+    const appointments = doctor.appointments ;
 
     res.status(200).json(appointments);
   } catch (err) {
     res.status(400).json({ error: err.message });
-  }
+  }}
 };
 export const addAvailableTimeSlot = async (req, res) => {
   const { username, date, time } = req.body;
@@ -402,10 +396,6 @@ export const addAvailableTimeSlot = async (req, res) => {
     
     if (!doctor) {
       return res.status(404).json({ error: "Doctor not found" });
-    }
-
-    if (doctor.employmentStatus !== "accepted") {
-      return res.status(403).json({ error: "Doctor is not accepted by the admin." });
     }
 
     // Add the new available time slot
@@ -430,6 +420,50 @@ export const getWallet = async (req,res) => {
     });
  }
 
+
+
+export const reservefollowup = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+ 
+     jwt.verify(token, "supersecret", async (err, decodedToken) => {
+       if (err) {
+         res.status(400).json({ message: "You are not logged in." });
+       } else {
+         console.log("test")
+         const {  appointment } = req.body;
+         const username = decodedToken.username;
+         console.log(username)
+         const doctor =await doctorModel.findOne({username : username});
+         const patient =await patientModel.findById(appointment.patient);
+         console.log(doctor.username)
+         if (!patient || !doctor) {
+           return res.status(404).json({ message: 'Patient or doctor not found.' });
+         }
+         console.log(patient.username)
+         patient.appointments.push({
+           date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // Add 2 days in milliseconds           ,
+           status: 'reserved',
+           doctor: doctor._id,
+           type : appointment.type
+         });
+         doctor.appointments.push({
+          date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // Add 2 days in milliseconds           ,
+          status: 'reserved',
+           patient: patient._id,
+           type : appointment.type
+         });
+         await patient.save();
+         await doctor.save();
+         res.status(200).json({ error: 'Appointment reserved successfully.' });
+ 
+       }
+     });
+   } catch (error) {
+     res.status(400).json({ error: error.message });
+   }
+ 
+ }
 
 
 

@@ -654,6 +654,9 @@ export const removeHealthRecord = async (req, res) => {
 };
 
 
+
+
+
 export const payAppointment = async (req, res) => {
   const { healthPackage } = req.body;
   const { price } = req.body;
@@ -722,12 +725,52 @@ export const payAppointment = async (req, res) => {
     cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
   });
  }
- export const getWallet = async (req,res) => {
-  const token = req.cookies.jwt;
+
+   export const reserveappointment = async (req, res) => {
+ try {
+   const token = req.cookies.jwt;
     jwt.verify(token, "supersecret", async (err, decodedToken) => {
       if (err) {
         res.status(400).json({ message: "You are not logged in." });
       } else {
+        console.log("test")
+        const {  selectedUser, appointment,reservetype } = req.body;
+        const username = decodedToken.username;
+        console.log(username)
+        const patient =await patientModel.findOne({username : username});
+        const doctor =await doctorModel.findById(selectedUser._id);
+        console.log(doctor.username)
+        if (!patient || !doctor) {
+          return res.status(404).json({ message: 'Patient or doctor not found.' });
+        }
+        console.log(patient.username)
+        patient.appointments.push({
+          date: new Date(appointment.date),
+          status: 'reserved',
+          doctor: doctor._id,
+          type : reservetype
+        });
+        doctor.appointments.push({
+          date: new Date(appointment.date),
+          status: 'reserved',
+          patient: patient._id,
+          type: reservetype
+        });
+        await patient.save();
+        await doctor.save();
+        res.status(200).json({ error: 'Appointment reserved successfully.' });
+
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+
+}
+
+
+       export const getWallet = async (req,res) => {
+      const token = req.cookies.jwt;
         const username = decodedToken.username;
         const patient = await patientModel.findOne({ username: username });
         res.json(patient.wallet);

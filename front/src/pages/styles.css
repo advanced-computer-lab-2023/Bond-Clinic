@@ -157,3 +157,26 @@ button:hover {
 .one {
   margin-right: 10px;
 }
+
+.table-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-buttons button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.table-buttons button:hover {
+  background-color: #2980b9;
+}
+
+/* Style for the dropdown/select */
+.table-buttons select {
+  padding: 6px;
+}

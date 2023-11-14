@@ -16,6 +16,7 @@ import Login from "./pages/login.js";
 import ResetPassword from "./pages/ResetPassword.js";
 import OtpVerification from "./pages/OtpVerification.js";
 import RoleContext from "./pages/RoleContext.js";
+import Wallet from "./pages/wallet.js";
 
 function App() {
   const [role, setRole] = useState('');

@@ -1,6 +1,8 @@
 import "../styles/doctor.css";
 import { Link } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton";
+import ChangePasswordForm from "../components/ChangePasswordForm";
+
 export default function Patient() {
   return (
     <>
@@ -27,6 +29,7 @@ export default function Patient() {
             Wallet
           </Link>
         </div>
+        <ChangePasswordForm/>
       </div>
     </>
   );

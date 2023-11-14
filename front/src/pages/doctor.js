@@ -4,6 +4,8 @@ import UpdateDoctorForm from "../components/updatedoctor.js";
 import DoctorPatientsTable from "../components/doctorpatientstable";
 import DoctorAppointmentsTable from "../components/doctorappointments";
 import LogoutButton from "../components/LogoutButton.js";
+import {  useNavigate, Link} from 'react-router-dom';
+import ChangePasswordForm from "../components/ChangePasswordForm";
 
 export default function Doctor(){
 
@@ -17,7 +19,7 @@ return (
     <Link to="/doctor/wallet" className="button">
             Wallet
           </Link>
-
+        <ChangePasswordForm/>
     </main>
 )
 }

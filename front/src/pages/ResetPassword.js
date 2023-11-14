@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {  useNavigate, Link} from 'react-router-dom';
 import '../styles/doctor.css'
+import RoleContext from './RoleContext';
 
 const ResetPassword = () => {
     const navigate = useNavigate();
+    const { setRole } = useContext(RoleContext);
     const [formData, setFormData] = useState({
         role: '',
         username: '',
@@ -40,8 +42,10 @@ const ResetPassword = () => {
             if (response.ok) {
             // Move to the next reset step
                 setError('');
-                // Navigate to OtpVerification page with formData.role
-                navigate(`/verifyOTP/${formData.role}`);
+            // Set the role in the context
+                setRole(formData.role);
+            // Navigate to OtpVerification page with formData.role
+                navigate("/verifyOTP");
             } else {
                 setError(data.error || 'An error occurred during password reset');
             }

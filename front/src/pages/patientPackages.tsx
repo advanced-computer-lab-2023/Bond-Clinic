@@ -49,7 +49,7 @@ export default function PatientPackages() {
 
   async function handleSubscribe(packageType: String | null) {
     if (familySelected) {
-      await fetch("http://localhost:4000/api/package/subscribe", {
+      await fetch("http://localhost:4000/api/patient/payment-package", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export default function PatientPackages() {
           console.error(error);
         });
     } else {
-      await fetch("http://localhost:4000/api/package/subscribe", {
+      await fetch("http://localhost:4000/api/patient/payment-package", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

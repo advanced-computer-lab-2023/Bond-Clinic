@@ -12,6 +12,8 @@ import PatientPrescriptions from "./pages/patientPrescriptions.js";
 import PatientPackages from "./pages/patientPackages.tsx";
 import PatientDoctors from "./pages/patientDoctor.js";
 import Login from "./pages/login.js";
+import ResetPassword from "./pages/ResetPassword.js";
+import OtpVerification from "./pages/OtpVerification.js";
 
 function App() {
   return (
@@ -20,6 +22,9 @@ function App() {
         <div className="pages">
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/resetPassword" element={<ResetPassword/>} />
+            <Route path="/verifyOTP/:role" element={<OtpVerification/>} />
+
             <Route path="/" element={<LandingPage />} />
             <Route
               path="/patient/register"

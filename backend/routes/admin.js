@@ -13,7 +13,7 @@ router.put('/changePassword', changePassword);
 
 router.post('/resetPassword', resetPassword);
 
-router.post('/verifyOTP', verifyOTP);
+router.post('/verifyOTP/:role', verifyOTP);
 
 router.post('/',createAdmin);
 

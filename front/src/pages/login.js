@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate, Link} from 'react-router-dom';
 import '../styles/doctor.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    role: 'admin',
-    username: 'null',
-    password: 'null',
+    role: '',
+    username: '',
+    password: '',
   });
 
   const navigate  = useNavigate();
@@ -86,6 +86,8 @@ const Login = () => {
         </label>
         <br />
         <button className='button-78' type="submit">Login</button>
+        <br />
+        <Link to="/resetPassword">Forgot Password?</Link>
       </form>
     </div>
   );

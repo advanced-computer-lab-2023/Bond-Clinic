@@ -181,7 +181,15 @@ export default function PatientPackages() {
               }}
               className="rounded-2xl bg-main hover:bg-main-hover duration-300 p-3 text-white cursor-pointer"
             >
-              Subscribe
+              Pay With Stripe
+            </button>
+            <button
+              onClick={() => {
+                handleSubscribe(pkg.type);
+              }}
+              className="rounded-2xl bg-main hover:bg-main-hover duration-300 p-3 text-white cursor-pointer"
+            >
+              Pay with Wallet
             </button>
           </div>
         </div>

@@ -17,6 +17,7 @@ import ResetPassword from "./pages/ResetPassword.js";
 import OtpVerification from "./pages/OtpVerification.js";
 import RoleContext from "./pages/RoleContext.js";
 import Wallet from "./pages/wallet.js";
+import PayAppointment from "./components/payAppointment.js";
 
 function App() {
   const [role, setRole] = useState('');
@@ -60,6 +61,7 @@ function App() {
             <Route path="/patient/doctors" element={<PatientDoctors />} />
             <Route path="/doctor/wallet" element={<Wallet />} />
             <Route path="/patient/wallet" element={<Wallet />} />
+            <Route path="/patient/pay-appointment" element={<PayAppointment />} />
           </Routes>
         </div>
       </BrowserRouter>

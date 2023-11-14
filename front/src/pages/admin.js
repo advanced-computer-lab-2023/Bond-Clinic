@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./styles.css";
 import LogoutButton from "../components/LogoutButton";
+import ChangePasswordForm from "../components/ChangePasswordForm";
 
 
 function AdminPanel() {
@@ -201,7 +202,7 @@ function AdminPanel() {
         />
         <button className="button" onClick={handleRemovePatient}>Delete patient</button>
       </div>
-
+      <ChangePasswordForm/>
       <Link to="/admin/packages" className="button">
             Packages
           </Link>

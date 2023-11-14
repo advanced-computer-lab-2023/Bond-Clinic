@@ -23,7 +23,8 @@ import {
   removeHealthRecord,
   addPackageToFamilyMember,
   payAppointment,
-  payPackage
+  payPackage,
+  getWallet
 } from "../controllers/patientController.js";
 import upload from "../Middleware/multer.js";
 //router initialization

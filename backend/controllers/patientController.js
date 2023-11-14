@@ -655,31 +655,23 @@ export const removeHealthRecord = async (req, res) => {
 
 export const payAppointment = async (req, res) => {
   const { healthPackage } = req.body;
-  const name = '';
-  const price = 0;
+  const { price } = req.body;
   healthPackage = healthPackage.toLowerCase();
   if ( healthPackage == 'silver' )
-  {
-    name = 'Silver Health Package'
-    price = 3600;
-  }
+    price = (price * 1.1) - (price * 1.4);
   else if ( healthPackage == 'gold' )
-  {
-    name = 'Gold Health Package'
-    price = 6000;
-  }  
+    price = (price * 1.1) - (price * 1.6);
   else if ( healthPackage == 'platinum' )
-  {
-    name = 'Platinum Health Package'
-    price = 9000 ;
-  }  
+    price = (price * 1.1) - (price * 1.8);
+  else 
+  price = (price * 1.1);
   const stripeInstance = new stripe(process.env.STRIPE_PRIVATE_KEY);
     const session = await stripeInstance.checkout.sessions.create({
       line_items: [{
         price_data: {
             currency: 'egp', // or your preferred currency
             product_data: {
-                name: name,
+                name: `Doctor's Appointment`,
             },
             unit_amount: price * 100, // convert to cents
         },
@@ -689,7 +681,6 @@ export const payAppointment = async (req, res) => {
     success_url: `http://localhost:4000/api/patient/success-payment`,
     cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
   });
-
   res.redirect(303, session.url);
  };
  export const payPackage = async (req, res) => {

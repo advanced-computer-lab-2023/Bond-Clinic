@@ -22,6 +22,7 @@ import {
   addhealthrecordp,
   removeHealthRecord,
   addPackageToFamilyMember,
+  reserveappointment,
 } from "../controllers/patientController.js";
 import upload from "../Middleware/multer.js";
 //router initialization
@@ -32,6 +33,7 @@ router.get("/", fetchPatient);
 
 router.post("/login", login);
 router.get("/logout", logout);
+router.post("/reserveappointment",reserveappointment)
 
 router.put("/changePassword", changePassword);
 

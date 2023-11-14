@@ -4,7 +4,7 @@ import '../styles/doctor.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    role: '',
+    role: 'admin',
     username: '',
     password: '',
   });

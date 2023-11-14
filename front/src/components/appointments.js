@@ -11,7 +11,7 @@ export default function AppointmentsTable() {
   useEffect(() => {
     // Fetch user's appointments from your backend API
     handleFetchAppointments();
-  });
+  },[]);
 
   const handleFetchAppointments = async () => {
     // Make an API request to fetch appointments for the patient
@@ -82,7 +82,7 @@ export default function AppointmentsTable() {
           onChange={(e) => setSelectedStatus(e.target.value)}
         >
           <option value="">All</option>
-          <option value="scheduled">Scheduled</option>
+          <option value="reserved">Reserved</option>
           <option value="completed">Completed</option>
           <option value="canceled">Canceled</option>
         </select>
@@ -95,6 +95,7 @@ export default function AppointmentsTable() {
           <tr>
             <th>Date</th>
             <th>Status</th>
+            <th>Type</th>
             <th>Doctor</th>
             {/* Add other appointment-related columns here */}
           </tr>
@@ -105,6 +106,7 @@ export default function AppointmentsTable() {
                 <tr key={appointment.id}>
                   <td>{appointment.date}</td>
                   <td>{appointment.status}</td>
+                  <td>{appointment.type}</td>
                   <td>{appointment.doctor}</td>
                   {/* Add other appointment-related fields here */}
                 </tr>

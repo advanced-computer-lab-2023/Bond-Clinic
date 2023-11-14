@@ -16,7 +16,7 @@ const healthrecord = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 
@@ -146,6 +146,9 @@ const patientSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Doctor",
       },
+      type:{
+        type:String
+      }
     },
   ],
 });

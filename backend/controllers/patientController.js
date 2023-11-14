@@ -3,6 +3,7 @@ import Doctor from "../models/doctorModel.js";
 import doctorModel from "../models/doctorModel.js";
 import jwt from "jsonwebtoken";
 import passwordValidator from "password-validator";
+import stripe from "stripe";
 
 // Create a schema
 var schema = new passwordValidator();
@@ -682,8 +683,8 @@ export const payAppointment = async (req, res) => {
         quantity: 1,
     }],
     mode: 'payment',
-    success_url: `http://localhost:4000/api/patient/success-payment`,
-    cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
+    success_url: `http://localhost:3000/patient/home`,
+    cancel_url: `http://localhost:3000/patient/home`,
   });
   res.redirect(303, session.url);
  };
@@ -721,8 +722,8 @@ export const payAppointment = async (req, res) => {
         quantity: 1,
     }],
     mode: 'payment',
-    success_url: 'http://localhost:4000/api/patient/success-payment/',
-    cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
+    success_url: 'http://localhost:3000/patient/home',
+    cancel_url: `http://localhost:3000/patient/home`,
   });
  }
 
@@ -836,8 +837,8 @@ export const payAppointment2 = async (req, res) => {
         quantity: 1,
     }],
     mode: 'payment',
-    success_url: `http://localhost:3000/patient/success-payment`,
-    cancel_url: `http://localhost:3000/patient/cancel-payment`,
+    success_url: `http://localhost:3000/patient/home`,
+    cancel_url: `http://localhost:3000/patient/home`,
   });
   res.redirect(303, session.url);
  };

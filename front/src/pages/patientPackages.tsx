@@ -6,6 +6,7 @@ export default function PatientPackages() {
   const [packages, setPackages] = useState<Array<Package>>([]);
   const [familySelected, setFamilySelected] = useState<Family>();
   const [patient, setPatient] = useState<any>(null);
+  const [url,setUrl] = useState<any>(null);
   useEffect(() => {
     fetch("http://localhost:4000/api/package", {
       method: "GET",
@@ -63,14 +64,13 @@ export default function PatientPackages() {
       })
         .then((response) => {
           if (response.ok) {
-            
             return response.json();
           } else {
             throw new Error("Failed to subscribe to package");
           }
         })
         .then((data) => {
-          console.log(data);
+          setUrl(data);
         })
         .catch((error) => {
           console.error(error);
@@ -100,7 +100,7 @@ export default function PatientPackages() {
           }
         })
         .then((data) => {
-          console.log(data);
+          setUrl(data);
         })
         .catch((error) => {
           console.error(error);
@@ -175,14 +175,7 @@ export default function PatientPackages() {
             <p>{"Family Discount :" + pkg.familyDiscount}</p>
           </div>
           <div className="flex justify-center mt-4">
-            <button
-              onClick={() => {
-                handleSubscribe(pkg.type);
-              }}
-              className="rounded-2xl bg-main hover:bg-main-hover duration-300 p-3 text-white cursor-pointer"
-            >
-              Pay With Stripe
-            </button>
+          <a href="http://localhost:4000/api/patient/payment-package" className="rounded-2xl bg-main hover:bg-main-hover duration-300 p-3 text-white cursor-pointer">Pay With Stripe</a>
             <button
               onClick={() => {
                 handleSubscribe(pkg.type);

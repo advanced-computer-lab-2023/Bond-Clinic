@@ -725,6 +725,7 @@ export const payAppointment = async (req, res) => {
     success_url: 'http://localhost:3000/patient/home',
     cancel_url: `http://localhost:3000/patient/home`,
   });
+  res.json({url:session.url});
  }
 
    export const reserveappointment = async (req, res) => {
@@ -824,15 +825,38 @@ export const getWallet = async (req,res) => {
 });
 };
 export const payAppointment2 = async (req, res) => {
+  let price = 100;
+  let name = `Doctor's Appointment`
   const stripeInstance = new stripe(process.env.STRIPE_PRIVATE_KEY);
     const session = await stripeInstance.checkout.sessions.create({
       line_items: [{
         price_data: {
             currency: 'egp', // or your preferred currency
             product_data: {
-                name: `Doctor's Appointment`,
+                name: name,
             },
-            unit_amount: 100 * 100, // convert to cents
+            unit_amount: price * 100, // convert to cents
+        },
+        quantity: 1,
+    }],
+    mode: 'payment',
+    success_url: `http://localhost:3000/patient/home`,
+    cancel_url: `http://localhost:3000/patient/home`,
+  });
+  res.redirect(303, session.url);
+ };
+ export const payPackage2 = async (req, res) => {
+  let price = 9000;
+  let name = `Platinum Package`
+  const stripeInstance = new stripe(process.env.STRIPE_PRIVATE_KEY);
+    const session = await stripeInstance.checkout.sessions.create({
+      line_items: [{
+        price_data: {
+            currency: 'egp', // or your preferred currency
+            product_data: {
+                name: name,
+            },
+            unit_amount: price * 100, // convert to cents
         },
         quantity: 1,
     }],

@@ -45,6 +45,28 @@ const doctorSchema = new mongoose.Schema({
     educationBg: {
         type: String,
         required: true,
+<<<<<<< Updated upstream
+=======
+    },
+    speciality: {
+        type: String,
+      },
+      status: {
+        type: String,
+        enum: ["pending", "accepted", "rejected"],
+        default: "pending",
+      },
+      employmentStatus: {
+        type: String,
+        enum: ["pending", "accepted", "rejected"],
+        default: "pending",
+    },
+    availableTimeSlots: [availabilitySchema],
+    availability: [availabilitySchema],
+    wallet:{
+        type: Number,
+        default: 0,
+>>>>>>> Stashed changes
     }
 });
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export default function Wallet()  {
     const [wallet, setWallet] = useState("");
@@ -10,13 +10,16 @@ export default function Wallet()  {
       const handleFetch = async () => {
         // Make an API request to fetch appointments for the patient
         const response = await fetch("http://localhost:4000/api/patient/wallet", {
+            credentials: 'include'
         });
     
         if (response.ok) {
             setWallet(await response.json());
         } else {
             setWallet([]);
-            const response = await fetch("http://localhost:4000/api/doctor/wallet",{});
+            const response = await fetch("http://localhost:4000/api/doctor/wallet",{
+                credentials: 'include'
+            });
             if(response.ok)
             setWallet(await response.json());
             else 

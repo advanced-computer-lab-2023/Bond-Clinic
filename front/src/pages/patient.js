@@ -1,6 +1,7 @@
 import "../styles/doctor.css";
 import { Link } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton";
+import LinkFamily from "../components/linkFamily";
 export default function Patient() {
   return (
     <>
@@ -26,6 +27,7 @@ export default function Patient() {
           </Link><Link to="/patient/wallet" className="button">
             Wallet
           </Link>
+        <LinkFamily/>
         </div>
       </div>
     </>

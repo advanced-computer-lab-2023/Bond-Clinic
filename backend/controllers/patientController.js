@@ -33,6 +33,7 @@ function generateOTP() {
 
 // Using a gmail
 import nodemailer from "nodemailer";
+import { mongo } from "mongoose";
 // const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -733,3 +734,48 @@ export const payAppointment = async (req, res) => {
       }
     });
  }
+
+ export const linkFamily = async (req, res) => {
+   const token = req.cookies.jwt;
+
+   jwt.verify(token, 'supersecret', async (err, decodedToken) => {
+     if (err) {
+       res.status(400).json({message:"You are not logged in."})
+     } else {
+       const username = decodedToken.username ;
+    try {
+
+    const {role,email,number} = req.body; // The new family member data from the request body
+
+    // Find the patient by username
+    const patient = await patientModel.findOne({ username: username });
+    let familyMember = await patientModel.findOne({email:email}); 
+    if(!familyMember)
+    familyMember = await patientModel.findOne({phoneNumber:number})
+    if (!familyMember)
+      return res.status(404).json({ message: "Patient not found" });
+    if (!patient) {
+      return res.status(404).json({ message: "Patient not found" });
+    }
+    familyMember = await patient.familyMembers.create(
+      {
+        relationToPatient: role,
+        name: familyMember.name,
+        gender: familyMember.gender,
+        age: familyMember.dob
+      }
+    )
+    // Add the new family member to the patient's familyMembers array
+    patient.familyMembers.push(familyMember);
+
+    // Save the updated patient document
+    await patient.save();
+
+    res.status(200).json(patient);
+  } catch (error) {
+    console.error("Error adding family member:", error);
+    res.status(400).json({ message: "Internal server error" });
+  }
+}
+});
+};

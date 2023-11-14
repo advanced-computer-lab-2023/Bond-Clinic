@@ -4,6 +4,7 @@ import UpdateDoctorForm from "../components/updatedoctor.js";
 import DoctorPatientsTable from "../components/doctorpatientstable";
 import DoctorAppointmentsTable from "../components/doctorappointments";
 import LogoutButton from "../components/LogoutButton.js";
+import { Link } from "react-router-dom";
 
 export default function Doctor(){
 

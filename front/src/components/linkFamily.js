@@ -1,12 +1,12 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 export default function LinkFamily() {
     const [formData, setFormData] = useState({
         role: '',
         email: '',
         number: '',
       });
-    
-      const navigate  = useNavigate();
-    
+      
       const [error, setError] = useState('');
     
       const handleChange = (e) => {
@@ -18,7 +18,7 @@ export default function LinkFamily() {
     
         try {
           // Make a request to the server for authentication
-    
+          console.log(formData);
           const response = await fetch("http://localhost:4000/api/patient/link", {
             method: 'POST',
             headers: {
@@ -48,7 +48,7 @@ export default function LinkFamily() {
     
       return (
         <div>
-          <h2>Login</h2>
+          <h2>Link Family Members</h2>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <form onSubmit={handleSubmit}>
             <label>
@@ -56,7 +56,7 @@ export default function LinkFamily() {
               <select name="role" value={formData.role} onChange={handleChange}>
                 <option value="wife">wife</option>
                 <option value="husband">husband</option>
-                <option value="children">children</option>
+                <option value="child">children</option>
               </select>
             </label>
             <br />

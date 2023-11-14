@@ -23,7 +23,8 @@ import {
   removeHealthRecord,
   addPackageToFamilyMember,
   payAppointment,
-  payPackage
+  payPackage,
+  getWallet, linkFamily
 } from "../controllers/patientController.js";
 import upload from "../Middleware/multer.js";
 //router initialization
@@ -86,5 +87,6 @@ router.post("/payment-appointment", payAppointment);
 router.post("/payment-package", payPackage);
 
 router.get("/wallet", getWallet);
+router.post('/link',linkFamily);
 
 export default router;

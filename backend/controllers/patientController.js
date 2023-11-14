@@ -684,30 +684,40 @@ export const payAppointment = async (req, res) => {
   res.redirect(303, session.url);
  };
  export const payPackage = async (req, res) => {
-  const { healthPackage , price } = req.body;
-  healthPackage = healthPackage.toLowerCase();
+  const { patient , packageType , familyNationalID , familySubscription }= req.body;
+  let price = 0;
+  const healthPackage = packageType.toLowerCase();
+  let name = '';
+  const url = 'http://localhost:4000/api/patient/success-payment/patient?='+patient+'/packageType='+packageType+'/familyNationalID='+familyNationalID+'/familySubscription='+familySubscription ;
   if ( healthPackage == 'silver' )
-    price = (price * 1.1) - (price * 1.4);
+  {
+    name = 'Silver Health Package'
+    price = 3600;
+  }
   else if ( healthPackage == 'gold' )
-    price = (price * 1.1) - (price * 1.6);
+  {
+    name = 'Gold Health Package'
+    price = 6000;
+  }  
   else if ( healthPackage == 'platinum' )
-    price = (price * 1.1) - (price * 1.8);
-  else 
-  price = (price * 1.1);
+  {
+    name = 'Platinum Health Package'
+    price = 9000 ;
+  }
   const stripeInstance = new stripe(process.env.STRIPE_PRIVATE_KEY);
     const session = await stripeInstance.checkout.sessions.create({
       line_items: [{
         price_data: {
             currency: 'egp', // or your preferred currency
             product_data: {
-                name: `Doctor's Appointment`,
+                name: name,
             },
             unit_amount: price * 100, // convert to cents
         },
         quantity: 1,
     }],
     mode: 'payment',
-    success_url: `http://localhost:4000/api/patient/success-payment`,
+    success_url: url,
     cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
   });
  }

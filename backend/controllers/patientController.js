@@ -651,3 +651,72 @@ export const removeHealthRecord = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+
+export const payAppointment = async (req, res) => {
+  const { healthPackage } = req.body;
+  const name = '';
+  const price = 0;
+  healthPackage = healthPackage.toLowerCase();
+  if ( healthPackage == 'silver' )
+  {
+    name = 'Silver Health Package'
+    price = 3600;
+  }
+  else if ( healthPackage == 'gold' )
+  {
+    name = 'Gold Health Package'
+    price = 6000;
+  }  
+  else if ( healthPackage == 'platinum' )
+  {
+    name = 'Platinum Health Package'
+    price = 9000 ;
+  }  
+  const stripeInstance = new stripe(process.env.STRIPE_PRIVATE_KEY);
+    const session = await stripeInstance.checkout.sessions.create({
+      line_items: [{
+        price_data: {
+            currency: 'egp', // or your preferred currency
+            product_data: {
+                name: name,
+            },
+            unit_amount: price * 100, // convert to cents
+        },
+        quantity: 1,
+    }],
+    mode: 'payment',
+    success_url: `http://localhost:4000/api/patient/success-payment`,
+    cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
+  });
+
+  res.redirect(303, session.url);
+ };
+ export const payPackage = async (req, res) => {
+  const { healthPackage , price } = req.body;
+  healthPackage = healthPackage.toLowerCase();
+  if ( healthPackage == 'silver' )
+    price = (price * 1.1) - (price * 1.4);
+  else if ( healthPackage == 'gold' )
+    price = (price * 1.1) - (price * 1.6);
+  else if ( healthPackage == 'platinum' )
+    price = (price * 1.1) - (price * 1.8);
+  else 
+  price = (price * 1.1);
+  const stripeInstance = new stripe(process.env.STRIPE_PRIVATE_KEY);
+    const session = await stripeInstance.checkout.sessions.create({
+      line_items: [{
+        price_data: {
+            currency: 'egp', // or your preferred currency
+            product_data: {
+                name: `Doctor's Appointment`,
+            },
+            unit_amount: price * 100, // convert to cents
+        },
+        quantity: 1,
+    }],
+    mode: 'payment',
+    success_url: `http://localhost:4000/api/patient/success-payment`,
+    cancel_url: `http://localhost:4000/api/patient/cancel-payment`,
+  });
+ }

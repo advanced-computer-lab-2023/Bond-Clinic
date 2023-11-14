@@ -129,6 +129,10 @@ const patientSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Package",
   },
+  wallet: {
+    type : Number,
+    default : 0
+  },
   prescription: [prescriptionSchema],
   familyMembers: [familyMemberSchema], // Array of family members
   healthrecords: [healthrecord],

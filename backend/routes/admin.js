@@ -1,19 +1,11 @@
 import express from "express";
-import { login,logout, changePassword, resetPassword, verifyOTP, createAdmin, deleteAdmin , acceptDoctorRequest, rejectDoctorRequest, getPendingDoctorRequests, acceptDoctorRequestReg} from "../controllers/adminController.js";
+import { createAdmin, deleteAdmin , acceptDoctorRequest, rejectDoctorRequest, getPendingDoctorRequests, acceptDoctorRequestReg} from "../controllers/adminController.js";
+// import { login} from "../controllers/utilityController.js";
 
 //router initialization
 const router = express.Router();
 
 //router.get('/',);
-
-router.post('/login',login)
-router.get('/logout',logout)
-
-router.put('/changePassword', changePassword);
-
-router.post('/resetPassword', resetPassword);
-
-router.post('/verifyOTP', verifyOTP);
 
 router.post('/',createAdmin);
 

@@ -7,7 +7,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/admin/logout", {
+      const response = await fetch("http://localhost:4000/api/user/logout", {
         method: "GET",
         credentials: "include", // Include credentials in the request
       });

@@ -1,20 +1,11 @@
 import express from "express";
-import {login,logout, changePassword, resetPassword, verifyOTP, fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor, addAvailableTimeSlot, getWallet,reservefollowup } from "../controllers/doctorController.js";
-
+import { fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor, addAvailableTimeSlot, getWallet,reservefollowup } from "../controllers/doctorController.js";
 import {viewContract, acceptContract} from "../controllers/employmentContractController.js";
 
 //router initialization
 const router = express.Router();
 
-router.post('/login',login);
-router.get('/logout',logout)
 router.post('/reservefollowup',reservefollowup)
-
-router.put('/changePassword', changePassword);
-
-router.post('/resetPassword', resetPassword);
-
-router.post('/verifyOTP', verifyOTP);
 
 router.get('/',fetchDoctor);
 

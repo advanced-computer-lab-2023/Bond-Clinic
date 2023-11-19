@@ -1,15 +1,13 @@
-import React, { useState, useContext } from 'react';
-import {  useNavigate, Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import {  useNavigate} from 'react-router-dom';
 import '../styles/doctor.css'
-import RoleContext from './RoleContext';
 
 const ResetPassword = () => {
     const navigate = useNavigate();
-    const { setRole } = useContext(RoleContext);
     const [formData, setFormData] = useState({
-        role: '',
-        username: '',
-        email: '',
+      OTP:'',
+      newPassword:'',
+      reNewPassword:'',
     });
 
     const [error, setError] = useState('');
@@ -20,81 +18,77 @@ const ResetPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
-          // Make a request to the server for authentication
-    
-            const response = await fetch("http://localhost:4000/api/"+formData.role+"/resetPassword", {
-                method: 'POST',
-                headers: {
+            const response = await fetch("http://localhost:4000/api/user/resetPassword", {
+              method: 'POST',
+              headers: {
                 'Content-Type': 'application/json',
-                },
-            body: JSON.stringify({
-                role: formData.role,
-                username: formData.username,
-                email: formData.email,
-            }),
-            withCredentials: true,
-            credentials : `include`
+              },
+              body: JSON.stringify({
+                OTP: formData.OTP,
+                newPassword: formData.newPassword,
+                reNewPassword: formData.reNewPassword,
+              }),
+              withCredentials: true,
+              credentials : `include`
             });
-    
+                
             const data = await response.json();
             if (response.ok) {
-            // Move to the next reset step
-                setError('');
-            // Set the role in the context
-                setRole(formData.role);
-            // Navigate to OtpVerification page with formData.role
-                navigate("/verifyOTP");
+            // Reset error state and move back to the login step
+              setError('');
+              // Navigate to the login page after successful password reset
+              navigate('/login');
             } else {
-                setError(data.error || 'An error occurred during password reset');
+              setError(data.error || 'An error occurred during password verification');
             }
           // Redirect or handle response as needed
         } catch (error) {
-          console.error('Error Reseting Password:', error);
+            console.error('Error during password verification:', error);
         }
     };
+    
     return (
         <div>
-        <h2>Reset Password</h2>
-        <form onSubmit={handleSubmit}>  
+          <h2>Reset Password</h2>
+          <p>Step 2 of 2</p>
+          <form onSubmit={handleSubmit}>
             <label>
-                Role:
-                <select name="role" value={formData.role} onChange={handleChange}>
-                <option value="doctor">Doctor</option>
-                <option value="patient">Patient</option>
-                <option value="admin">Admin</option>
-                </select>
+              Enter OTP:
+              <input
+                type="text"
+                name="OTP"
+                value={formData.OTP}
+                onChange={handleChange}
+                required
+              />
             </label>
             <br />
             <label>
-                Username:
-                <input
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                />
+              Enter New Password:
+              <input
+                type="password"
+                name="newPassword"
+                value={formData.newPassword}
+                onChange={handleChange}
+                required
+              />
             </label>
             <br />
             <label>
-                Enter your email:
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+              Re-Enter New Password:
+              <input
+                type="password"
+                name="reNewPassword"
+                value={formData.reNewPassword}
+                onChange={handleChange}
+                required
+              />
             </label>
             <br />
-            <button className='button-78' type="submit">
-                Send OTP
-            </button>
-        </form>
-        <br />
-        <Link to="/login">Back to Login</Link>
+            <button className='button-78' type="submit">Reset Password</button>
+          </form>
         </div>
     );
 };

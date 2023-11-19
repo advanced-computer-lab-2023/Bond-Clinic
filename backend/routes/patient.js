@@ -1,14 +1,9 @@
 import express, { json } from "express";
-import {
-  login,
-  logout,
-  changePassword,
-  resetPassword,
-  verifyOTP,
-  getFamilyMembers,
-  addFamilyMember,
-  getappointments,
-  createPatient,
+import { 
+  getFamilyMembers, 
+  addFamilyMember, 
+  getappointments, 
+  createPatient, 
   deletePatient,
   fetchPatient,
   updatePatient,
@@ -22,29 +17,20 @@ import {
   addhealthrecordp,
   removeHealthRecord,
   addPackageToFamilyMember,
-
   reserveappointment,
-
   payAppointment,
   payPackage,
   getWallet, linkFamily, payAppointment2, payPackage2
 } from "../controllers/patientController.js";
 import upload from "../Middleware/multer.js";
+
 //router initialization
 const router = express.Router();
 
 //get request
 router.get("/", fetchPatient);
 
-router.post("/login", login);
-router.get("/logout", logout);
 router.post("/reserveappointment",reserveappointment)
-
-router.put("/changePassword", changePassword);
-
-router.post("/resetPassword", resetPassword);
-
-router.post("/verifyOTP", verifyOTP);
 
 //post request
 router.post("/", createPatient);

@@ -13,24 +13,27 @@ import PatientPrescriptions from "./pages/patientPrescriptions.js";
 import PatientPackages from "./pages/patientPackages.tsx";
 import PatientDoctors from "./pages/patientDoctor.js";
 import Login from "./pages/login.js";
-import ResetPassword from "./pages/ResetPassword.js";
-import OtpVerification from "./pages/OtpVerification.js";
+import ForgotPassword from "./pages/forgotPassword.js";
+import ResetPassword from "./pages/resetPassword.js";
 import RoleContext from "./pages/RoleContext.js";
+import UsernameContext from "./pages/UsernameContext.js";
 import Wallet from "./pages/wallet.js";
 import PayAppointment from "./components/payAppointment.js";
 
 function App() {
+  const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
 
   return (
     <div className="App">
+    <UsernameContext.Provider value={{ username, setUsername }}>
     <RoleContext.Provider value={{ role, setRole }}>  
       <BrowserRouter>
         <div className="pages">
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/forgotPassword" element={<ForgotPassword/>}/>
             <Route path="/resetPassword" element={<ResetPassword/>} />
-            <Route path="/verifyOTP" element={<OtpVerification/>} />
 
             <Route path="/" element={<LandingPage />} />
             <Route
@@ -66,6 +69,7 @@ function App() {
         </div>
       </BrowserRouter>
       </RoleContext.Provider>
+      </UsernameContext.Provider>
     </div>
   );
 }

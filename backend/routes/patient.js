@@ -14,8 +14,12 @@ import {
   adddoctor,
   getPrescriptions,
   addPrescription,
-  addhealthrecordp,
+  addhealthrecord,
+  downloadHealthRecordFile,
   removeHealthRecord,
+  viewHealthRecords,
+  viewAllPatients,
+  viewAllDoctors,
   addPackageToFamilyMember,
   reserveappointment,
   payAppointment,
@@ -70,8 +74,12 @@ router.get("/filter", filterDoctors);
 router.get("/select/:username", selectDoctor);
 
 //2
-router.post("/addhealthrecord", upload.single("file"), addhealthrecordp);
+router.post("/addhealthrecord", upload.single("file"), addhealthrecord);
+router.get("/download/:recordId", downloadHealthRecordFile);
 router.delete("/removehealthrecord/:recordId", removeHealthRecord);
+router.get("/viewhealthrecords", viewHealthRecords);
+router.get("/viewallpatients", viewAllPatients);
+router.get("/viewalldoctors", viewAllDoctors);
 
 router.post("/payment-appointment", payAppointment);
 router.get("/payment-appointment", payAppointment2);

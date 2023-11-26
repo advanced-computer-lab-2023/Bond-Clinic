@@ -16,7 +16,7 @@ const healthrecord = new mongoose.Schema({
   },
   description: {
     type: String,
-    // required: true,
+    required: true,
   },
 });
 
@@ -58,6 +58,7 @@ const familyMemberSchema = new mongoose.Schema({
   nationalID: {
     type: String,
     unique: true,
+    sparse: true,
   },
   age: {
     type: Number,

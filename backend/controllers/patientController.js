@@ -2,6 +2,11 @@ import patientModel from "../models/patientModel.js";
 import Doctor from "../models/doctorModel.js";
 import doctorModel from "../models/doctorModel.js";
 import stripe from "stripe";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import jwt from 'jsonwebtoken';
 
 // create a new patient
 export const createPatient = async (req, res) => {
@@ -15,7 +20,6 @@ export const createPatient = async (req, res) => {
     phoneNumber,
     emergencyFullName,
     emergencyPhoneNumber,
-    doctor,
     packages,
   } = req.body;
   try {
@@ -29,7 +33,6 @@ export const createPatient = async (req, res) => {
       phoneNumber,
       emergencyFullName,
       emergencyPhoneNumber,
-      doctor,
       packages,
     });
     res.status(200).json(patient);
@@ -354,7 +357,7 @@ export const selectDoctor = async (req, res) => {
 // 2
 
 // patient adding health record
-export const addhealthrecordp = async (req, res) => {
+export const addhealthrecord = async (req, res) => {
   try {
     const token = req.cookies.jwt;
     jwt.verify(token, "supersecret", async (err, decodedToken) => {
@@ -362,7 +365,6 @@ export const addhealthrecordp = async (req, res) => {
         res.status(400).json({ message: "You are not logged in." });
       } else {
         const username = decodedToken.username;
-        const role = decodedToken.role;
         const { description } = req.body;
         const file = req.file.path;
         const healthrecord = await patientModel.findOneAndUpdate(
@@ -375,6 +377,36 @@ export const addhealthrecordp = async (req, res) => {
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+};
+
+// Function to download health record file
+export const downloadHealthRecordFile = async (req, res) => {
+  try {
+    const { recordId } = req.params;
+
+    // Find the patient that has the health record with the given ID
+    const patient = await patientModel.findOne({ "healthrecords._id": recordId });
+
+    if (!patient) {
+      return res.status(404).json({ message: "Health record not found.1" });
+    }
+
+    // Find the health record within the patient's health records array
+    const record = patient.healthrecords.id(recordId);
+
+    if (!record) {
+      return res.status(404).json({ message: "Health record not found.2" });
+    }
+
+    const currentFilePath = fileURLToPath(import.meta.url);
+    const currentDirPath = dirname(currentFilePath);
+    const file = record.file;
+    const filePath = path.join(currentDirPath, `../${file}`);
+    res.download(filePath);
+  } catch (error) {
+    console.error("Error downloading health record file:", error);
+    res.status(500).json({ error: "Failed to download health record file." });
   }
 };
 
@@ -392,7 +424,7 @@ export const removeHealthRecord = async (req, res) => {
         // Find the patient and pull the health record from the array
         const updatedPatient = await patientModel.findOneAndUpdate(
           { username },
-          { $pull: { healthrecords: { _id: recordId, by: "patient" } } },
+          { $pull: { healthrecords: { _id: recordId } } },
           { new: true }
         );
 
@@ -407,9 +439,41 @@ export const removeHealthRecord = async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error removing health record:", error);
+    res.status(400).json({ error: "Failed to remove health record." });
   }
 };
+
+//view health records for the current patient logged in
+export const viewHealthRecords = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const username = decodedToken.username;
+        const patient = await patientModel.findOne({ username });
+        const healthrecords = patient.healthrecords;
+        res.status(200).json(healthrecords);
+      }
+    });
+  } catch (error) {
+    console.error("Error retrieving health records:", error);
+    res.status(500).json({ error: "Failed to retrieve health records." });
+  }
+}
+
+ //helping func
+ //view all patients there is
+ export const viewAllPatients = async (req,res) => {
+  const patients = await patientModel.find({});
+  res.json(patients);
+}
+export const viewAllDoctors = async (req,res) => {
+  const doctors = await doctorModel.find({});
+  res.json(doctors);
+}
 
 export const payAppointment = async (req, res) => {
   const { healthPackage } = req.body;
@@ -619,3 +683,5 @@ export const payAppointment2 = async (req, res) => {
   });
   res.redirect(303, session.url);
  };
+
+

@@ -1,5 +1,5 @@
 import express from "express";
-import { fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, updateDoctor, addAvailableTimeSlot, getWallet,reservefollowup } from "../controllers/doctorController.js";
+import { fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, viewHealthRecords, addhealthrecord, updateDoctor, addAvailableTimeSlot, getWallet,reservefollowup } from "../controllers/doctorController.js";
 import {viewContract, acceptContract} from "../controllers/employmentContractController.js";
 
 //router initialization
@@ -9,7 +9,7 @@ router.post('/reservefollowup',reservefollowup)
 
 router.get('/',fetchDoctor);
 
-router.get('/getpatients/:username',fetchPatients);
+router.get('/getpatients',fetchPatients);
 
 router.get('/getappointments',getappointments)
 
@@ -31,5 +31,9 @@ router.patch("/contract/:doctorId/accept", acceptContract);
 router.post("/add-available-time-slot", addAvailableTimeSlot);
 
 router.get("/wallet",getWallet);
+
+//24
+router.get("/healthrecords/:patientId", viewHealthRecords);
+router.post("/healthrecords/:patientId", addhealthrecord);
 
 export default router

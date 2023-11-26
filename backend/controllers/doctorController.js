@@ -1,6 +1,6 @@
 import doctorModel from "../models/doctorModel.js";
 import patientModel from "../models/patientModel.js";
-
+import jwt from 'jsonwebtoken';
 export const createDoctor = async (req, res) => {
   const {
     username,
@@ -99,32 +99,75 @@ export const updateDoctor = async (req, res) => {
   }
 };
 
-export const fetchPatients = async (req,res) => {
-
+//fetch patients 
+export const fetchPatients = async (req, res) => {
   try {
-    const {username} = req.params
-    const doctorr = await doctorModel.findOne({username})
-   
-    if(!doctorr){
-      return res.status(404).json({error:"Doctor not found" });
-    }
-
-    //fetch patients who have this doctorr in any object in the appoitnments array
-    const patients = await patientModel.find({ "appointments.doctor": doctorr._id });
-    //const patients = await patientModel.find({ doctor:doctorr._id });
-
-    if (!patients.length) {
-      return res.status(404).json({error: "Doctor has No Patients yet !" });
-    }
-
-    // Extract and send the familyMembers array from the patient document
-
-    res.status(200).json(patients);
+    const token = req.cookies.jwt;
+    jwt.verify(token, 'supersecret', async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({message:"You are not logged in."})
+      } else {
+        const username = decodedToken.username ;
+        const doctor = await doctorModel.findOne({ username });
+        if (!doctor) {
+          return res.status(404).json({ error: "Doctor not found" });
+        }
+        const patients = await patientModel.find({ "appointments.doctor": doctor._id });
+        if (!patients.length) {
+          return res.status(404).json({ error: "Doctor has No Patients yet !" });
+        }
+        res.status(200).json(patients);
+      }
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
-  
   }
-}
+};
+
+//view health records of a patient
+export const viewHealthRecords = async (req, res) => {
+  const { patientId } = req.params;
+  try {
+    const patient = await patientModel.findOne({ _id : patientId });
+    if (!patient) {
+      return res.status(404).json({ error: "Patient not found" });
+    }
+    const healthrecords = patient.healthrecords;
+    res.status(200).json(healthrecords);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//add new health record for a patient
+export const addhealthrecord = async (req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const dusername = decodedToken.username;
+        const doctor = await doctorModel.findOne({ username: dusername });
+        if (!doctor) {
+          return res.status(404).json({ error: "you are not a doctor" });
+        }
+        const doctorName = doctor.name;
+        const { patientId } = req.params;
+        const { doctorNotes ,description } = req.body;
+        const healthrecord = await patientModel.findOneAndUpdate(
+          { _id : patientId },
+          { $push: { healthrecords: { doctorNotes, description, by: "Dr/"+ doctorName} } },
+          { new: true }
+        );
+        res.status(200).json({ message: "Health record added successfully." });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 //get all appointments
 export const getappointments = async (req, res) => {

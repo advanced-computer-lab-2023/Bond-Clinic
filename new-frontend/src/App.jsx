@@ -8,6 +8,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Register from "./pages/login/Register.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 import ResetPW from "./pages/login/ResetPW.jsx";
+import Admin from "./pages/users/Admin.jsx";
+import Patient from "./pages/users/Patient.jsx";
+import Doctor from "./pages/users/Doctor.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,6 +50,9 @@ const App = () => {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/reset" element={<ResetPW />} />
+            <Route path="/admin/home" element={<Admin />} />
+            <Route path="/patient/home" element={<Patient />} />
+            <Route path="/doctor/home" element={<Doctor />} />
           </Routes>
         </QueryClientProvider>
       </BrowserRouter>

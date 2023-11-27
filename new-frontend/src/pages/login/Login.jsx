@@ -7,7 +7,7 @@ import {
   CssBaseline,
 } from "@mui/material";
 import LoginForm from "../../components/login/LoginForm";
-import Cards from "../../components/Cards";
+import Cards from "../../components/login/Cards";
 
 export default function Login() {
   return (

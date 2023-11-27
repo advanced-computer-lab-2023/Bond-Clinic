@@ -5,9 +5,9 @@ import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
-import pic1 from "../images/card-pic-1.svg";
-import pic2 from "../images/card-pic-2.jpg";
-import pic3 from "../images/card-pic-3.jpg";
+import pic1 from "../../images/card-pic-1.svg";
+import pic2 from "../../images/card-pic-2.jpg";
+import pic3 from "../../images/card-pic-3.jpg";
 
 export default function Cards() {
   return (

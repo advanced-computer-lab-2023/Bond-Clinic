@@ -6,6 +6,8 @@ import Login from "./pages/login/Login.jsx";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Register from "./pages/login/Register.jsx";
+import CssBaseline from "@mui/material/CssBaseline";
+import ResetPW from "./pages/login/ResetPW.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,11 +40,13 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/reset" element={<ResetPW />} />
           </Routes>
         </QueryClientProvider>
       </BrowserRouter>

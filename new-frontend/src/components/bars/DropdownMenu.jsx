@@ -4,6 +4,7 @@ import { Menu } from "@mui/base/Menu";
 import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
 import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function MenuIntroduction() {
   const createHandleMenuClick = (menuItem) => {
@@ -14,12 +15,17 @@ export default function MenuIntroduction() {
 
   return (
     <Dropdown>
-      <MenuButton>My account</MenuButton>
+      <MenuButton
+        sx={{
+          backgroundColor: "transparent",
+          border: "none",
+          borderRadius: "40px",
+        }}
+      >
+        <AccountCircleIcon />
+      </MenuButton>
       <Menu slots={{ listbox: Listbox }}>
         <MenuItem onClick={createHandleMenuClick("Profile")}>Profile</MenuItem>
-        <MenuItem onClick={createHandleMenuClick("Language settings")}>
-          Language settings
-        </MenuItem>
         <MenuItem onClick={createHandleMenuClick("Log out")}>Log out</MenuItem>
       </Menu>
     </Dropdown>

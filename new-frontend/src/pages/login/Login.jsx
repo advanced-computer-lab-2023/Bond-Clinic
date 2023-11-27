@@ -14,14 +14,22 @@ export default function Login() {
     <Container component="main" maxWidth="xl">
       <CssBaseline />
       <Stack direction="column" spacing={8}>
-        <Typography
-          sx={{ paddingTop: 5 }}
-          component="h1"
-          variant="h1"
-          align="center"
+        <Stack
+          display="flex"
+          direction="row"
+          justifyContent="center"
+          alignContent="center"
+          paddingTop={5}
         >
-          Bond Clinic
-        </Typography>
+          <img
+            src="../../images/logo.png"
+            alt="logo"
+            style={{ width: "auto", height: "120px", paddingRight: "10px" }}
+          />
+          <Typography component="h1" variant="h1" align="center">
+            Bond Clinic
+          </Typography>
+        </Stack>
         <Typography component="h1" variant="h4" align="center">
           Welcome to Bond Clinic, where you can find the best doctors in the
           world.

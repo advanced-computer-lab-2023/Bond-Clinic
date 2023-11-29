@@ -10,7 +10,8 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { AdminNavbarItems } from "./consts/AdminNavbarItems";
+import { AdminNavbarItems, AdminAppbaritems } from "./consts/AdminNavbarItems";
+import MenuItem from "@mui/material/MenuItem";
 import DropdownMenu from "./DropdownMenu";
 const drawerWidth = 240;
 
@@ -39,7 +40,6 @@ export default function Navbar() {
             variant="h6"
             noWrap
             sx={{
-              mr: 2,
               display: { xs: "none", md: "flex" },
               fontWeight: 700,
               color: "black",
@@ -48,6 +48,11 @@ export default function Navbar() {
           >
             Bond Clinic
           </Typography>
+          {AdminAppbaritems.map((item) => (
+            <MenuItem key={item.id}>
+              <Typography textAlign="center">{item.label}</Typography>
+            </MenuItem>
+          ))}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <DropdownMenu />

@@ -10,12 +10,27 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { AdminNavbarItems, AdminAppbaritems } from "./consts/AdminNavbarItems";
-import MenuItem from "@mui/material/MenuItem";
+import { AdminNavbarItems } from "./consts/admin/AdminNavbarItems";
+import { UserManagementList } from "./consts/admin/AdminAppbarItems";
+import { PatientNavbarItems } from "./consts/patient/PatientNavbarItems";
+import {} from "./consts/patient/PatientAppbarItems";
+import { DoctorNavbarItems } from "./consts/doctor/DoctorNavbarItems";
+import {} from "./consts/doctor/DoctorAppbarItems";
+import Button from "@mui/material/Button";
 import DropdownMenu from "./DropdownMenu";
+
 const drawerWidth = 240;
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const { type } = props;
+  let NavbarItems = {};
+  if (type === "Admin") {
+    NavbarItems = AdminNavbarItems;
+  } else if (type === "Patient") {
+    NavbarItems = PatientNavbarItems;
+  } else if (type === "Doctor") {
+    NavbarItems = DoctorNavbarItems;
+  }
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -48,13 +63,27 @@ export default function Navbar() {
           >
             Bond Clinic
           </Typography>
-
-          {AdminAppbaritems.map((item) => (
-            <MenuItem key={item.id}>
-              <Typography textAlign="center">{item.label}</Typography>
-            </MenuItem>
-          ))}
-
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              marginLeft: 10,
+            }}
+          >
+            {UserManagementList.map((item) => (
+              <Button
+                key={item.id}
+                sx={{
+                  my: 2,
+                  color: "black",
+                  display: "block",
+                  marginLeft: 10,
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <DropdownMenu />
@@ -75,16 +104,14 @@ export default function Navbar() {
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
           <List>
-            {AdminNavbarItems.map((item) => (
+            {NavbarItems.map((item) => (
               <ListItem
                 button
                 key={item.id}
                 onClick={() => console.log("clicked")}
               >
-                <ListItemIcon sx={AdminNavbarItems.icons}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText sx={AdminNavbarItems.text} primary={item.label} />
+                <ListItemIcon sx={NavbarItems.icons}>{item.icon}</ListItemIcon>
+                <ListItemText sx={NavbarItems.text} primary={item.label} />
               </ListItem>
             ))}
           </List>

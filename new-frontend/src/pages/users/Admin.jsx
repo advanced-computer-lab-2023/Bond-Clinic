@@ -6,7 +6,7 @@ export default function Admin() {
   return (
     <Box component="main" sx={{ height: "100vh" }}>
       <CssBaseline />
-      <Navbar />
+      <Navbar type="Admin" />
     </Box>
   );
 }

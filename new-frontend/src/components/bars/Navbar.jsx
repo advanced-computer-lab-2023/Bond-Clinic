@@ -1,82 +1,89 @@
-import React from "react";
+import * as React from "react";
+import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import AppBar from "@mui/material/AppBar";
+import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { AdminNavbarItems } from "./consts/AdminNavbarItems";
-import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import DropdownMenu from "./DropdownMenu";
+const drawerWidth = 240;
 
-const Navbar = () => {
-  const navigate = useNavigate();
-
+export default function Navbar() {
   return (
-    <Drawer
-      sx={{
-        drawer: {
-          width: 320,
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: "white",
+        }}
+      >
+        <Toolbar>
+          <a href="/admin/home">
+            <img
+              src="../../images/logo.png"
+              alt="logo"
+              style={{ width: "50px", height: "auto", marginRight: "10px" }}
+            />
+          </a>
+          <Typography
+            component="a"
+            href="/admin/home"
+            variant="h6"
+            noWrap
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontWeight: 700,
+              color: "black",
+              textDecoration: "none",
+            }}
+          >
+            Bond Clinic
+          </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <DropdownMenu />
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: drawerWidth,
           flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: 320,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: "#101F33",
-            color: "rgba(255, 255, 255, 0.7)",
           },
-          "& .Mui-selected": {
-            color: "red",
-          },
-        },
-        icons: {
-          color: "rgba(255, 255, 255, 0.7)!important",
-          marginLeft: "20px",
-        },
-        text: {
-          "& span": {
-            marginLeft: "-10px",
-            fontWeight: "600",
-            fontSize: "16px",
-          },
-        },
-      }}
-      variant="permanent"
-      anchor="left"
-    >
-      <Toolbar>
-        <img
-          src="../../images/logo.png"
-          alt="logo"
-          style={{ width: "auto", height: "50px", marginRight: "10px" }}
-        />
-        <Typography
-          variant="h6"
-          noWrap
-          component="a"
-          href="/admin/home"
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontWeight: 700,
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
-          BOND CLINIC
-        </Typography>
-      </Toolbar>
-      <Divider />
-      <List>
-        {AdminNavbarItems.map((item) => (
-          <ListItem button key={item.id} onClick={() => navigate(item.route)}>
-            <ListItemIcon sx={AdminNavbarItems.icons}>{item.icon}</ListItemIcon>
-            <ListItemText sx={AdminNavbarItems.text} primary={item.label} />
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
+        }}
+      >
+        <Toolbar />
+        <Box sx={{ overflow: "auto" }}>
+          <List>
+            {AdminNavbarItems.map((item) => (
+              <ListItem
+                button
+                key={item.id}
+                onClick={() => console.log("clicked")}
+              >
+                <ListItemIcon sx={AdminNavbarItems.icons}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText sx={AdminNavbarItems.text} primary={item.label} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+        </Box>
+      </Drawer>
+    </Box>
   );
-};
-
-export default Navbar;
+}

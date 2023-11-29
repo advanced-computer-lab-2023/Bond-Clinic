@@ -48,11 +48,13 @@ export default function Navbar() {
           >
             Bond Clinic
           </Typography>
+
           {AdminAppbaritems.map((item) => (
             <MenuItem key={item.id}>
               <Typography textAlign="center">{item.label}</Typography>
             </MenuItem>
           ))}
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <DropdownMenu />

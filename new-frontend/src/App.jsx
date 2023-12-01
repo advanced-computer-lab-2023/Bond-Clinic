@@ -12,6 +12,9 @@ import Admin from "./pages/users/Admin.jsx";
 import Patient from "./pages/users/Patient.jsx";
 import Doctor from "./pages/users/Doctor.jsx";
 
+import Store from "./redux/Store.jsx";
+import { Provider } from "react-redux";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -42,21 +45,23 @@ const theme = createTheme({
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/reset" element={<ResetPW />} />
-            <Route path="/admin/home" element={<Admin />} />
-            <Route path="/patient/home" element={<Patient />} />
-            <Route path="/doctor/home" element={<Doctor />} />
-          </Routes>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={Store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/reset" element={<ResetPW />} />
+              <Route path="/admin/home" element={<Admin />} />
+              <Route path="/patient/home" element={<Patient />} />
+              <Route path="/doctor/home" element={<Doctor />} />
+            </Routes>
+          </QueryClientProvider>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
   );
 };
 const container = document.getElementById("root");

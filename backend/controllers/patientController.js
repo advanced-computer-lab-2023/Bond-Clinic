@@ -575,6 +575,16 @@ export const payAppointment = async (req, res) => {
           patient: patient._id,
           type: reservetype
         });
+        patient.chats.push({
+          firstPerson: patient.username,
+          secondPerson: doctor.username,
+          messages:[]
+        });
+        doctor.chats.push({
+          firstPerson: doctor.username,
+          secondPerson: patient.username,
+          messages:[]
+        });
         await patient.save();
         await doctor.save();
         res.status(200).json({ error: 'Appointment reserved successfully.' });

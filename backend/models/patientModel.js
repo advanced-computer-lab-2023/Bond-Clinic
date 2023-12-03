@@ -79,6 +79,38 @@ const familyMemberSchema = new mongoose.Schema({
   },
 });
 
+const messageSchema = new mongoose.Schema({
+  sender: {
+    type: String,  
+    required: true,
+  },
+  receiver: {
+    type: String,   
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const chatSchema = new mongoose.Schema({
+  firstPerson: {
+    type: String,   //  firstPerson
+    required: true,
+  },
+  secondPerson: {
+    type: String,   // secondPerson
+    required: true,
+  },
+  messages: [messageSchema] // Array of messages
+});
+
+
 const patientSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -155,6 +187,7 @@ const patientSchema = new mongoose.Schema({
       }
     },
   ],
+  chats:[chatSchema],
 });
 
 export default mongoose.model("Patient", patientSchema);

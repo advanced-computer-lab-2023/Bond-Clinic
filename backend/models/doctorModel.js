@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const availabilitySchema = new mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     date: {
       type: Date,
       required: true,

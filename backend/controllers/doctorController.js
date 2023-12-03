@@ -210,26 +210,7 @@ export const getappointments = async (req, res) => {
     res.status(400).json({ error: err.message });
   }}
 };
-export const addAvailableTimeSlot = async (req, res) => {
-  const { username, date, time } = req.body;
 
-  try {
-    // Check if the doctor is accepted by the admin and has accepted the employment contract
-    const doctor = await doctorModel.findOne({ username });
-    
-    if (!doctor) {
-      return res.status(404).json({ error: "Doctor not found" });
-    }
-
-    // Add the new available time slot
-    doctor.availableTimeSlots.push({ date, time });
-    await doctor.save();
-
-    res.status(200).json(doctor);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
 export const getWallet = async (req,res) => {
   const token = req.cookies.jwt;
     jwt.verify(token, "supersecret", async (err, decodedToken) => {
@@ -287,7 +268,34 @@ export const reservefollowup = async (req, res) => {
    }
  
  }
+ export const addAvailableTimeSlot = async (req, res) => {
+  const { username, date, time } = req.body;
 
+  try {
+      const doctor = await doctorModel.findOne({ username });
+
+      if (!doctor) {
+          return res.status(404).json({ error: "Doctor not found" });
+      }
+
+      // Create a new availability object
+      const newAvailability = {
+          _id: mongoose.Types.ObjectId(),
+          date,
+          time,
+      };
+
+      // Add the new availability to the doctor's availability array
+      doctor.availability.push(newAvailability);
+
+      // Save the changes to the doctor document
+      await doctor.save();
+
+      res.status(200).json(doctor);
+  } catch (error) {
+      res.status(400).json({ error: error.message });
+  }
+};
 
 
 

@@ -143,6 +143,26 @@ function AdminPanel() {
       alert("Doctor Approved Successfully");
     }
   };
+  const handleAddTimeSlot = async () => {
+    try {
+        const response = await axios.post(
+            "http://localhost:4000/api/doctor/add-available-time-slot",
+            {
+                username: selectedUser.username,
+                date: "2023-12-10", // Replace with the selected date
+                time: "14:00", // Replace with the selected time
+            }
+        );
+
+        // Handle success or show an alert
+        console.log(response.data);
+        alert("Available time slot added successfully.");
+    } catch (error) {
+        // Handle errors or show an alert
+        console.error("Error adding available time slot:", error);
+        alert("Error adding available time slot.");
+    }
+};
 
   return (
     <div>

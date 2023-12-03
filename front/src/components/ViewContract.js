@@ -12,7 +12,7 @@ function ViewContract({ doctorId, clinicId }) {
   }, [doctorId, clinicId]);
 
   if (!contract) {
-    return <div>Loading...</div>;
+    return <div>No Contracts</div>;
   }
 
   return (

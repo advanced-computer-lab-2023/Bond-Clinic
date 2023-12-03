@@ -61,14 +61,9 @@ const doctorSchema = new mongoose.Schema({
       },
       status: {
         type: String,
-        enum: ["pending", "accepted", "rejected"],
+        enum: ["pending", "approved", "rejected"],
         default: "pending",
       },
-      employmentStatus: {
-        type: String,
-        enum: ["pending", "accepted", "rejected"],
-        default: "pending",
-    },
 
     wallet:{
         type: Number,

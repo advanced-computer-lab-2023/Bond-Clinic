@@ -12,7 +12,7 @@ function DoctorRegistrationForm() {
     phoneNumber: '',
     hourlyRate: '',
     affiliation: '',
-    educationBg: ''
+    educationBg: '',
   });
 
   const handleChange = (e) => {

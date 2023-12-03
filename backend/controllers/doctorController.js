@@ -16,7 +16,6 @@ export const createDoctor = async (req, res) => {
     availability,
     educationBg,
     status,
-    employmentStatus,
     availableTimeSlots, 
   } = req.body;
   try {
@@ -34,7 +33,6 @@ export const createDoctor = async (req, res) => {
       availability,
       educationBg,
       status,
-      employmentStatus,
       availableTimeSlots,
     });
     res.status(200).json(doctor);
@@ -51,6 +49,16 @@ export const fetchDoctor = async (req, res) => {
     res.status(400).json({error: error.message});
   }
 }
+export const fetchPendingDoctor = async (req, res) => {
+  try {
+    // Exclude doctors with "approved" status
+    const doctors = await Doctor.find({ status: { $ne: "approved" } });
+    res.json(doctors);
+  } catch (error) {
+    console.error("Error fetching doctors:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 export const deleteDoctor = async (req, res) => {
     const{username}=req.body;
@@ -64,7 +72,7 @@ export const deleteDoctor = async (req, res) => {
 }
 
 export const updateDoctor = async (req, res) => {
-  const { username, email, hourlyRate, affiliation } = req.body;
+  const { username, email, hourlyRate, affiliation, status} = req.body;
   const updateFields = {};
 
   // Check if email is provided and update it
@@ -80,6 +88,11 @@ export const updateDoctor = async (req, res) => {
   // Check if affiliation is provided and update it
   if (affiliation) {
     updateFields.affiliation = affiliation;
+  }
+
+  // Check if status is provided and update it
+  if (status) {
+    updateFields.status = status;
   }
 
   try {

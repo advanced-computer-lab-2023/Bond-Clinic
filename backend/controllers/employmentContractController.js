@@ -1,37 +1,40 @@
 import EmploymentContract from "../models/employmentContractModel.js";
 
 export const viewContract = async (req, res) => {
-  const { doctorId } = req.params;
+  const { doctorId, clinicId } = req.params;
 
   try {
-    const contract = await EmploymentContract.findOne({ doctor: doctorId });
+    const contract = await EmploymentContract.findOne({
+      doctor: doctorId,
+      clinic: clinicId,
+    });
 
-    if (contract) {
-      res.status(200).json(contract);
-    } else {
-      res.status(404).json({ message: "Contract not found for this doctor." });
+    if (!contract) {
+      return res.status(404).json({ error: "Contract not found" });
     }
+
+    res.status(200).json(contract);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 export const acceptContract = async (req, res) => {
-  const { doctorId } = req.params;
+  const { doctorId, clinicId } = req.params;
 
   try {
     const contract = await EmploymentContract.findOneAndUpdate(
-      { doctor: doctorId },
-      { accepted: true },
+      { doctor: doctorId, clinic: clinicId, status: "pending" },
+      { status: "approved" },
       { new: true }
     );
 
-    if (contract) {
-      res.status(200).json(contract);
-    } else {
-      res.status(404).json({ message: "Contract not found for this doctor." });
+    if (!contract) {
+      return res.status(404).json({ error: "Contract not found" });
     }
+
+    res.status(200).json(contract);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };

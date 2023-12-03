@@ -117,22 +117,32 @@ function AdminPanel() {
   };
   const handleAcceptDoctor = async (e) => {
     e.preventDefault();
-    //TODO accept a doctor
-    // const response = await fetch("http://localhost:4000/api/doctor", {
-    //   method: "POST",
-    //   body: JSON.stringify(newAdmin),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const json = await response.json();
-    // if (!response.ok) {
-    //   alert(json.error);
-    // }
-    // if (response.ok) {
-    //   alert("Admin Registered Successfully");
-    // }
-  }
+
+    // Assuming that the backend API endpoint for updating the doctor status is "/api/doctor/approve"
+    const response = await fetch("http://localhost:4000/api/doctor", {
+      method: "PATCH", // Use PUT method for updating existing data
+      body: JSON.stringify({ username: selectedUser.username, status: "approved" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await response.json();
+    if (!response.ok) {
+      alert(json.error);
+    } else {
+      // Update the user list and reset selectedUser state
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.username === selectedUser.username
+            ? { ...user, status: "approved" }
+            : user
+        )
+      );
+      setSelectedUser(null);
+      alert("Doctor Approved Successfully");
+    }
+  };
 
   return (
     <div>
@@ -225,6 +235,7 @@ function AdminPanel() {
             <th>Hourly Rate</th>
             <th>Affiliation</th>
             <th>Educational Background</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -244,6 +255,7 @@ function AdminPanel() {
               <td>{user.hourlyRate}</td>
               <td>{user.affiliation}</td>
               <td>{user.educationBg}</td>
+              <td>{user.status}</td>
             </tr>
           ))}
         </tbody>
@@ -252,7 +264,7 @@ function AdminPanel() {
       {selectedUser && (
         <div className="select-buttons">
           <button className="button-78" onClick={handleAcceptDoctor}>Accept Doctor</button>
-          <button className= "button-78" onClick={handleRemoveDoctor}>Delete Doctor</button>
+          <button className= "button-78" onClick={handleRemoveDoctor}>Reject Doctor</button>
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import express from "express";
-import { fetchPatients, createDoctor ,getappointments, deleteDoctor, fetchDoctor, viewHealthRecords, addhealthrecord, updateDoctor, addAvailableTimeSlot, getWallet,reservefollowup } from "../controllers/doctorController.js";
+import { fetchPatients, createDoctor, fetchPendingDoctor ,getappointments, deleteDoctor, fetchDoctor, viewHealthRecords, addhealthrecord, updateDoctor, addAvailableTimeSlot, getWallet,reservefollowup } from "../controllers/doctorController.js";
 import {viewContract, acceptContract} from "../controllers/employmentContractController.js";
 
 //router initialization
@@ -20,11 +20,8 @@ router.delete('/',deleteDoctor);
 router.patch('/',updateDoctor)
 
 //16
-// View employment contract
-router.get("/contract/:doctorId", viewContract);
-
-// Accept employment contract
-router.patch("/contract/:doctorId/accept", acceptContract);
+router.get("/:doctorId/:clinicId", viewContract);
+router.patch("/accept/:doctorId/:clinicId", acceptContract);
 
 //17
 // Add a new route for adding available time slots

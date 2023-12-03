@@ -14,7 +14,7 @@ import PatientPackages from "./pages/patientPackages.tsx";
 import PatientDoctors from "./pages/patientDoctor.js";
 import Login from "./pages/login.js";
 import ForgotPassword from "./pages/forgotPassword.js";
-import ResetPassword from "./pages/resetPassword.js";
+import ResetPassword from "./pages/ResetPassword.js";
 import RoleContext from "./pages/RoleContext.js";
 import UsernameContext from "./pages/UsernameContext.js";
 import Wallet from "./pages/wallet.js";

@@ -46,7 +46,8 @@ export const login = async(req,res) => {
                 }
                 tokenData = {
                     username: username,
-                    role: 'doctor'
+                    role: 'doctor',
+                    status: doctor.status
                 };
             } else {
 

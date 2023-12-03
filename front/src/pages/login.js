@@ -22,7 +22,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:4000/api/user/login", {
         method: 'POST',
@@ -31,20 +31,28 @@ const Login = () => {
         },
         body: JSON.stringify(formData),
         withCredentials: true,
-        credentials : `include`
+        credentials: `include`
       });
-
+  
       const data = await response.json();
+
+      console.log('Response Data:', data);
+
       if (response.ok) {
         // Reset error state on successful login
         setError('');
         // Destructure username and role from data
-        const { username, role } = data;
-        // Set username and role in the context
-        setUsername(username);
-        setRole(role);
-        // Redirect or handle response as needed
-        navigate("/"+role+"/home");
+        const { username, role, status} = data;
+        
+        if (role === "doctor" && status === "pending") {
+          setError("Your account is still pending approval. Please wait for approval.");
+        } else {
+          // Set username and role in the context
+          setUsername(username);
+          setRole(role);
+          // Redirect or handle response as needed
+          navigate("/" + role + "/home");
+        }
       } else {
         // Display error message
         setError(data.error || 'An error occurred');

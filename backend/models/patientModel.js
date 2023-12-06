@@ -13,6 +13,7 @@ const healthrecord = new mongoose.Schema({
   },
   doctorNotes: {
     type: String,
+    default: "no doctor notes available",
   },
   description: {
     type: String,

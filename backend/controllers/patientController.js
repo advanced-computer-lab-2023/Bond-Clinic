@@ -384,7 +384,7 @@ export const addhealthrecord = async (req, res) => {
 export const downloadHealthRecordFile = async (req, res) => {
   try {
     const { recordId } = req.params;
-
+    console.log('Received download request for record ID:', recordId);
     // Find the patient that has the health record with the given ID
     const patient = await patientModel.findOne({ "healthrecords._id": recordId });
 
@@ -399,6 +399,9 @@ export const downloadHealthRecordFile = async (req, res) => {
       return res.status(404).json({ message: "Health record not found.2" });
     }
 
+    if (!record.file) {
+      return res.status(404).json({ message: "Health record does not have a file." });
+    }
     const currentFilePath = fileURLToPath(import.meta.url);
     const currentDirPath = dirname(currentFilePath);
     const file = record.file;
@@ -464,8 +467,7 @@ export const viewHealthRecords = async (req, res) => {
   }
 }
 
- //helping func
- //view all patients there is
+ //hussein helping func
  export const viewAllPatients = async (req,res) => {
   const patients = await patientModel.find({});
   res.json(patients);
@@ -474,6 +476,48 @@ export const viewAllDoctors = async (req,res) => {
   const doctors = await doctorModel.find({});
   res.json(doctors);
 }
+export const addAppointment = async (req, res) => {
+  const { date, status, doctor, type } = req.body;
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const username = decodedToken.username;
+        const patient = await patientModel.findOne({ username });
+        const appointment = { date, status, doctor, type };
+        patient.appointments.push(appointment);
+        await patient.save();
+        res.status(200).json({ message: "Appointment added successfully." });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+export const removeAppointment = async (req, res) => {
+  const { appointmentId } = req.params;
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const username = decodedToken.username;
+        const patient = await patientModel.findOne({ username });
+        patient.appointments = patient.appointments.filter(
+          (appointment) => appointment._id != appointmentId
+        );
+        await patient.save();
+        res.status(200).json({ message: "Appointment removed successfully." });
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+//hussein helping func ends here!
 
 export const payAppointment = async (req, res) => {
   const { healthPackage } = req.body;

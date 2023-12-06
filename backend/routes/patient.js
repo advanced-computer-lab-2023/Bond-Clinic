@@ -20,6 +20,8 @@ import {
   viewHealthRecords,
   viewAllPatients,
   viewAllDoctors,
+  addAppointment,
+  removeAppointment,
   addPackageToFamilyMember,
   reserveappointment,
   payAppointment,
@@ -80,6 +82,8 @@ router.delete("/removehealthrecord/:recordId", removeHealthRecord);
 router.get("/viewhealthrecords", viewHealthRecords);
 router.get("/viewallpatients", viewAllPatients);
 router.get("/viewalldoctors", viewAllDoctors);
+router.post("/addappointment", addAppointment);
+router.delete("/removeappointment/:appointmentId", removeAppointment);
 
 router.post("/payment-appointment", payAppointment);
 router.get("/payment-appointment", payAppointment2);

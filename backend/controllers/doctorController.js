@@ -168,12 +168,19 @@ export const addhealthrecord = async (req, res) => {
         const doctorName = doctor.name;
         const { patientId } = req.params;
         const { doctorNotes ,description } = req.body;
+        if(!doctorNotes){
+          return res.status(400).json({ error: "Please enter doctor notes" });
+        }
+        if(!description){
+          return res.status(400).json({ error: "Please enter description" });
+        }
         const healthrecord = await patientModel.findOneAndUpdate(
           { _id : patientId },
           { $push: { healthrecords: { doctorNotes, description, by: "Dr/"+ doctorName} } },
           { new: true }
         );
-        res.status(200).json({ message: "Health record added successfully." });
+        console.log("Health record added successfully.");
+        res.status(200).json({healthrecord });
       }
     });
   } catch (error) {

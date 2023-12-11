@@ -7,10 +7,14 @@ import { styled } from "@mui/system";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Logout } from "../../redux/userSlice";
 
 export default function ProfileMenu() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const logout = async () => {
+    dispatch(Logout());
     try {
       const response = await fetch("http://localhost:4000/api/user/logout", {
         method: "GET",
@@ -18,6 +22,7 @@ export default function ProfileMenu() {
       });
 
       if (response.ok) {
+        dispatch(Logout());
         navigate("/"); // Redirect to the home page or login page
       } else {
         console.error("Logout failed:", response.error);

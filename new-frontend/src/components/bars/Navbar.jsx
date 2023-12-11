@@ -20,7 +20,6 @@ export default function Navbar() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let NavbarItems = [];
-  console.log(user);
   switch (user.role) {
     case "admin":
       NavbarItems = AdminNavbarItems;

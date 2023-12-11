@@ -12,7 +12,11 @@ const columns = [
     dataIndex: "date",
     key: "date",
   },
-
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+  },
   {
     title: "Action",
     key: "action",
@@ -76,6 +80,7 @@ const handleAccept = () => {
 };
 const handleReject = () => {
   console.log("Rejected");
+  ``;
 };
 
 const PatientTable = ({ data }) => (

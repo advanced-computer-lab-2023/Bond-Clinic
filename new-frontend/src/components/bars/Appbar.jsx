@@ -23,7 +23,6 @@ export default function Appbar() {
   const dispatch = useDispatch();
 
   let AppbarItems = [];
-  console.log(user);
   switch (user.openedNavbar) {
     //admin
     case NavbarLabel.UserManagement:

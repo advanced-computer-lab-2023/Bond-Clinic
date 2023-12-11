@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    role: "patient",
+    role: "doctor",
     username: "",
     openedAppbar: "",
     openedNavbar: "",
@@ -25,6 +25,13 @@ export const userSlice = createSlice({
     setInfo: (state, action) => {
       state.info = action.payload;
     },
+    Logout: (state) => {
+      state.role = "doctor";
+      state.username = "";
+      state.openedAppbar = "";
+      state.openedNavbar = "";
+      state.info = {};
+    },
   },
 });
 
@@ -34,6 +41,7 @@ export const {
   setUsername,
   setRole,
   setInfo,
+  Logout,
 } = userSlice.actions;
 
 export default userSlice.reducer;

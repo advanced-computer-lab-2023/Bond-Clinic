@@ -6,6 +6,7 @@ import {
   Avatar,
   Box,
   ButtonBase,
+  Button,
   Card,
   Grid,
   InputAdornment,
@@ -13,6 +14,11 @@ import {
   Popper,
 } from "@mui/material";
 
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // third-party
 import PopupState, { bindPopper, bindToggle } from "material-ui-popup-state";
 
@@ -22,6 +28,7 @@ import Transitions from "./Transitions";
 // assets
 import { IconSearch } from "@tabler/icons";
 import { shouldForwardProp } from "@mui/system";
+import TuneIcon from "@mui/icons-material/Tune";
 
 // styles
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
@@ -59,10 +66,10 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(
   ({ theme }) => ({
     ...theme.typography.commonAvatar,
     ...theme.typography.mediumAvatar,
-    background: theme.palette.secondary.light,
+    background: "white",
     color: theme.palette.secondary.dark,
     "&:hover": {
-      background: theme.palette.secondary.dark,
+      background: "lightblue",
       color: theme.palette.secondary.light,
     },
   })
@@ -72,6 +79,14 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(
 
 const PatientSearchBar = ({ search }) => {
   const theme = useTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const [value, setValue] = useState("");
   return (
     <>
@@ -128,7 +143,6 @@ const PatientSearchBar = ({ search }) => {
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
-            search(e.target.value);
           }}
           placeholder="Search"
           startAdornment={
@@ -139,6 +153,51 @@ const PatientSearchBar = ({ search }) => {
                 color={theme.palette.grey[500]}
               />
             </InputAdornment>
+          }
+          endAdornment={
+            <>
+              <InputAdornment position="end">
+                <ButtonBase sx={{ borderRadius: "10px" }}>
+                  <HeaderAvatarStyle onClick={() => search(value)}>
+                    <IconSearch size="1.2rem" />
+                  </HeaderAvatarStyle>
+                </ButtonBase>
+              </InputAdornment>
+              <InputAdornment>
+                <ButtonBase sx={{ borderRadius: "10px" }}>
+                  <HeaderAvatarStyle onClick={handleClick}>
+                    <TuneIcon />
+                  </HeaderAvatarStyle>
+                </ButtonBase>
+              </InputAdornment>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem>
+                  Status
+                  <Button>1</Button>
+                  <Button>2</Button>
+                </MenuItem>
+                <MenuItem>
+                  Date{" "}
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      closeOnSelect
+                      label=""
+                      // value={value}
+                      // onChange={(newValue) => setValue(newValue)}
+                    />
+                  </LocalizationProvider>
+                </MenuItem>
+                <MenuItem>Reset</MenuItem>
+              </Menu>
+            </>
           }
           aria-describedby="search-helper-text"
           inputProps={{ "aria-label": "weight" }}

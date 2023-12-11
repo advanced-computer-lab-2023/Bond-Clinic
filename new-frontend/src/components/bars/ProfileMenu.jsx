@@ -27,6 +27,14 @@ export default function ProfileMenu() {
     }
   };
 
+  const handleClickProfile = () => {
+    navigate(`/` + user.role + `/profile`);
+  };
+
+  const handleClick = () => {
+    navigate("/change-password");
+  };
+
   const user = useSelector((state) => state.user);
   let boolWallet = true;
   if (user.role === "admin") {
@@ -45,7 +53,11 @@ export default function ProfileMenu() {
         <AccountCircleIcon />
       </MenuButton>
       <Menu slots={{ listbox: Listbox }}>
-        <MenuItem>Profile</MenuItem>
+        {boolWallet ? (
+          <MenuItem onClick={handleClickProfile}>Profile</MenuItem>
+        ) : (
+          <MenuItem onClick={handleClick}>Change Password</MenuItem>
+        )}
         {boolWallet ? <MenuItem>Wallet</MenuItem> : null}
 
         <MenuItem onClick={logout}>Log out</MenuItem>

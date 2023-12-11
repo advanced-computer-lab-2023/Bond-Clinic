@@ -35,7 +35,8 @@ export const login = async(req,res) => {
             }
             tokenData = {
                 username: username,
-                role: 'admin'
+                role: 'admin',
+                admin: admin,
             };
         } else {
 
@@ -47,7 +48,8 @@ export const login = async(req,res) => {
                 tokenData = {
                     username: username,
                     role: 'doctor',
-                    status: doctor.status
+                    status: doctor.status,
+                    doctor: doctor,
                 };
             } else {
 
@@ -58,7 +60,8 @@ export const login = async(req,res) => {
                     }
                     tokenData = {
                         username: username,
-                        role: 'patient'
+                        role: 'patient',
+                        patient: patient,
                     };
                 } else {
                     return res.status(400).json({error : "User does not exist"});

@@ -15,6 +15,7 @@ import {
   setOpenedNavbar,
   setOpenedAppbar,
   setRole,
+  setInfo,
 } from "../../redux/userSlice";
 import { AppbarLabel, NavbarLabel } from "../bars/consts/enums";
 import IconButton from "@mui/material/IconButton";
@@ -76,14 +77,17 @@ const LoginForm = forwardRef((props, ref) => {
           case "patient":
             dispatch(setOpenedNavbar(NavbarLabel.FamilyMembers));
             dispatch(setOpenedAppbar(AppbarLabel.ViewFamilyMembers));
+            dispatch(setInfo(data.patient));
             break;
           case "admin":
             dispatch(setOpenedNavbar(NavbarLabel.UserManagement));
             dispatch(setOpenedAppbar(AppbarLabel.AddUser));
+            dispatch(setInfo(data.admin));
             break;
           case "doctor":
             dispatch(setOpenedNavbar(NavbarLabel.Appointments));
             dispatch(setOpenedAppbar(AppbarLabel.ViewAppointments));
+            dispatch(setInfo(data.doctor));
             break;
           default:
             break;

@@ -7,6 +7,7 @@ export const userSlice = createSlice({
     username: "",
     openedAppbar: "",
     openedNavbar: "",
+    info: {},
   },
   reducers: {
     setUsername: (state, action) => {
@@ -21,10 +22,18 @@ export const userSlice = createSlice({
     setRole: (state, action) => {
       state.role = action.payload;
     },
+    setInfo: (state, action) => {
+      state.info = action.payload;
+    },
   },
 });
 
-export const { setOpenedAppbar, setOpenedNavbar, setUsername, setRole } =
-  userSlice.actions;
+export const {
+  setOpenedAppbar,
+  setOpenedNavbar,
+  setUsername,
+  setRole,
+  setInfo,
+} = userSlice.actions;
 
 export default userSlice.reducer;

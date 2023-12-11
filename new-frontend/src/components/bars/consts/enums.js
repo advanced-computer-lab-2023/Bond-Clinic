@@ -16,6 +16,13 @@ export const NavbarLabel = {
   DoctorRegistration: "Doctors' Registrations",
   HealthPackages: "Health Packages",
   // Doctor Navbar
+  Patients: "Patients",
+  DrAppointments: "Appointments Management",
+  HealthRecords: "Health Records",
+  DrPrescriptions: "Doctor's Prescriptions",
+  //Common Navbar
+  Profile: "Profile",
+  Logout: "Logout",
 };
 
 export const AppbarLabel = {

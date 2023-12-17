@@ -1,129 +1,105 @@
 import mongoose from "mongoose";
 
-const availabilitySchema = new mongoose.Schema({
-    date: {
-      type: Date,
-      required: true,
-    },
-    time: {
-      type: String,
-      required: true,
-    },
-  });
-
-  const messageSchema = new mongoose.Schema({
-    sender: {
-      type: String,  
-      required: true,
-    },
-    receiver: {
-      type: String,   
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    timestamp: {
-      type: Date,
-      default: Date.now,
-    },
-  });
-  
-  const chatSchema = new mongoose.Schema({
-    firstPerson: {
-      type: String,   //  firstPerson
-      required: true,
-    },
-    secondPerson: {
-      type: String,   // secondPerson
-      required: true,
-    },
-    messages: [messageSchema] // Array of messages
-  });
-
 const doctorSchema = new mongoose.Schema({
-    
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        minlength: 3,
-    }, 
-    name: {
-        type: String,
-        required: true,
-    }, 
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    }, 
-    password: {
-        type: String,
-        required: true,
-        minlength: 8,
-    }, 
-    dob: {
-        type : Date ,
-    }, 
-    gender: {
-        type: String,
-        required: true,
+  username: {
+    type: String,
+}, 
+  name: {
+      type: String,
+  }, 
+  email: {
+    type: String,
+  },  
+  dob: {
+    type : Date , // Date (ISO format); "2023-12-31" 
+  },  
+  hourlyRate: {
+    type: Number,
+  },
+  affiliation: {
+    type: String,
+  },
+  educationBg: {
+    type: String,
+  },
+  status: {
+    type: String,
+    enum: ["registered", "pending", "accepted", "rejected"],
+    default: "registered",
+  },
+  requiredDocuments: {
+    medicalId: {
+      type: String,
     },
-    phoneNumber: {
-        type: Number,
-        required: true,
-        minlength: 11,
-    }, 
-    hourlyRate: {
-        type: Number,
-        required: true,
+    medicalLicense: {
+      type: String,
     },
-    affiliation: {
-        type: String,
-        required: true,
-    },
-    educationBg: {
-        type: String,
-        required: true,
+    medicalDegree: {
+      type: String,
     },
     speciality: {
-        type: String,
-      },
-      status: {
-        type: String,
-        enum: ["pending", "approved", "rejected"],
-        default: "pending",
-      },
-
-    wallet:{
-        type: Number,
-        default: 0,
+      type: String,
     },
-    availableTimeSlots: [availabilitySchema],
-
-    availability: [availabilitySchema],
-    appointments: [
-        {
-          date: {
-            type: Date,
-            required: true,
-          },
-          status: {
-            type: String,
-            required: true,
-          },
-          patient: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Patient",
-          },
-          type :{
-            type:String
-          }
+    default: {},
+  },  
+  employmentContract: {
+    markup: {
+      type: Number,
+    },
+    doctorAcceptance: {
+        type: Boolean,
+    },
+    adminAcceptance: {
+        type: Boolean,
+    },
+    default: {},
+  },
+  workingSlots: [{
+    day: {
+      type: String,
+      enum: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+      required: false,
+    },
+    slot: {
+      type: String,
+      enum: ["1st", "2nd", "3rd", "4th", "5th"],
+      required: false,
+    },
+  }],
+  registered: {
+    patients: [],
+  },
+  appointments: {
+    appointment: [{
+        date: {
+          type: Date, // Date (ISO format); "2023-12-31" 
         },
-      ],
-      chats:[chatSchema],
+        day: {
+          type: String,
+          enum: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+        },
+        slot: {
+          type: String,
+          enum: ["1st", "2nd", "3rd", "4th", "5th"],
+        },
+        status: {
+            type: String,
+            enum: ["upcoming", "completed", "cancelled", "rescheduled"],
+        },
+        type: {
+            type: String,
+            enum: ["self", "familyMember"],
+        },
+        patient: {
+            type: String,
+        },
+    }],
+    default: [],
+  },
+  // wallet:{
+  //   type: Number,
+  //   default: 0,
+  // },
 });
 
 export default mongoose.model('Doctor',doctorSchema)

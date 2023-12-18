@@ -16,7 +16,7 @@ export const patientRegister = async (req, res) => {
 
         const passwordValidation = validatePassword(password);
         if(passwordValidation) {
-            return res.status(400).json(passwordValidation);
+            return res.status(400).json({message : passwordValidation[0].message});
         }
 
         await userModel.create({ username, password, role:"Patient" });
@@ -24,7 +24,7 @@ export const patientRegister = async (req, res) => {
 
         return res.status(200).json({message: "Patient Created Successfully"});
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ message: error.message });
     }
 };
 
@@ -35,7 +35,7 @@ export const doctorRegister = async (req, res) => {
 
         const passwordValidation = validatePassword(password);
         if(passwordValidation) {
-            return res.status(400).json(passwordValidation);
+            return res.status(400).json({message : passwordValidation[0].message});
         }
 
         await userModel.create({ username, password, role:"Doctor" });
@@ -43,7 +43,7 @@ export const doctorRegister = async (req, res) => {
 
         return res.status(200).json({message: "Registration request submitted successfully, waiting for required documents upload", "requestId": doctorReqesting._id});
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ message: error.message });
     }
 };
 

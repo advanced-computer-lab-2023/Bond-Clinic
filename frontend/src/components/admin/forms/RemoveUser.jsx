@@ -34,12 +34,12 @@ export default function RemoveUser() {
       const data = await response.json();
       if (response.ok) {
       setseverity("success");
-      setSnackbarMessage("Admin "+username+" Removed Successfuly !");        
+      setSnackbarMessage(data.message);        
       setSnackbarOpen(true);
       }
       if (!response.ok) {
         setseverity("error");
-        setSnackbarMessage("Error while Removing Admin : \n "+data.message);        
+        setSnackbarMessage("Error : \n "+data.message);        
         setSnackbarOpen(true);
       }
     } catch (error) {

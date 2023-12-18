@@ -1,6 +1,6 @@
 import React from "react";
 import FormControl from "@mui/material/FormControl";
-import { Button, Container, TextField,Snackbar,Alert } from "@mui/material";
+import { Button, TextField,Snackbar,Alert } from "@mui/material";
 import Paper from "@mui/material/Paper";
 
 export default function RemoveUser() {

@@ -11,7 +11,7 @@ export const addPackage = async (req, res) => {
     const packages = await packageModel.create({ type, price, clinicDiscount, pharmacyDiscount, familyDiscount });
     return res.status(200).json({message: type + " package is created successfully"});
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
@@ -44,12 +44,12 @@ export const updatePackage = async (req, res) => {
     );
 
     if (!updatedPackage) {
-      return res.status(404).json({ error: "Package not found" });
+      return res.status(404).json({ message: "Package not found" });
     }
 
     return res.status(200).json({message: type + " package updatted successfully"});
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
@@ -58,11 +58,11 @@ export const deletePackage = async (req, res) => {
   try {
     const deletedPackage = await packageModel.findOneAndDelete({ type });
     if (!deletedPackage) {
-      return res.status(400).json({ error: type + " Package does not exist" });
+      return res.status(400).json({ message: type + " Package does not exist" });
     }
-    return res.status(200).json({message: type + " package is deleted successfully"});
+    return res.status(200).json({message: type + " Package is deleted successfully"});
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 

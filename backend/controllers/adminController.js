@@ -31,7 +31,7 @@ export const removeUser = async (req, res) => {
 
     const removedUser = await userModel.findOneAndDelete({ username: username});
     if(!removedUser) {
-      return res.status(400).json({error: "User does not exist"});
+      return res.status(400).json({message: "User does not exist"});
     }
     if(removedUser.role === "Admin") {
       await adminModel.findOneAndDelete({ username: username});

@@ -7,8 +7,7 @@ import { setOpenedNavbar } from "../../../redux/userSlice";
 import { NavbarLabel } from "../../bars/consts/enums";
 
 const PatientTable = ({ data }) => {
-  const [open, setOpen] = React.useState(false);
-  const [message, setMessage] = React.useState("");
+
   const dispatch = useDispatch();
   const columns = [
     {
@@ -69,8 +68,7 @@ const PatientTable = ({ data }) => {
               cursor: "pointer",
             }}
             onClick={() => {
-              snackbar();
-              setMessage("Follow-Up scheduled Successfully");
+
             }}
           >
             Follow-Up
@@ -84,8 +82,7 @@ const PatientTable = ({ data }) => {
               cursor: "pointer",
             }}
             onClick={() => {
-              snackbar();
-              setMessage("Appointment rescheduled successfully!");
+
             }}
           >
             Reschedule
@@ -95,25 +92,12 @@ const PatientTable = ({ data }) => {
     },
   ];
 
-  function snackbar() {
-    setOpen(true);
-  }
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
 
-    setOpen(false);
-  };
   return (
     <div>
       <Table columns={columns} dataSource={data} />
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          {message}
-        </Alert>
-      </Snackbar>
+      
     </div>
   );
 };

@@ -151,11 +151,8 @@ const patientSchema = new mongoose.Schema({
     },
   },
   registered: {
-    doctors: [{
-      username: {
-        type: String,
-      },
-    }],
+    type:[String],
+    default :[]
   },
   health: {
     records:[{

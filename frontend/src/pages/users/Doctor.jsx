@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Box } from "@mui/material";
 import Navbar from "../../components/bars/Navbar";
@@ -18,34 +18,66 @@ import { setOpenedNavbar } from "../../redux/userSlice";
 import AddMedicineForm from "../../components/patient/forms/AddMedicineForm";
 import DoctorChat from "../../components/doctor/DoctorChat";
 
+
+
 export default function Doctor() {
-  const data = [
-    {
-      key: "1",
-      name: "Joe Black",
-      date: "2021-10-10",
-    },
-    {
-      key: "2",
-      name: "Joe Black",
-      date: "2021-10-10",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      date: "2021-10-10",
-    },
-    {
-      key: "4",
-      name: "Joe Black",
-      date: "2021-10-10",
-    },
-    {
-      key: "5",
-      name: "Joe Black",
-      date: "2021-10-10",
-    },
-  ];
+  // const data = [
+  //   {
+  //     key: "1",
+  //     name: "Joe Black",
+  //     date: "2021-10-10",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "Joe Black",
+  //     date: "2021-10-10",
+  //   },
+  //   {
+  //     key: "3",
+  //     name: "Joe Black",
+  //     date: "2021-10-10",
+  //   },
+  //   {
+  //     key: "4",
+  //     name: "Joe Black",
+  //     date: "2021-10-10",
+  //   },
+  //   {
+  //     key: "5",
+  //     name: "Joe Black",
+  //     date: "2021-10-10",
+  //   },
+  // ];
+  const [data, setData] = React.useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/doctor/registered-patients",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: `include`,
+        }
+      );
+      const dataa = await response.json();
+      setData(dataa);
+      setData2(dataa)
+      console.log(dataa);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+
+
+
   const [data2, setData2] = useState(data);
 
   const healthRecordData = [

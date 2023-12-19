@@ -140,16 +140,17 @@ export const getRegisteredPatients = async(req, res) => {
         res.status(400).json({message:"You are not logged in."})
       } else {
         const doctorusername = decodedToken.username;
-        const doctor = await doctorModel.find({ username: doctorusername});
-        const registeredPatients = doctor.registeredPatients;
-        if(registeredPatients.length === 0) {
-          return res.status(404).json({ message: "You do not have any registered patient" });
-        }
+        const doctor = await doctorModel.findOne({ username: doctorusername});
+
+        const registeredPatientsUsernames = doctor ? doctor.registered : [];
+        // Use the usernames to fetch patient objects from patientModel
+        const registeredPatients = await patientModel.find({ username: { $in: registeredPatientsUsernames } });
+        console.log(registeredPatients)
         return res.status(200).json(registeredPatients);
       }
     });
   } catch (error) {
-    return res.status(400).json({error: error.message});
+    return res.status(400).json({message: error.message});
   }
 };
 
@@ -195,9 +196,6 @@ export const viewRegisteredPatient = async(req, res) => {
         const doctorusername = decodedToken.username;
 
         let healthRecords = patient.health.records;
-        if(healthRecords.length === 0) {
-          return res.status(400).json({ message: "There is no health Records" });
-        }
         healthRecords = healthRecords.filter(
           (record) => record.uploadedBy === doctorusername);
         let informationAndHealthRecords = {

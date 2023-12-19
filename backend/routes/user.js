@@ -1,6 +1,7 @@
 import express from "express";
 import { patientRegister, doctorRegister, pharmacistRegister, login, logout, forgotPassword, resetPassword,
-         viewMedicines, searchMedicine, filterMedicine, viewMonthSales } from "../controllers/userController.js";
+         viewMedicines, searchMedicine, filterMedicine, viewMonthSales, getAppointments, 
+         filterAppointmentsDateStatus, viewHealthRecords } from "../controllers/userController.js";
 
 //router initialization
 const router = express.Router();
@@ -37,5 +38,17 @@ router.get('/filter-medicines', filterMedicine);
 
 // (Req 20) As an Adminstrator / Pharmacist view a total sales report based on a chosen month
 router.get("/month-sales", viewMonthSales);
+
+// (Req 45) As a doctor or patinet view a list of all my upcoming / past appointments
+router.get("/get-appointments", getAppointments);
+
+// (Req 46) As a doctor or patient filter appointments by date or status (upcoming, completed, cancelled, rescheduled)
+router.post("/filter-appointments", filterAppointmentsDateStatus);
+
+// (Req 24) As a doctor or patient view uploaded health records
+router.get("/view health Records", viewHealthRecords);
+// upload and remove health records are in patient controller
+
+
 
 export default router;

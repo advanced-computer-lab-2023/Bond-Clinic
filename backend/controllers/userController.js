@@ -356,3 +356,125 @@ export const viewMonthSales = async(req, res) => {
         return res.status(400).json({error : error.message});
     }
 };
+
+// (Req 46) As a doctor or patient filter appointments by date or status (upcoming, completed, cancelled, rescheduled)
+export const filterAppointmentsDateStatus = async (req, res) => {
+    try {
+      const token = req.cookies.jwt;
+      jwt.verify(token, "supersecret", async (err, decodedToken) => {
+        if (err) {
+          return res.status(400).json({ message: "You are not logged in." });
+        } else {
+          let { date, status } = req.body;
+          if(!date && ! status) {
+            return res.status(200).json({ message: "You need to either filter by date or status" });
+          }
+          if(!date) {
+            date = "";
+          }
+          if(!status) {
+            status = "";
+          }
+          const role = decodedToken.role;
+          if(role === "Doctor") {
+            const doctorusername = decodedToken.username;
+            const doctor = await doctorModel.findOne({ username: doctorusername });
+            let appointments = [];
+            for(appointment in doctor.appointments.appointment) {
+              if(appointment.date === date || appointment.status === status) {
+                appointments.push(appointment);
+              }
+            }
+            return res.status(200).json({ Appointments: appointments});
+          } else {
+            const patientusername = decodedToken.username;
+            const patient = await patientModel.findOne({ username: patientusername });
+            let appointments = [];
+            for(appointment in patient.appointments.appointment) {
+              if(appointment.date === date || appointment.status === status) {
+                appointments.push(appointment);
+              }
+            }
+            return res.status(200).json({ Appointments: appointments }); 
+          } 
+        }
+      });
+    } catch (error) {
+      return res.status(500).json({ "error": "Failed to retrieve health records." });
+    }
+  };
+
+  // (Req 45) As a doctor or patinet view a list of all my upcoming / past appointments
+export const getAppointments = async (req, res) => {
+    try {
+      const token = req.cookies.jwt;
+      jwt.verify(token, "supersecret", async (err, decodedToken) => {
+        if (err) {
+          res.status(400).json({ message: "You are not logged in." });
+        } else {
+          const role = decodedToken.role;
+          if(role === "Doctor") {
+            const doctorusername = decodedToken.username;
+            const doctor = await doctorModel.findOne({ username: doctorusername });
+            const appointments = doctor.appointments.appointment;
+            let list = [];
+            for(appointment in appointments) {
+              if(appointment.status === "upcoming" || appointment.status === "completed") {
+                list.push(appointment);
+              }
+            }
+            return res.status(200).json({"Appointments": list});
+          } else {
+            const patientusername = decodedToken.username;
+            const patient = await patientModel.findOne({ username: patientusername });
+            const appointments = patient.appointments;
+            let list = [];
+            for(appointment in appointments) {
+              if(appointment.status === "upcoming" || appointment.status === "completed") {
+                list.push(appointment);
+              }
+            }
+            return res.status(200).json({"Appointments": list});
+          }
+        }
+      });
+    } catch (error) {
+      return res.status(400).json({ "error": "Failed to retrieve health records." });
+    }
+  };
+  
+  // (Req 24) As a doctor or patient view uploaded health records
+export const viewHealthRecords = async(req, res) => {
+    try {
+      const token = req.cookies.jwt;
+      jwt.verify(token, "supersecret", async (err, decodedToken) => {
+        if (err) {
+          return res.status(400).json({ message: "You are not logged in." });
+        } else {
+          const role = decodedToken.role;
+          if(role === "Doctor") {
+            const doctorusername = decodedToken.username;
+  
+            const doctor = await doctorModel.findOne({ username: doctorusername });
+  
+            let healthRecords = [];
+  
+            for(patient in doctor.registered) {
+              healthRecords.push(patient.health.records);
+            }
+  
+            return res.status(200).json({"Patients health Records": healthRecords});
+          } else {
+            const patientusername = decodedToken.username;
+  
+            const patient = await patientModel.findOne({ username: patientusername});
+    
+            return res.status(200).json({ "Health Records": patient.health.records });
+          }
+        }
+      });
+    } catch (error) {
+      return res.status(400).json({ "error": "Failed to remove health record." });
+    }
+  };
+  

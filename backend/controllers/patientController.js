@@ -1,6 +1,7 @@
 import userModel from "../models/userModel.js";
 import patientModel from "../models/patientModel.js";
 import doctorModel from "../models/doctorModel.js";
+import packageModel from "../models/packageModel.js";
 import jwt from "jsonwebtoken"
 import multer from "multer";
 import fs from 'fs/promises';
@@ -62,7 +63,7 @@ export const getFamilyMembers = async (req, res) => {
   }
 };
 
-// (Req 37) view a list of all doctors along with their speciality, session price (based on subscribed health package if any)
+// (Req 37) As a patient view a list of all doctors along with their speciality, session price (based on subscribed health package if any)
 export const getDoctorsNameSpecialitySessionPrice = async (req, res) => {
   try {
     const token = req.cookies.jwt;
@@ -259,31 +260,7 @@ export const viewSelectedDoctor = async (req, res, username) => {
   }
 }
 
-export const addPrescription = async (req, res) => {
-  try {
-    const token = req.cookies.jwt;
-    jwt.verify(token, 'supersecret', async(err, decodedToken) => {
-      if(err) {
-        return res.status(400).json({err : err.message});
-      } else {
-        const patientusername = decodedToken.username;
-        const { name, price, description, img, doctor, date } = req.body;
-
-        const newPrescription = { name, price, description, img, doctor, date };
-        
-        const patient = await patientModel.findOne({username: patientusername});
-        patient.prescription.push(newPrescription);
-        await patient.save();
-
-        return res.status(200).json(newPrescription);
-      }
-    });
-  } catch (error) {
-    return res.status(400).json({ error: error.message });
-  }
-};
-
-// (Req 54) view a list of all my perscriptions
+// (Req 54) As a patient view a list of all my perscriptions
 export const getPrescriptions = async (req, res) => {
   try {
     const token = req.cookies.jwt;
@@ -439,29 +416,6 @@ export const uploadHealthRecord = async (req, res) => {
   }
 };
 
-// (Req 24) helper to delete health records
-export const viewHealthRecords = async(req, res) => {
-  try {
-    const token = req.cookies.jwt;
-    jwt.verify(token, "supersecret", async (err, decodedToken) => {
-      if (err) {
-        return res.status(400).json({ message: "You are not logged in." });
-      } else {
-        const patientusername = decodedToken.username;
-
-        const patient = await patientModel.findOne({ username: patientusername});
-
-        if(!patient) {
-          return res.status(404).json({ "message": "no health records available." });
-        }
-        return res.status(200).json({ "Health Records": patient.health.records });
-      }
-    });
-  } catch (error) {
-    return res.status(400).json({ "error": "Failed to remove health record." });
-  }
-};
-
 // (Req 2) As a patient remove documents (PDF,JPEG,JPG,PNG) for my medical history
 export const removeHealthRecord = async (req, res) => {
   try {
@@ -487,77 +441,6 @@ export const removeHealthRecord = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({ "error": "Failed to remove health record." });
-  }
-};
-
-// (Req 45) view a list of all my upcoming / past appointments
-export const getAppointments = async (req, res) => {
-  try {
-    const token = req.cookies.jwt;
-    jwt.verify(token, "supersecret", async (err, decodedToken) => {
-      if (err) {
-        res.status(400).json({ message: "You are not logged in." });
-      } else {
-        const patientusername = decodedToken.username;
-        const patient = await patientModel.findOne({ username: patientusername });
-        const appointments = patient.appointments;
-        return res.status(200).json(appointments);
-      }
-    });
-  } catch (error) {
-    return res.status(400).json({ "error": "Failed to retrieve health records." });
-  }
-};
-
-// (Req 46) filter appointments by date or status (upcoming, completed, cancelled, rescheduled)
-export const filterAppointmentsDateStatus = async (req, res) => {
-  try {
-    const token = req.cookies.jwt;
-    jwt.verify(token, "supersecret", async (err, decodedToken) => {
-      if (err) {
-        return res.status(400).json({ message: "You are not logged in." });
-      } else {
-        const patientusername = decodedToken.username;
-        const { date, status } = req.body;
-        const patient = await patientModel.findOne({ username: patientusername });
-
-        let filteredAppointments = patient.appointments.map((appointment) => ({
-          date: appointment.date.toISOString(),
-          status: appointment.status,
-          doctorName: appointment.doctor.name,
-          type: appointment.type,
-        }));
-
-        if (status !== undefined && status !== "" && status !== null) {
-          filteredAppointments = filteredAppointments.filter((appointment) => appointment.status === status);
-        }
-        if (date !== undefined && date !== "" && date !== null) {
-          filteredAppointments = filteredAppointments.filter((appointment) => appointment.date === date);
-        }
-
-        if (filteredAppointments.length === 0) {
-          return res.status(400).json({ message: "There is no matching appointment" });
-        } else {
-          return res.status(200).json(filteredAppointments);
-        }
-      }
-    });
-  } catch (error) {
-    return res.status(500).json({ "error": "Failed to retrieve health records." });
-  }
-};
-
-// (Req 67) view the amount in my wallet
-export const getWallet = async (req,res) => {
-  try {
-    const token = req.cookies.jwt;
-    jwt.verify(token, "supersecret", async (err, decodedToken) => {
-      const username = decodedToken.username;
-      const patient = await patientModel.findOne({ username: username });
-      return res.json(patient.wallet);
-    });
-  } catch (error) {
-    return res.status(400).json({ "error": "Failed to get amount in wallet" });
   }
 };
 
@@ -646,6 +529,44 @@ export const linkFamily = async (req, res) => {
     });
   } catch (error) {
     return res.status(400).json({ "error": "Failed to link a family Member" + error });
+  }
+};
+
+// (Req 27) As a patient view health package options and details
+export const viewHealthPackageOptions = async(req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        return res.status(400).json({ message: "You are not logged in." });
+      } else {
+        const patientusername = decodedToken.username;
+        const packages = await packageModel.find({});
+        if(!packages) {
+          return res.status(200).json({error: "error fetching the health packages"});
+        }
+      }
+    });
+  } catch (error) {
+    return res.status(400).json({ error: "Failed to view health packages options" });
+  }
+};
+
+
+
+
+
+// (Req 67) view the amount in my wallet
+export const getWallet = async (req,res) => {
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      const username = decodedToken.username;
+      const patient = await patientModel.findOne({ username: username });
+      return res.json(patient.wallet);
+    });
+  } catch (error) {
+    return res.status(400).json({ "error": "Failed to get amount in wallet" });
   }
 };
 

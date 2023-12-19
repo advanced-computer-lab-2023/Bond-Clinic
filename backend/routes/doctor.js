@@ -1,6 +1,7 @@
 import express from "express";
 import { uploadDocuments, updateDoctor, searchPatient, getRegisteredPatients, filterPatientsUpcomingAppointments, 
-    selectPatient, viewRegisteredPatient, acceptContract, viewContract, addAvailableTimeSlots } from "../controllers/doctorController.js";
+         selectPatient, viewRegisteredPatient, acceptContract, viewContract, addAvailableTimeSlots, 
+         addPatinetPrescription } from "../controllers/doctorController.js";
 
 //router initialization
 const router = express.Router();
@@ -11,29 +12,32 @@ router.post("/upload-documents", uploadDocuments);
 // (Req 14) As a doctor edit/ update my email, hourly rate or affiliation (hospital)
 router.patch('/update-doctor',updateDoctor);
 
-// (Req 34) search for a patient by name
+// (Req 34) As a doctor search for a patient by name
 router.get("/search-patient", searchPatient);
 
-// (Req 33) view a list of all my patients
+// (Req 33) As a doctor view a list of all my patients
 router.get("/registered-patients", getRegisteredPatients);
 
-// (Req 35) filter patients based on upcoming appointments
-router.post("/filter/upcoming-appointments", filterPatientsUpcomingAppointments);
+// (Req 35) As a doctor filter patients based on upcoming appointments
+router.post("/filter-upcoming-appointments", filterPatientsUpcomingAppointments);
 
-// (Req 36) select a patient from the list of patients
+// (Req 36) As a doctor select a patient from the list of patients
 router.post("/select-patient", selectPatient);
 
-// (Req 25) view information and health records of patient registered with me
+// (Req 25) As a doctor view information and health records of patient registered with me
 router.get("/view-patient-record", viewRegisteredPatient)
 
-// (Req 16) view the employment contract
+// (Req 16) As a doctor view the employment contract
 router.get("/view-contract", viewContract);
 
-// (Req 16) accept the employment contract
+// (Req 16) As a doctor accept the employment contract
 router.patch("/accept-contract", acceptContract);
 
 // (Req 17) As a doctor add my available time slots for appointments
 router.patch("/add-available-time-slot", addAvailableTimeSlots);
+
+// (Req 62) As a doctor add a patient's prescription
+router.post("/add-prescription", addPatinetPrescription);
 
 // router.post('/reservefollowup',reservefollowup)
 

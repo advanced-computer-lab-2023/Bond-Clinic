@@ -2,8 +2,8 @@ import express, { json } from "express";
 import { addFamilyMember, getFamilyMembers, 
          getDoctorsNameSpecialitySessionPrice, getDoctorNameSpeciality, filterDoctorsSpecialityAvailability, 
          selectDoctor, viewSelectedDoctor, getPrescriptions, filterPrescription, selectPrescription, 
-         uploadHealthRecord, viewHealthRecords, removeHealthRecord, linkFamily, getAppointments, 
-         filterAppointmentsDateStatus, getWallet, payAppointment, payAppointment2, payPackage, 
+         uploadHealthRecord, viewHealthRecords, removeHealthRecord, linkFamily, viewHealthPackageOptions, 
+         getAppointments, filterAppointmentsDateStatus, getWallet, payAppointment, payAppointment2, payPackage, 
          payPackage2 } from "../controllers/patientController.js";
 
 //router initialization
@@ -42,8 +42,7 @@ router.get("/select-prescription/:prescriptionId", selectPrescription);
 // (Req 2) As a patient upload documents (PDF,JPEG,JPG,PNG) for my medical history
 router.post("/upload-health-record", uploadHealthRecord);
 
-// helper to remove
-router.get("/get-health-records", viewHealthRecords);
+// view health records in userController
 
 // (Req 2) As a patient remove documents (PDF,JPEG,JPG,PNG) for my medical history
 router.delete("/remove-health-record/:recordId", removeHealthRecord);
@@ -51,9 +50,12 @@ router.delete("/remove-health-record/:recordId", removeHealthRecord);
 // (Req 19) As a patient link another patient's account as a family member using email or phone number stating relation to the patient
 router.post('/link-family',linkFamily);
 
-router.get("/getAppointments", getAppointments);
+// (Req 27) As a patient view health package options and details
+router.get("/health-oackages", viewHealthPackageOptions);
 
-router.get("/filterAppointmentsDateStatus", filterAppointmentsDateStatus);
+
+
+
 
 router.get("/getWallet", getWallet);
 

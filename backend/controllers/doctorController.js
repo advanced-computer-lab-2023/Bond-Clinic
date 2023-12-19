@@ -349,50 +349,45 @@ export const followUpAppointment =  async(req, res) => {
   }
 };
 
-// //view health records of a patient
-// export const viewHealthRecords = async (req, res) => {
-//   const { patientId } = req.params;
-//   try {
-//     const patient = await patientModel.findOne({ _id : patientId });
-//     if (!patient) {
-//       return res.status(404).json({ error: "Patient not found" });
-//     }
-//     const healthrecords = patient.healthrecords;
-//     res.status(200).json(healthrecords);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// //add new health record for a patient
-// export const addhealthrecord = async (req, res) => {
-//   try {
-//     const token = req.cookies.jwt;
-//     jwt.verify(token, "supersecret", async (err, decodedToken) => {
-//       if (err) {
-//         res.status(400).json({ message: "You are not logged in." });
-//       } else {
-//         const dusername = decodedToken.username;
-//         const doctor = await doctorModel.findOne({ username: dusername });
-//         if (!doctor) {
-//           return res.status(404).json({ error: "you are not a doctor" });
-//         }
-//         const doctorName = doctor.name;
-//         const { patientId } = req.params;
-//         const { doctorNotes ,description } = req.body;
-//         const healthrecord = await patientModel.findOneAndUpdate(
-//           { _id : patientId },
-//           { $push: { healthrecords: { doctorNotes, description, by: "Dr/"+ doctorName} } },
-//           { new: true }
-//         );
-//         res.status(200).json({ message: "Health record added successfully." });
-//       }
-//     });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
+// (Req 62) As a doctor add a patient's prescription
+export const addPatinetPrescription = async(req, res) => {
+  try {
+    const token = req.cookies.jwt;
+    jwt.verify(token, 'supersecret', async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({message:"You are not logged in."})
+      } else {
+        const { patientusername, medicine, dosage, duration, filled } = req.body;
+        const doctorusername = decodedToken.username;
+        const doctor = await doctorModel.findOne({ username: doctorusername});
+        const patients = doctor.registered.patients;
+        for(patient in patients) {
+          if(patient.username === patientusername) {
+            const requiredPatient = await patientModel.findOne({ username: patientusername});
+            const date = new Date();
+            let medicines = {
+              medicine: medicine,
+              dosage: dosage,
+              duration: duration
+            };
+            let prescription = {
+              doctor: doctorusername,
+              date: date,
+              medicines: [medicines],
+              filled: filled
+            };
+            requiredPatient.prescriptions.push(prescription);
+            await requiredPatient.save();
+            return res.status(200).json({ message: "Patient prescription is added successfully"});
+          }
+        }
+        return res.status(400).json({message: "You are not allowed to write a prescription for this patient"});
+      }
+    });
+  } catch (error) {
+    return res.status(400).json({error: "error adding prescription to patinet"});
+  }
+};
 
 // //get all appointments
 // export const getappointments = async (req, res) => {

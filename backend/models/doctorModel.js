@@ -67,7 +67,11 @@ const doctorSchema = new mongoose.Schema({
     },
   }],
   registered: {
-    patients: [],
+    patients: [{
+      username: {
+        type: String,
+      },
+    }],
   },
   appointments: {
     appointment: [{

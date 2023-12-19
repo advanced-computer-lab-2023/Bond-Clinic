@@ -1,7 +1,7 @@
 import express from "express";
 import { addAdmin, removeUser, getRegisteredDoctorsRequests, getRegisteredPharmacistsRequests, acceptRegisteredDoctor, 
-         acceptRegisteredPharmacist, rejectRegisteredPharmacist, getPendDoctorRequests, acceptPendDoctor, 
-         rejectPendDoctor, viewPatientInfo, viewPharmacistInfo } from "../controllers/adminController.js";
+         rejectRegisteredDoctor, acceptRegisteredPharmacist, rejectRegisteredPharmacist, viewPatientInfo, 
+         viewPharmacistInfo } from "../controllers/adminController.js";
 
 //router initialization
 const router = express.Router();
@@ -21,20 +21,14 @@ router.get("/registered-pharmacist-requests", getRegisteredPharmacistsRequests);
 // (Req 15) As an admin accept a request for the registration of a doctor
 router.patch("/accept-doctor-register/:username", acceptRegisteredDoctor);
 
+// (Req 15) As an admin accept a request for the registration of a doctor
+router.patch("/reject-doctor-register/:username", rejectRegisteredDoctor);
+
 // (Req 8) accept the request of a pharmacist to join the platform
 router.patch("/accept-pharmacist-register/:username", acceptRegisteredPharmacist);
 
 // (Req 8) reject the request of a pharmacist to join the platform
 router.patch("/reject-pharmacist-register/:username", rejectRegisteredPharmacist);
-
-// (Req 10) helper
-router.get("/pending-doctors-requests", getPendDoctorRequests);
-
-// (Req 10) accept the request of a doctor to join the platform
-router.patch("/accept-doctor-pending/:username", acceptPendDoctor);
-
-// (Req 10) reject the request of a doctor to join the platform
-router.patch("/reject-doctor-pending/:username", rejectPendDoctor);
 
 // (Req 23) view a patients's basic information
 router.get("/patients", viewPatientInfo);

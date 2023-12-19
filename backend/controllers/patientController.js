@@ -760,57 +760,56 @@ export const payPackage2 = async (req, res) => {
 //   }
 // };
 
-//    export const reserveappointment = async (req, res) => {
-//  try {
-//    const token = req.cookies.jwt;
-//     jwt.verify(token, "supersecret", async (err, decodedToken) => {
-//       if (err) {
-//         res.status(400).json({ message: "You are not logged in." });
-//       } else {
-//         console.log("test")
-//         const {  selectedUser, appointment,reservetype } = req.body;
-//         const username = decodedToken.username;
-//         console.log(username)
-//         const patient =await patientModel.findOne({username : username});
-//         const doctor =await doctorModel.findById(selectedUser._id);
-//         console.log(doctor.username)
-//         if (!patient || !doctor) {
-//           return res.status(404).json({ message: 'Patient or doctor not found.' });
-//         }
-//         console.log(patient.username)
-//         patient.appointments.push({
-//           date: new Date(appointment.date),
-//           status: 'reserved',
-//           doctor: doctor._id,
-//           type : reservetype
-//         });
-//         doctor.appointments.push({
-//           date: new Date(appointment.date),
-//           status: 'reserved',
-//           patient: patient._id,
-//           type: reservetype
-//         });
-//         patient.chats.push({
-//           firstPerson: patient.username,
-//           secondPerson: doctor.username,
-//           messages:[]
-//         });
-//         doctor.chats.push({
-//           firstPerson: doctor.username,
-//           secondPerson: patient.username,
-//           messages:[]
-//         });
-//         await patient.save();
-//         await doctor.save();
-//         res.status(200).json({ error: 'Appointment reserved successfully.' });
+   export const reserveappointment = async (req, res) => {
+ try {
+   const token = req.cookies.jwt;
+    jwt.verify(token, "supersecret", async (err, decodedToken) => {
+      if (err) {
+        res.status(400).json({ message: "You are not logged in." });
+      } else {
+        console.log("test")
+        const {  selectedUser, appointment,reservetype } = req.body;
+        const username = decodedToken.username;
+        const patient =await patientModel.findOne({username : username});
+        const doctor =await doctorModel.findById(selectedUser._id);
+        console.log(doctor.username)
+        if (!patient || !doctor) {
+          return res.status(404).json({ message: 'Patient or doctor not found.' });
+        }
+        console.log(patient.username)
+        patient.appointments.push({
+          date: new Date(appointment.date),
+          status: 'reserved',
+          doctor: doctor._id,
+          type : reservetype
+        });
+        doctor.appointments.push({
+          date: new Date(appointment.date),
+          status: 'reserved',
+          patient: patient._id,
+          type: reservetype
+        });
+        patient.chats.push({
+          firstPerson: patient.username,
+          secondPerson: doctor.username,
+          messages:[]
+        });
+        doctor.chats.push({
+          firstPerson: doctor.username,
+          secondPerson: patient.username,
+          messages:[]
+        });
+        await patient.save();
+        await doctor.save();
+        res.status(200).json({ error: 'Appointment reserved successfully.' });
 
-//       }
-//     });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 
-// }
+}
 
 
 

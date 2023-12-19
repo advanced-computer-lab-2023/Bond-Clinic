@@ -70,11 +70,8 @@ const doctorSchema = new mongoose.Schema({
     },
   }],
   registered: {
-    patients: [{
-      username: {
-        type: String,
-      },
-    }],
+    type:[String],
+    default:[]
   },
   appointments: {
     appointment: [{

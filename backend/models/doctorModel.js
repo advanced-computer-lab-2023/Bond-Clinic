@@ -12,8 +12,11 @@ const doctorSchema = new mongoose.Schema({
   },  
   dob: {
     type : Date , // Date (ISO format); "2023-12-31" 
-  },  
-  hourlyRate: {
+  }, 
+  age: {
+    type: Number,
+  }
+  ,hourlyRate: {
     type: Number,
   },
   affiliation: {

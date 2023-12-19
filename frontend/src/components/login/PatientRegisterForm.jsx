@@ -23,7 +23,7 @@ export default function PatientRegisterForm() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [dob, setDob] = React.useState("");
+  const [dob, setDob] = React.useState(null);
   const [gender, setGender] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [emergencyContactname, setEmergencyContactname] = React.useState("");
@@ -179,7 +179,7 @@ export default function PatientRegisterForm() {
               sx={{ width: "100%" }}
               label="Date of Birth"
                value={dob}
-               onChange={(event) => setDob(event.target.value)}            />
+               onChange={(selectedDate) => setDob(selectedDate)}            />
           </LocalizationProvider>
         </Grid>
       </Grid>

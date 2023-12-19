@@ -12,7 +12,7 @@ const columns = [
     key: "age",
   },
   {
-    title: "Hourly Rate",
+    title: "Hourly Rate (EGP)",
     dataIndex: "hourlyRate",
     key: "hourlyRate",
   },
@@ -22,9 +22,9 @@ const columns = [
     key: "affiliation",
   },
   {
-    title: "Eduacational Background",
-    dataIndex: "eduacationalBackground",
-    key: "eduacationalBackground",
+    title: "Educational Background",
+    dataIndex: "educationBg",
+    key: "eduacationBg",
   },
   {
     title: "Action",
@@ -68,6 +68,7 @@ const handleReject = () => {
 };
 
 const NewDoctorTable = ({ data }) => (
+
   <Table columns={columns} dataSource={data} />
 );
 export default NewDoctorTable;

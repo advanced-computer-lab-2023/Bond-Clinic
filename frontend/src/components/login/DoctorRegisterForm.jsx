@@ -24,7 +24,7 @@ export default function DoctorRegisterForm() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [dob, setDob] = React.useState("");
+  const [dob, setDob] = React.useState(null);
   const [gender, setGender] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
   const [rate, setRate] = React.useState("");
@@ -48,8 +48,8 @@ export default function DoctorRegisterForm() {
     event.preventDefault();
     const formData = {
       username:username,name:name,email:email,password:password,dob:dob,gender:gender,phoneNumber:phoneNumber,
-        dob:dob,hourlyRate:rate,affiliation:affiliation , educationBg:educationalbg    };
-
+        hourlyRate:rate,affiliation:affiliation , educationBg:educationalbg    };
+        console.log("TESTT : "+dob)
     try {
       const response = await fetch("http://localhost:4000/api/user/doctor-register", {
         method: "POST",
@@ -179,7 +179,7 @@ export default function DoctorRegisterForm() {
               sx={{ width: "100%" }}
               label="Date of Birth"
               value={dob}
-              onChange={(event) => setDob(event.target.value)}
+              onChange={(selectedDate) => setDob(selectedDate)}
             />
           </LocalizationProvider>
         </Grid>

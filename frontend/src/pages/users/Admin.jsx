@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Box } from "@mui/material";
 import Navbar from "../../components/bars/Navbar";
@@ -15,36 +15,65 @@ import DeletePackage from "../../components/admin/forms/DeletePackage";
 
 export default function Admin() {
   const user = useSelector((state) => state.user);
+  const [data, setData] = React.useState([]);
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      hourlyRate: "$10",
-      affiliation: "Hospital",
-      eduacationalBackground: "University",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      hourlyRate: "$10",
-      affiliation: "Hospital",
-      eduacationalBackground: "University",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      hourlyRate: "$10",
-      affiliation: "Hospital",
-      eduacationalBackground: "University",
-    },
-  ];
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/admin/registered-doctors-requests",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: `include`,
+        }
+      );
+      const dataa = await response.json();
+      setData(dataa);
+      console.log(dataa);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+
+
+  // const data = [
+  //   {
+  //     key: "1",
+  //     name: "John Brown",
+  //     age: 32,
+  //     hourlyRate: "$10",
+  //     affiliation: "Hospital",
+  //     eduacationalBackground: "University",
+  //   },
+  //   {
+  //     key: "2",
+  //     name: "Jim Green",
+  //     age: 42,
+  //     hourlyRate: "$10",
+  //     affiliation: "Hospital",
+  //     eduacationalBackground: "University",
+  //   },
+  //   {
+  //     key: "3",
+  //     name: "Joe Black",
+  //     age: 32,
+  //     hourlyRate: "$10",
+  //     affiliation: "Hospital",
+  //     eduacationalBackground: "University",
+  //   },
+  // ];
 
   function HandleNavbar() {
+    
     switch (user.openedNavbar) {
+      
       case NavbarLabel.DoctorRegistration:
         return (
           <Box sx={{ width: "50%" }}>

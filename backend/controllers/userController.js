@@ -8,6 +8,8 @@ import jwt from "jsonwebtoken"
 import passwordValidator from 'password-validator';
 import crypto from 'crypto';
 import nodemailer from "nodemailer";
+import { differenceInYears } from 'date-fns';
+
 
 // (Req 1) As a guest register as a patient using username, name, email, password, date of birth, gender, mobile number, emergency contact ( full name , mobile number)
 export const patientRegister = async (req, res) => {
@@ -37,9 +39,11 @@ export const doctorRegister = async (req, res) => {
         if(passwordValidation) {
             return res.status(400).json({message : passwordValidation[0].message});
         }
+        
+        const age = differenceInYears(new Date(), new Date(dob));
 
         await userModel.create({ username, password, role:"Doctor" });
-        const doctorReqesting = await doctorModel.create({ username, name, email, dob, hourlyRate, affiliation, educationBg });
+        const doctorReqesting = await doctorModel.create({ username, name, email, dob,age, hourlyRate, affiliation, educationBg });
 
         return res.status(200).json({message: "Registration request submitted successfully, waiting for required documents upload", "requestId": doctorReqesting._id});
     } catch (error) {

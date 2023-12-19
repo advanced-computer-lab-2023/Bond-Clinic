@@ -97,7 +97,11 @@ export default function Appbar() {
         </Box>
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          {
+            user.role === 'admin' ? null :
           <NotificationsMenu />
+          }
+            
           <ProfileMenu />
         </Box>
       </Toolbar>

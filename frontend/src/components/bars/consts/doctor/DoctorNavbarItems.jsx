@@ -1,7 +1,7 @@
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import ArticleIcon from "@mui/icons-material/Article";
 import InventoryIcon from "@mui/icons-material/Inventory";
-
+import ChatIcon from "@mui/icons-material/Chat"
 import { AppbarLabel } from "../enums";
 
 export const DoctorNavbarItems = [
@@ -35,5 +35,11 @@ export const DoctorNavbarItems = [
     icon: <VaccinesIcon />,
     label: "Doctor's Prescriptions",
     route: "authentication",
+  },
+  {
+    id: 6,
+    icon: <ChatIcon />,
+    label: "Chats",
+    appbarLabel: "",
   },
 ];

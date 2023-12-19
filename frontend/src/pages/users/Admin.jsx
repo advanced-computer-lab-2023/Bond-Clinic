@@ -12,14 +12,17 @@ import NewDoctorTable from "../../components/admin/tables/NewDoctorTable";
 import AddPackage from "../../components/admin/forms/AddPackage";
 import UpdatePackage from "../../components/admin/forms/UpdatePackage";
 import DeletePackage from "../../components/admin/forms/DeletePackage";
+import DocumentsTable from "../../components/admin/tables/DocumentsTable";
 
 export default function Admin() {
   const user = useSelector((state) => state.user);
   const [data, setData] = React.useState([]);
-
   useEffect(() => {
     fetchData();
   }, []);
+
+
+
 
   const fetchData = async () => {
     try {
@@ -36,6 +39,7 @@ export default function Admin() {
       const dataa = await response.json();
       setData(dataa);
       console.log(dataa);
+      fetchDocuments();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -73,6 +77,16 @@ export default function Admin() {
   function HandleNavbar() {
     
     switch (user.openedNavbar) {
+      
+      case "Documents":
+        return(
+          <Box sx={{ width: "50%" }}>
+            <Typography variant="h4" align="center" marginBottom={5}>
+              Doctors Documents Table
+            </Typography>
+            <DocumentsTable data={data}/>
+          </Box>
+        )
       
       case NavbarLabel.DoctorRegistration:
         return (

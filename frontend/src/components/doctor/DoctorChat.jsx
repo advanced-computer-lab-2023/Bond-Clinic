@@ -76,7 +76,7 @@ export default function Chat() {
         <ChatContainer>
           <ConversationHeader>
             <Avatar src={photo} name="Doctor" />
-            <ConversationHeader.Content userName="Doctor" />
+            <ConversationHeader.Content userName="Patient 1" />
             <ConversationHeader.Actions>
               <VideoCallButton />
               <InfoButton />
@@ -84,7 +84,7 @@ export default function Chat() {
           </ConversationHeader>
           <MessageList
             scrollBehavior="smooth"
-            typingIndicator={<TypingIndicator content="Doctor is typing" />}
+            typingIndicator={<TypingIndicator content="Patient is typing" />}
           >
             {messages.map((m, i) => (
               <Message key={i} model={m} />

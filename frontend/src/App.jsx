@@ -14,6 +14,7 @@ import Doctor from "./pages/users/Doctor.jsx";
 import Pharmacist from "./pages/users/Pharmacist.jsx";
 import ChangePW from "./pages/login/ChangePW.jsx";
 import Chat from "./components/patient/Chat.jsx";
+import ViewPhoto from "./pages/VIewPhoto.jsx"
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -69,6 +70,7 @@ const App = () => {
                 <Route path="/pharmacist/home" element={<Pharmacist />} />
                 <Route path="/doctor/profile" element={<DoctorProfile />} />
                 <Route path="/patient/profile" element={<PatientProfile />} />
+                <Route path="/viewphoto" element={<ViewPhoto />} />
               </Routes>
             </QueryClientProvider>
           </BrowserRouter>

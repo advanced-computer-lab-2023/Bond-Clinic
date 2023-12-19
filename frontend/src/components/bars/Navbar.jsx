@@ -30,6 +30,9 @@ export default function Navbar() {
     case "doctor":
       NavbarItems = DoctorNavbarItems;
       break;
+    case "pharmacist":
+      NavbarItems = DoctorNavbarItems;
+      break;
     default:
       break;
   }

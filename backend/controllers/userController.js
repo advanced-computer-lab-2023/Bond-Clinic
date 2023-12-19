@@ -163,7 +163,7 @@ export const forgotPassword = async(req,res) => {
         const user = await userModel.findOne({ username:username });
         
         if(!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ message: 'User not found' });
         }
         let userRole;
         if(user.role === "Admin") {
@@ -179,7 +179,7 @@ export const forgotPassword = async(req,res) => {
                 }
             }
             if(userRole.email !== email) {
-                return res.status(400).json({ error: 'Email does not match' });
+                return res.status(400).json({ message: 'Email does not match' });
             }
         }
         sendMail(email, otp);
@@ -196,7 +196,7 @@ export const forgotPassword = async(req,res) => {
 
         res.status(200).json({ message: 'OTP sent successfully' });
     } catch (error) {
-        return res.status(400).json({error : error.message});
+        return res.status(400).json({message : error.message});
     }
 };
 
@@ -226,45 +226,67 @@ export const validatePassword = (password) => {
 };
 
 // (Req 12) change my password
+export const checkotp = async (req, res) => {
+    try {
+      const token = req.cookies.jwt;
+      jwt.verify(token, 'supersecret', async (err, decodedToken) => {
+        if (err) {
+          return res.status(400).json({ message: err.message });
+        } else {
+          // request from forgotPassword else resetPassword
+          if ('otp' in decodedToken) {
+            const savedOTP = decodedToken.otp;
+            const { OTP } = req.body;
+            if (OTP !== savedOTP) {
+              return res.status(400).json({ message: 'Wrong OTP' });
+            } else {
+              return res.status(200).json({ message: 'Please enter your new Password' });
+            }
+          }
+        }
+      });
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
+  };  
+
+
 export const resetPassword = async(req,res) => {
     try {
         const token = req.cookies.jwt;
         jwt.verify(token, 'supersecret', async(err, decodedToken) => {
             if(err) {
-                return res.status(400).json({err : err.message});
+                return res.status(400).json({message : err.message});
             } else {
                 // request from forgotPassword else resetPassword
                 if ('otp' in decodedToken) {
                     const savedUsername = decodedToken.username;
-                    const savedOTP  = decodedToken.otp;
-                    const {OTP, newPassword, reNewPassword} = req.body;
-                    if(OTP !== savedOTP) {
-                        return res.status(400).json({error : "Wrong OTP"});
-                    }
+                    const { newPassword, reNewPassword} = req.body;
                     if(newPassword !== reNewPassword) {
-                        return res.status(400).json({error : "New Password and Re-input New Password does not match"});
+                        return res.status(400).json({message : "New Password and Re-input New Password does not match"});
                     }
                     const tempJson = validatePassword(newPassword);
                     if(tempJson) {
-                        return res.status(400).json(tempJson);
+                        return res.status(400).json({message : tempJson[0].message});
                     } else {
                         const user = await userModel.findOne({ username:savedUsername });
                         user.password = newPassword;
-                        await user.save();        
+                        await user.save();     
+                        return res.status(200).json({message : "Password Updated Successfully"});
                     }
                 } else {
                     const savedUsername = decodedToken.username;
                     const {oldPassword, newPassword, reNewPassword} = req.body;
                     if(newPassword !== reNewPassword) {
-                        return res.status(400).json({error : "New Password and Re-input New Password does not match"});
+                        return res.status(400).json({message : "New Password and Re-input New Password does not match"});
                     }
                     const tempJson = validatePassword(newPassword);
                     if(tempJson) {
-                        return res.status(400).json(tempJson);
+                        return res.status(400).json({message : tempJson[0].message});
                     } else {
                         const user = await userModel.findOne({ username:savedUsername });
                         if(user.password !== oldPassword) {
-                            return res.status(400).json({error : "Old password is not correct"});
+                            return res.status(400).json({message : "Old password is not correct"});
                         }
                         user.password = newPassword;
                         await user.save();
@@ -275,7 +297,7 @@ export const resetPassword = async(req,res) => {
             }
         });
     } catch (error) {
-        return res.status(400).json({error : error.message});
+        return res.status(400).json({message : error.message});
     }
 };
 

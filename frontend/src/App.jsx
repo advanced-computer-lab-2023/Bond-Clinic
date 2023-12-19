@@ -11,7 +11,9 @@ import ResetPW from "./pages/login/ResetPW.jsx";
 import Admin from "./pages/users/Admin.jsx";
 import Patient from "./pages/users/Patient.jsx";
 import Doctor from "./pages/users/Doctor.jsx";
+import Pharmacist from "./pages/users/Pharmacist.jsx";
 import ChangePW from "./pages/login/ChangePW.jsx";
+import Chat from "./components/patient/Chat.jsx";
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -64,6 +66,7 @@ const App = () => {
                 <Route path="/admin/home" element={<Admin />} />
                 <Route path="/patient/home" element={<Patient />} />
                 <Route path="/doctor/home" element={<Doctor />} />
+                <Route path="/pharmacist/home" element={<Pharmacist />} />
                 <Route path="/doctor/profile" element={<DoctorProfile />} />
                 <Route path="/patient/profile" element={<PatientProfile />} />
               </Routes>

@@ -16,9 +16,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
 import { setOpenedNavbar } from "../../redux/userSlice";
 import AddMedicineForm from "../../components/patient/forms/AddMedicineForm";
-import DoctorChat from "../../components/doctor/DoctorChat";
 
-export default function Doctor() {
+export default function Pharmacist() {
   const data = [
     {
       key: "1",
@@ -161,15 +160,6 @@ export default function Doctor() {
   };
   const HandleNavbar = () => {
     switch (user.openedNavbar) {
-      case "Chats":
-        return (
-          <Box sx={{ width: "50%" }}>
-            <Typography variant="h4" align="center" marginBottom={5}>
-              Chat
-            </Typography>
-            <DoctorChat />
-          </Box>
-        );
       case NavbarLabel.Patients:
         return (
           <Box sx={{ width: "50%" }}>

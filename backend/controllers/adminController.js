@@ -59,9 +59,6 @@ export const removeUser = async (req, res) => {
 export const getRegisteredDoctorsRequests = async (req, res) => {
   try {
     const registeredDoctors = await doctorModel.find({ status: "registered" });
-    if(registeredDoctors.length === 0) {
-      return res.status(200).json({ message: "There is no registered doctors" })
-    }
     return res.status(200).json(registeredDoctors);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -72,9 +69,6 @@ export const getRegisteredDoctorsRequests = async (req, res) => {
 export const getRegisteredPharmacistsRequests = async(req, res) => {
   try {
     const registeredPharmacists = await pharmacistModel.find({ status: "registered" });
-    if(registeredPharmacists.length === 0) {
-      return res.status(200).json({ message: "There is no registered pharmacists" })
-    }
     return res.status(200).json(registeredPharmacists);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -91,13 +85,30 @@ export const acceptRegisteredDoctor = async (req, res) => {
       adminAcceptance: false,
     };
     const doctor = await doctorModel.findOne({ username: username });
+    if(!doctor){
+      return res.status(500).json({ message: "Doctor NOT Found" });
+    }
     doctor.employmentContract = employmentContract;
+    doctor.status = "pending";
     doctor.save();
-    return res.status(200).json({message: "Doctor registration is accepted, waiting for your to accept employment contract"});
+    return res.status(200).json({message: "Doctor registration is pending, waiting for your to accept employment contract"});
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };
+
+// (Req 15) As an admin accept a request for the registration of a doctor
+export const rejectRegisteredDoctor = async(req, res) => {
+  try {
+    const { username } = req.params;
+    const doctor = await doctorModel.findOne({ username: username });
+    doctor.status = "rejected";
+    doctor.save();
+    return res.status(200).json({message: "Doctor registration is rejected"});
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+}
 
 // (Req 8) accept the request of a pharmacist to join the platform
 export const acceptRegisteredPharmacist = async(req, res) => {
@@ -120,45 +131,6 @@ export const rejectRegisteredPharmacist = async(req, res) => {
     pharmacist.status = "rejected";
     pharmacist.save();
     return res.status(200).json({message: "Pharmacist registration is rejected"});
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
-
-// (Req 10) helper
-export const getPendDoctorRequests = async (req, res) => {
-  try {
-    const pendingDoctors = await doctorModel.find({ status: "pending" });
-    if(pendingDoctors.length === 0) {
-      return res.status(200).json({ message: "There is no pend doctors" })
-    }
-    return res.status(200).json(pendingDoctors);
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
-
-// (Req 10) accept the request of a doctor to join the platform
-export const acceptPendDoctor = async (req, res) => {
-  const { doctorusername } = req.params;
-  try {
-    const doctor = await doctorModel.findOne({ username: doctorusername });
-    doctor.employmentContract.adminAcceptance = true;
-    doctor.status = "accepted";
-    return res.status(200).json({message: "Employment contract is now approved, you are now a Doctor"});
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
-
-// (Req 10) reject the request of a doctor to join the platform
-export const rejectPendDoctor = async (req, res) => {
-  const { doctorusername } = req.params;
-  try {
-    const doctor = await doctorModel.findOne({ username: doctorusername});
-    doctor.employmentContract.adminAcceptance = false;
-    doctor.status = "rejected";
-    return res.status(200).json({message: "Employment contract was not approved, you are now rejected"});
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

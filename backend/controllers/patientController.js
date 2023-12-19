@@ -552,10 +552,6 @@ export const viewHealthPackageOptions = async(req, res) => {
   }
 };
 
-
-
-
-
 // (Req 67) view the amount in my wallet
 export const getWallet = async (req,res) => {
   try {
@@ -599,7 +595,7 @@ export const payAppointment = async (req, res) => {
     cancel_url: `http://localhost:3000/patient/home`,
   });
   res.redirect(303, session.url);
- };
+};
 
   export const payPackage = async (req, res) => {
     const { patient , packageType , familyNationalID , familySubscription }= req.body;
@@ -658,8 +654,9 @@ export const payAppointment2 = async (req, res) => {
     cancel_url: `http://localhost:3000/patient/home`,
   });
   res.redirect(303, session.url);
- };
- export const payPackage2 = async (req, res) => {
+};
+
+export const payPackage2 = async (req, res) => {
   let price = 9000;
   let name = `Platinum Package`
   const stripeInstance = new stripe(process.env.STRIPE_PRIVATE_KEY);

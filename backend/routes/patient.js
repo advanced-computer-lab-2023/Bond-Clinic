@@ -2,8 +2,8 @@ import express, { json } from "express";
 import { addFamilyMember, getFamilyMembers, 
          getDoctorsNameSpecialitySessionPrice, getDoctorNameSpeciality, filterDoctorsSpecialityAvailability, 
          selectDoctor, viewSelectedDoctor, getPrescriptions, filterPrescription, selectPrescription, 
-         uploadHealthRecord, viewHealthRecords, removeHealthRecord, linkFamily, viewHealthPackageOptions, 
-         getAppointments, filterAppointmentsDateStatus, getWallet, payAppointment, payAppointment2, payPackage, 
+         uploadHealthRecord, removeHealthRecord, linkFamily, viewHealthPackageOptions, 
+         getWallet, payAppointment, payAppointment2, payPackage, 
          payPackage2 } from "../controllers/patientController.js";
 
 //router initialization

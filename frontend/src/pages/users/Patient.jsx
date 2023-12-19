@@ -9,12 +9,22 @@ import FamilyMembersTable from "../../components/patient/tables/FamilyMembersTab
 import Typography from "@mui/material/Typography";
 import FamilyMembersForm from "../../components/patient/forms/FamilyMembersForm";
 import { NavbarLabel } from "../../components/bars/consts/enums";
+import Chat from "../../components/patient/Chat";
 
 export default function Patient() {
   const user = useSelector((state) => state.user);
 
   function HandleNavbar() {
     switch (user.openedNavbar) {
+      case "Chats":
+        return (
+          <Box sx={{ width: "50%" }}>
+            <Typography variant="h4" align="center" marginBottom={5}>
+              Chat
+            </Typography>
+            <Chat />
+          </Box>
+        );
       case NavbarLabel.Prescriptions:
         return (
           <Box sx={{ width: "50%" }}>

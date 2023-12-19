@@ -4,7 +4,9 @@ import {
   TextField,
   FormControl,
   Button,
-  Divider,Snackbar,Alert
+  Divider,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import * as React from "react";
@@ -33,8 +35,7 @@ export default function DoctorRegisterForm() {
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState("");
   const [severity, setseverity] = React.useState("success");
-  
-  
+
   const navigate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -47,36 +48,50 @@ export default function DoctorRegisterForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = {
-      username:username,name:name,email:email,password:password,dob:dob,gender:gender,phoneNumber:phoneNumber,
-        dob:dob,hourlyRate:rate,affiliation:affiliation , educationBg:educationalbg    };
+      username: username,
+      name: name,
+      email: email,
+      password: password,
+      dob: dob,
+      gender: gender,
+      phoneNumber: phoneNumber,
+      hourlyRate: rate,
+      affiliation: affiliation,
+      educationBg: educationalbg,
+    };
 
     try {
-      const response = await fetch("http://localhost:4000/api/user/doctor-register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-        credentials: `include`,
-      });
+      const response = await fetch(
+        "http://localhost:4000/api/user/doctor-register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+          credentials: `include`,
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
-      setseverity("success");
-      setSnackbarMessage(data.message+"\n you will be redirected now to login ");        
-      setSnackbarOpen(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 5000);
+        setseverity("success");
+        setSnackbarMessage(
+          data.message + "\n you will be redirected now to login "
+        );
+        setSnackbarOpen(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 5000);
       }
       if (!response.ok) {
         setseverity("error");
-        setSnackbarMessage("Error  : \n "+data.message);        
+        setSnackbarMessage("Error  : \n " + data.message);
         setSnackbarOpen(true);
       }
     } catch (error) {
       setseverity("error");
-      setSnackbarMessage("Error : \n "+error);        
+      setSnackbarMessage("Error : \n " + error);
       setSnackbarOpen(true);
     }
   };
@@ -166,7 +181,11 @@ export default function DoctorRegisterForm() {
         <Grid item sx={{ width: "50%" }}>
           <FormControl sx={{ width: "100%" }}>
             <InputLabel id="gender">Gender</InputLabel>
-            <Select label="Gender" value={gender} onChange={(event) => setGender(event.target.value)}>
+            <Select
+              label="Gender"
+              value={gender}
+              onChange={(event) => setGender(event.target.value)}
+            >
               <MenuItem value="male">Male</MenuItem>
               <MenuItem value="female">Female</MenuItem>
             </Select>
@@ -234,11 +253,15 @@ export default function DoctorRegisterForm() {
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
         Submit
       </Button>
-      <Snackbar open={snackbarOpen} autoHideDuration={5000} onClose={handleClose}>
-      <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-           {snackbarMessage}
-      </Alert>
-</Snackbar>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

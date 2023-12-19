@@ -1,6 +1,7 @@
 import PeopleIcon from "@mui/icons-material/People";
 import ArticleIcon from "@mui/icons-material/Article";
 import InventoryIcon from "@mui/icons-material/Inventory";
+import ChatIcon from "@mui/icons-material/Chat";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
@@ -37,8 +38,8 @@ export const PatientNavbarItems = [
   },
   {
     id: 5,
-    icon: <InventoryIcon />,
-    label: "Packages",
-    route: "hosting",
+    icon: <ChatIcon />,
+    label: "Chats",
+    appbarLabel: "",
   },
 ];

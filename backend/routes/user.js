@@ -1,7 +1,7 @@
 import express from "express";
 import { patientRegister, doctorRegister, pharmacistRegister, login, logout, forgotPassword, resetPassword,
          viewMedicines, searchMedicine, filterMedicine, viewMonthSales, getAppointments, 
-         filterAppointmentsDateStatus, viewHealthRecords } from "../controllers/userController.js";
+         filterAppointmentsDateStatus, viewHealthRecords, checkotp } from "../controllers/userController.js";
 
 //router initialization
 const router = express.Router();
@@ -24,6 +24,7 @@ router.get('/logout',logout);
 // (Req 12) As a user change my password
 router.post('/reset-password', resetPassword);
 
+router.post('/checkotp',checkotp)
 // (Req 13) As a user reset a forgotten password through OTP sent to email
 router.post('/forgot-password', forgotPassword);
 

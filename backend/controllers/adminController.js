@@ -31,22 +31,22 @@ export const removeUser = async (req, res) => {
 
     const removedUser = await userModel.findOneAndDelete({ username: username});
     if(!removedUser) {
-      return res.status(400).json({error: "User does not exist"});
+      return res.status(400).json({message: "User does not exist"});
     }
     if(removedUser.role === "Admin") {
       await adminModel.findOneAndDelete({ username: username});
-      return res.status(200).json({ message: "Admin removed successfully" });
+      return res.status(200).json({ message: "Admin "+username+" removed successfully" });
     } else {
       if(removedUser.role === "Doctor") {
         await doctorModel.findOneAndDelete({ username: username});
-        return res.status(200).json({ message: "doctor removed successfully" });
+        return res.status(200).json({ message: "doctor "+username+" removed successfully" });
       } else {
         if(removeUser.role === "Pharmacist") {
           await pharmacistModel.findOneAndDelete({ username: username});
-          return res.status(200).json({ message: "Pharmacist removed successfully" });
+          return res.status(200).json({ message: "Pharmacist "+username+" removed successfully" });
         } else {
           await patientModel.findOneAndDelete({ username: username});
-          return res.status(200).json({ message: "Patient removed successfully" });
+          return res.status(200).json({ message: "Patient "+username+" removed successfully" });
         }
       }
     }

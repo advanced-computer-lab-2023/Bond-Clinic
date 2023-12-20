@@ -66,52 +66,9 @@ export default function NewDoctorTable({ data }) {
       ),
     },
     {
-      title: "ID",
-      dataIndex: "medicalId",
-      key: "medicalId",
-      render: (text, record) => (
-        <Space size="middle">
-          <button
-            style={{
-              background: "none",
-              border: "none",
-              padding: 0,
-              color: "#1677ff",
-              cursor: "pointer",
-            }}
-            onClick={() => handleClick(record)}
-          >
-            View
-          </button>
-        </Space>
-      ),
-    },
-    {
-      title: "Medical Licenses",
-      dataIndex: "medicalLicense",
-      key: "medicalLicense",
-
-      render: (text, record) => (
-        <Space size="middle">
-          <button
-            style={{
-              background: "none",
-              border: "none",
-              padding: 0,
-              color: "#1677ff",
-              cursor: "pointer",
-            }}
-            onClick={() => handleClick(record)}
-          >
-            View
-          </button>
-        </Space>
-      ),
-    },
-    {
-      title: "Medical Degree",
-      dataIndex: "medicalDegree",
-      key: "medicalDegree",
+      title: "Documents",
+      dataIndex: "documents",
+      key: "documents",
       render: (text, record) => (
         <Space size="middle">
           <button

@@ -26,11 +26,4 @@ export const AdminNavbarItems = [
     route: "hosting",
     appbarLabel: AppbarLabel.AddPackage,
   },
-  {
-    id: 3,
-    icon: <InventoryIcon />,
-    label: "Documents",
-    route: "hosting",
-    appbarLabel: '',
-  },
 ];

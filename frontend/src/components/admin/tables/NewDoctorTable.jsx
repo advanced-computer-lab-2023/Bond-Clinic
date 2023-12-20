@@ -3,11 +3,10 @@ import { Space, Table } from "antd";
 import { Snackbar, Alert } from "@mui/material";
 
 export default function NewDoctorTable({ data }) {
-
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState("");
   const [severity, setseverity] = React.useState("success");
-  
+
   const columns = [
     {
       title: "Name",
@@ -37,7 +36,7 @@ export default function NewDoctorTable({ data }) {
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
+      render: (record) => (
         <Space size="middle">
           <button
             style={{
@@ -66,67 +65,149 @@ export default function NewDoctorTable({ data }) {
         </Space>
       ),
     },
+    {
+      title: "ID",
+      dataIndex: "medicalId",
+      key: "medicalId",
+      render: (text, record) => (
+        <Space size="middle">
+          <button
+            style={{
+              background: "none",
+              border: "none",
+              padding: 0,
+              color: "#1677ff",
+              cursor: "pointer",
+            }}
+            onClick={() => handleClick(record)}
+          >
+            View
+          </button>
+        </Space>
+      ),
+    },
+    {
+      title: "Medical Licenses",
+      dataIndex: "medicalLicense",
+      key: "medicalLicense",
+
+      render: (text, record) => (
+        <Space size="middle">
+          <button
+            style={{
+              background: "none",
+              border: "none",
+              padding: 0,
+              color: "#1677ff",
+              cursor: "pointer",
+            }}
+            onClick={() => handleClick(record)}
+          >
+            View
+          </button>
+        </Space>
+      ),
+    },
+    {
+      title: "Medical Degree",
+      dataIndex: "medicalDegree",
+      key: "medicalDegree",
+      render: (text, record) => (
+        <Space size="middle">
+          <button
+            style={{
+              background: "none",
+              border: "none",
+              padding: 0,
+              color: "#1677ff",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              handleClick(record);
+            }}
+          >
+            View
+          </button>
+        </Space>
+      ),
+    },
   ];
-  
+
+  const handleClick = async (record) => {
+    window.open("../../viewphoto?url=" + record.requiredDocuments.medicalId);
+  };
+
   const handleAccept = async (record) => {
     try {
-      console.log(record.username)
-      const response = await fetch("http://localhost:4000/api/admin/accept-doctor-register/"+ record.username, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: `include`,
-      });
+      console.log(record.username);
+      const response = await fetch(
+        "http://localhost:4000/api/admin/accept-doctor-register/" +
+          record.username,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: `include`,
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
-      setseverity("success");
-      setSnackbarMessage("Doctor "+record.username+" Accepted Successfuly !");        
-      setSnackbarOpen(true);
-      window.location.reload();
+        setseverity("success");
+        setSnackbarMessage(
+          "Doctor " + record.username + " Accepted Successfuly !"
+        );
+        setSnackbarOpen(true);
+        window.location.reload();
       }
       if (!response.ok) {
         setseverity("error");
-        setSnackbarMessage("Error while accpting doctor \n "+data.error);        
+        setSnackbarMessage("Error while accpting doctor \n " + data.error);
         setSnackbarOpen(true);
       }
     } catch (error) {
       setseverity("error");
-      setSnackbarMessage("Error while accpting doctor \n "+error);        
+      setSnackbarMessage("Error while accpting doctor \n " + error);
       setSnackbarOpen(true);
     }
   };
-  
+
   const handleReject = async (record) => {
     try {
-      const response = await fetch("http://localhost:4000/api/admin/reject-doctor-register/"+ record.username, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: `include`,
-      });
+      const response = await fetch(
+        "http://localhost:4000/api/admin/reject-doctor-register/" +
+          record.username,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: `include`,
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
-      setseverity("success");
-      setSnackbarMessage("Doctor "+record.username+" rejected Successfuly !");        
-      setSnackbarOpen(true);
-      window.location.reload();
+        setseverity("success");
+        setSnackbarMessage(
+          "Doctor " + record.username + " rejected Successfuly !"
+        );
+        setSnackbarOpen(true);
+        window.location.reload();
       }
       if (!response.ok) {
         setseverity("error");
-        setSnackbarMessage("Error while rejecting doctor \n "+data.error);        
+        setSnackbarMessage("Error while rejecting doctor \n " + data.error);
         setSnackbarOpen(true);
       }
     } catch (error) {
       setseverity("error");
-      setSnackbarMessage("Error while rejecting doctor \n "+error);        
+      setSnackbarMessage("Error while rejecting doctor \n " + error);
       setSnackbarOpen(true);
     }
   };
-      
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -137,11 +218,15 @@ export default function NewDoctorTable({ data }) {
   return (
     <>
       <Table columns={columns} dataSource={data} />
-      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
           {snackbarMessage}
         </Alert>
       </Snackbar>
-  </>
-  ); 
+    </>
+  );
 }

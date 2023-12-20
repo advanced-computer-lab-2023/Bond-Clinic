@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Box } from "@mui/material";
 import Navbar from "../../components/bars/Navbar";
@@ -21,9 +21,6 @@ export default function Admin() {
     fetchData();
   }, []);
 
-
-
-
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -39,13 +36,10 @@ export default function Admin() {
       const dataa = await response.json();
       setData(dataa);
       console.log(dataa);
-      fetchDocuments();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
-
 
   // const data = [
   //   {
@@ -75,19 +69,7 @@ export default function Admin() {
   // ];
 
   function HandleNavbar() {
-    
     switch (user.openedNavbar) {
-      
-      case "Documents":
-        return(
-          <Box sx={{ width: "50%" }}>
-            <Typography variant="h4" align="center" marginBottom={5}>
-              Doctors Documents Table
-            </Typography>
-            <DocumentsTable data={data}/>
-          </Box>
-        )
-      
       case NavbarLabel.DoctorRegistration:
         return (
           <Box sx={{ width: "50%" }}>

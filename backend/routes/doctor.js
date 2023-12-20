@@ -1,7 +1,7 @@
 import express from "express";
 import { uploadDocuments, updateDoctor, searchPatient, getRegisteredPatients, filterPatientsUpcomingAppointments, 
          selectPatient, viewRegisteredPatient, acceptContract, viewContract, addAvailableTimeSlots, 
-         addPatinetPrescription } from "../controllers/doctorController.js";
+         addPatinetPrescription,getappointments } from "../controllers/doctorController.js";
 
 //router initialization
 const router = express.Router();
@@ -41,7 +41,7 @@ router.post("/add-prescription", addPatinetPrescription);
 
 // router.post('/reservefollowup',reservefollowup)
 
-// router.get('/getappointments',getappointments)
+ router.get('/getappointments',getappointments)
 
 // // router.post('/',createDoctor);
 

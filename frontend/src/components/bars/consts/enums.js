@@ -53,4 +53,5 @@ export const AppbarLabel = {
   //
   //Doctor Appbar
   ViewPatients: "View Patients",
+  DrAppointments:"View Appointments"
 };

@@ -387,34 +387,30 @@ export const addPatinetPrescription = async(req, res) => {
   }
 };
 
-// //get all appointments
-// export const getappointments = async (req, res) => {
-//   const token = req.cookies.jwt;
-//   if (!token){
-//     return res.status(400).json({error:"Not Logged in"})
-//      } else {
-//       const decodedToken =  jwt.verify(token, 'supersecret') 
-//       const username = decodedToken.username ;
-//       console.log(username)
-//       //const role  = decodedToken.role ;
-//   try {
-//     // Fetch appointments from the database
-//     const doctor = await doctorModel.findOne({ username });
-//     if (!doctor) {
-//       return res.status(400).json({ error: "Doctor not found" });
-//     }
+//get all appointments
+export const getappointments = async (req, res) => {
+  const token = req.cookies.jwt;
+  if (!token){
+    return res.status(400).json({error:"Not Logged in"})
+     } else {
+      const decodedToken =  jwt.verify(token, 'supersecret') 
+      const username = decodedToken.username ;
+      //console.log(username)
+      //const role  = decodedToken.role ;
+  try {
+    // Fetch appointments from the database
+    const doctor = await doctorModel.findOne({ username });
+    if (!doctor) {
+      return res.status(400).json({ message: "Doctor not found" });
+    }
 
-//     // Find patients associated with the doctor and populate their appointments
-//     // const patients = await patientModel
-//     //   .find({ doctor: doctor._id })
-//     //   .populate("appointments");
-//     const appointments = doctor.appointments ;
+    const appointments = doctor.appointments.appointment ;
 
-//     res.status(200).json(appointments);
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }}
-// };
+    res.status(200).json(appointments);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }}
+};
 // export const addAvailableTimeSlot = async (req, res) => {
 //   const { username, date, time } = req.body;
 

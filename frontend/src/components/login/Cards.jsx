@@ -18,39 +18,27 @@ export default function Cards() {
           <CardHeader title="Patient" subheader="Patient" />
           <CardContent>
             <Typography variant="body2" color="textSecondary">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus
-              ab dolor amet reprehenderit aliquam? Totam repudiandae tenetur,
-              sunt ex molestias sit nihil reprehenderit quos quae nesciunt quam
-              magnam. Praesentium, unde!
-            </Typography>
+            Welcome to El7a2ny Clinic, where your health is our priority! At El7a2ny, we're committed to delivering exceptional medical care personalized to your unique needs. Our experienced team ensures your well-being with compassionate healthcare. Thank you for choosing El7a2ny Clinic, your trusted partner in health.            </Typography>
           </CardContent>
         </Card>
       </Grid>
       <Grid item md={4}>
         <Card elevation={3}>
           <CardMedia sx={{ height: "28vh" }} image={pic2} />
-          <CardHeader title="Patient" subheader="Patient" />
+          <CardHeader title="Doctor" subheader="Doctor" />
           <CardContent>
             <Typography variant="body2" color="textSecondary">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque,
-              culpa molestiae. Cum voluptatem veritatis, iste fuga id
-              necessitatibus harum reprehenderit sapiente ea sint, tenetur eius
-              et quas nihil, hic explicabo!
-            </Typography>
+            Join El7a2ny Clinic, a hub of medical excellence! At El7a2ny, we value your health journey and offer a supportive environment for doctors to thrive. Join our dedicated team, where your expertise contributes to a healthier community. Welcome to El7a2ny Clinic, where your impact matters.            </Typography>
           </CardContent>
         </Card>
       </Grid>
       <Grid item md={4}>
         <Card elevation={3}>
           <CardMedia sx={{ height: "28vh" }} image={pic3} />
-          <CardHeader title="Patient" subheader="Patient" />
+          <CardHeader title="Pharmacist" subheader="Pharmacist" />
           <CardContent>
             <Typography variant="body2" color="textSecondary">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-              consequatur harum minus blanditiis libero maiores eius ullam totam
-              quis iure esse impedit reprehenderit, nesciunt eaque alias rem
-              doloribus architecto magnam?
-            </Typography>
+            Discover a fulfilling career at El7a2ny Clinic! As a pharmacist, your role is vital in ensuring optimal patient care. At El7a2ny, we prioritize your professional growth, providing a dynamic workspace where your skills make a difference. Welcome to El7a2ny Clinic, where your pharmacy career flourishes.            </Typography>
           </CardContent>
         </Card>
       </Grid>

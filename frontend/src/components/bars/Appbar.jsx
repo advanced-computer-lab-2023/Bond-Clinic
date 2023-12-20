@@ -9,6 +9,7 @@ import {
   UserManagementList,
   PackageManagementList,
 } from "./consts/admin/AdminAppbarItems";
+import { DoctorAppointmentsList } from "./consts/doctor/DoctorAppbarItems";
 import {
   FamilyMembersList,
   AppointmentsList,
@@ -32,6 +33,8 @@ export default function Appbar() {
     case NavbarLabel.HealthPackages:
       AppbarItems = PackageManagementList;
       break;
+    case NavbarLabel.Appointments :
+      AppbarItems = AppointmentsList;
     //patient
     case NavbarLabel.FamilyMembers:
       AppbarItems = FamilyMembersList;

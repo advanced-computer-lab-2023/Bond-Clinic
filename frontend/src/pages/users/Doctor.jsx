@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { setOpenedNavbar } from "../../redux/userSlice";
 import AddMedicineForm from "../../components/patient/forms/AddMedicineForm";
 import DoctorChat from "../../components/doctor/DoctorChat";
-
+import Appointmentstable from "../../components/doctor/table/appointmentstable";
 
 
 export default function Doctor() {
@@ -49,9 +49,9 @@ export default function Doctor() {
   //   },
   // ];
   const [data, setData] = React.useState([]);
-
+  const[appo,setAppo] = React.useState([]);
   useEffect(() => {
-    fetchData();
+    fetchData();fetchData2();
   }, []);
 
   const fetchData = async () => {
@@ -74,7 +74,26 @@ export default function Doctor() {
       console.error("Error fetching data:", error);
     }
   };
-
+  const fetchData2 = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/api/doctor/getappointments",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: `include`,
+        }
+      );
+      const dataa2 = await response.json();
+      setAppo(dataa2);
+      //setData2(dataa)
+      //console.log(dataa);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
 
 
@@ -180,16 +199,22 @@ export default function Doctor() {
           </Typography>
         </Box>;
         break;
-      case AppbarLabel.ViewAppointments:
-        <Box sx={{ width: "75%" }}>
-          <Typography variant="h4" align="center" margin={10}>
-            Appointments
-          </Typography>
-        </Box>;
-        break;
+      // case AppbarLabel.ViewAppointments:
+      //   return(
+      //     <Box sx={{ width: "75%" }}>
+      //       <Typography variant="h4" align="center" marginBottom={5}>
+      //         View Appointments
+      //       </Typography>
+      //       <Appointmentstable data={appo} />
+      //     </Box>
+      //   );
       default:
         return null;
     }
+  };
+
+  const updateData = (newData) => {
+    setAppo(newData);
   };
   const HandleNavbar = () => {
     switch (user.openedNavbar) {
@@ -219,13 +244,15 @@ export default function Doctor() {
             <PatientTable data={data2} />
           </Box>
         );
-      // case AppbarLabel.ViewAppointments:
-      //   <Box sx={{ width: "75%" }}>
-      //     <Typography variant="h4" align="center" margin={10}>
-      //       Appointments
-      //     </Typography>
-      //   </Box>;
-      //   break;
+      case NavbarLabel.DrAppointments:
+        return(
+          <Box sx={{ width: "50%" }}>
+            <Typography variant="h4" align="center" marginBottom={5}>
+              View Appointments
+            </Typography>
+            <Appointmentstable data={appo} updateData={updateData} />
+          </Box>
+        );
       case NavbarLabel.HealthRecords:
         return (
           <Box sx={{ width: "100%" }}>
@@ -344,13 +371,14 @@ export default function Doctor() {
         );
 
       default:
-        return (
-          <Box sx={{ width: "75%" }}>
-            <Typography variant="h4" align="center" margin={10}>
-              Welcome to Bond Clinic
-            </Typography>
-          </Box>
-        );
+        return null
+          // <Box sx={{ width: "75%" }}>
+          //   <Typography variant="h4" align="center" margin={10}>
+          //     Welcome to Bond Clinic
+          //   </Typography>
+          // </Box>
+          
+        
     }
   };
 
